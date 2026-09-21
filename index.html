@@ -3,273 +3,6913 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ARAMS - ระบบบริหารงานทะเบียนและวัดผล</title>
-    
-    <!-- FontAwesome สำหรับไอคอน -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- เชื่อมต่อไฟล์ CSS -->
-    <link rel="stylesheet" href="style.css">
+
+    <title>ARAMS | ระบบบริหารงานทะเบียนและวัดผล</title>
+
+    <meta name="description" content="Academic Registration and Assessment Management System">
+    <meta name="theme-color" content="#173054">
+
+    <!-- =========================================================
+         FONT AWESOME
+         ========================================================= -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+    <!-- =========================================================
+         GOOGLE FONT FALLBACK
+         ========================================================= -->
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <!-- =========================================================
+         MAIN STYLE
+         ========================================================= -->
+    <style>
+
+        /* =====================================================
+           FONT
+           ===================================================== */
+
+        @font-face {
+            font-family: "TH Sarabun PSK";
+            src: url("./fonts/THSarabunPSK.ttf") format("truetype");
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: "TH Sarabun PSK";
+            src: url("./fonts/THSarabunPSK-Bold.ttf") format("truetype");
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        /* =====================================================
+           ROOT
+           ===================================================== */
+
+        :root {
+
+            --primary: #173054;
+            --primary-dark: #10233f;
+            --primary-light: #27466f;
+
+            --secondary: #52657d;
+
+            --background: #f5f7fa;
+            --surface: #ffffff;
+            --surface-soft: #f8fafc;
+
+            --border: #e2e8f0;
+
+            --text: #1e293b;
+            --text-light: #64748b;
+            --text-muted: #94a3b8;
+
+            --success: #16855b;
+            --warning: #c47b00;
+            --danger: #c0392b;
+            --info: #2563a6;
+
+            --sidebar-width: 275px;
+
+            --header-height: 72px;
+
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 14px;
+
+            --shadow-sm:
+                0 1px 2px rgba(15, 23, 42, 0.04);
+
+            --shadow-md:
+                0 5px 20px rgba(15, 23, 42, 0.06);
+
+            --transition:
+                0.2s ease;
+        }
+
+        /* =====================================================
+           RESET
+           ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "TH Sarabun PSK", "TH Sarabun New", sans-serif;
+            font-size: 21px;
+            line-height: 1.4;
+            color: var(--text);
+            background: var(--background);
+            overflow-x: hidden;
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font-family: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* =====================================================
+           LOGIN SCREEN
+           ===================================================== */
+
+        #loginScreen {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #10233f 0%,
+                    #173054 50%,
+                    #27466f 100%
+                );
+
+            padding: 20px;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 470px;
+        }
+
+        .login-card {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 42px 40px;
+            box-shadow:
+                0 25px 70px rgba(0, 0, 0, 0.22);
+        }
+
+        .login-logo {
+            width: 92px;
+            height: 92px;
+
+            margin: 0 auto 18px;
+
+            border-radius: 16px;
+
+            background: #ffffff;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid var(--border);
+
+            overflow: hidden;
+        }
+
+        .login-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 8px;
+        }
+
+        .login-logo i {
+            font-size: 42px;
+            color: var(--primary);
+        }
+
+        .login-title {
+            text-align: center;
+            color: var(--primary);
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1.15;
+        }
+
+        .login-subtitle {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 20px;
+            margin-top: 4px;
+            margin-bottom: 30px;
+        }
+
+        .login-form-group {
+            margin-bottom: 18px;
+        }
+
+        .login-form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .login-input-wrapper {
+            position: relative;
+        }
+
+        .login-input-wrapper i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 17px;
+        }
+
+        .login-input {
+            width: 100%;
+            height: 50px;
+
+            border: 1px solid var(--border);
+            border-radius: 8px;
+
+            padding: 0 15px 0 45px;
+
+            outline: none;
+
+            font-size: 20px;
+
+            background: #ffffff;
+
+            transition: var(--transition);
+        }
+
+        .login-input:focus {
+            border-color: var(--primary);
+            box-shadow:
+                0 0 0 3px rgba(23, 48, 84, 0.10);
+        }
+
+        .login-password-toggle {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+
+            border: none;
+            background: transparent;
+
+            color: var(--text-muted);
+
+            font-size: 17px;
+        }
+
+        .login-button {
+            width: 100%;
+            height: 52px;
+
+            border: none;
+            border-radius: 8px;
+
+            background: var(--primary);
+            color: #ffffff;
+
+            font-size: 22px;
+            font-weight: 700;
+
+            transition: var(--transition);
+        }
+
+        .login-button:hover {
+            background: var(--primary-dark);
+        }
+
+        .login-button:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+        }
+
+        .login-button i {
+            margin-right: 8px;
+        }
+
+        .login-footer {
+            text-align: center;
+            margin-top: 24px;
+
+            color: var(--text-muted);
+            font-size: 17px;
+        }
+
+        .login-footer strong {
+            color: var(--primary);
+        }
+
+        .login-error {
+            display: none;
+
+            background: #fff3f2;
+            border: 1px solid #f1c2be;
+            color: var(--danger);
+
+            border-radius: 7px;
+
+            padding: 10px 13px;
+
+            margin-bottom: 18px;
+
+            font-size: 18px;
+        }
+
+        .login-error.show {
+            display: block;
+        }
+
+        /* =====================================================
+           APP
+           ===================================================== */
+
+        #app {
+            display: none;
+            min-height: 100vh;
+        }
+
+        #app.active {
+            display: block;
+        }
+
+        /* =====================================================
+           SIDEBAR
+           ===================================================== */
+
+        .sidebar {
+            position: fixed;
+
+            left: 0;
+            top: 0;
+            bottom: 0;
+
+            width: var(--sidebar-width);
+
+            background: #ffffff;
+
+            border-right: 1px solid var(--border);
+
+            z-index: 1000;
+
+            display: flex;
+            flex-direction: column;
+
+            transition: transform var(--transition);
+        }
+
+        .sidebar-header {
+            height: var(--header-height);
+
+            display: flex;
+            align-items: center;
+
+            padding: 0 20px;
+
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+
+            min-width: 0;
+        }
+
+        .brand-logo {
+            width: 42px;
+            height: 42px;
+
+            border-radius: 8px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: var(--primary);
+
+            color: #ffffff;
+
+            flex-shrink: 0;
+
+            overflow: hidden;
+        }
+
+        .brand-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .brand-logo i {
+            font-size: 20px;
+        }
+
+        .brand-text {
+            min-width: 0;
+        }
+
+        .brand-title {
+            font-size: 22px;
+            font-weight: 700;
+
+            color: var(--primary);
+
+            white-space: nowrap;
+        }
+
+        .brand-subtitle {
+            font-size: 14px;
+            color: var(--text-light);
+
+            white-space: nowrap;
+        }
+
+        .sidebar-menu {
+            flex: 1;
+
+            padding: 14px 10px;
+
+            overflow-y: auto;
+        }
+
+        .menu-section {
+            margin-bottom: 16px;
+        }
+
+        .menu-section-title {
+            font-size: 15px;
+
+            color: var(--text-muted);
+
+            font-weight: 700;
+
+            padding: 5px 13px;
+
+            text-transform: uppercase;
+        }
+
+        .menu-item {
+            position: relative;
+
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            width: 100%;
+
+            padding: 9px 13px;
+
+            margin-bottom: 3px;
+
+            border-radius: 7px;
+
+            color: #475569;
+
+            cursor: pointer;
+
+            transition: var(--transition);
+        }
+
+        .menu-item:hover {
+            background: #f1f5f9;
+            color: var(--primary);
+        }
+
+        .menu-item.active {
+            background: #eaf0f7;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .menu-item.active::before {
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+            top: 7px;
+            bottom: 7px;
+
+            width: 3px;
+
+            border-radius: 0 3px 3px 0;
+
+            background: var(--primary);
+        }
+
+        .menu-icon {
+            width: 24px;
+
+            text-align: center;
+
+            font-size: 17px;
+
+            flex-shrink: 0;
+        }
+
+        .menu-label {
+            flex: 1;
+            white-space: nowrap;
+        }
+
+        .menu-arrow {
+            font-size: 12px;
+            transition: var(--transition);
+        }
+
+        .menu-item.open .menu-arrow {
+            transform: rotate(90deg);
+        }
+
+        .submenu {
+            display: none;
+
+            padding-left: 30px;
+
+            margin-bottom: 4px;
+        }
+
+        .submenu.open {
+            display: block;
+        }
+
+        .submenu-item {
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+
+            padding: 7px 12px;
+
+            margin-bottom: 2px;
+
+            border-radius: 6px;
+
+            color: #64748b;
+
+            font-size: 19px;
+
+            cursor: pointer;
+        }
+
+        .submenu-item:hover {
+            background: #f8fafc;
+            color: var(--primary);
+        }
+
+        .submenu-item.active {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .submenu-item i {
+            width: 17px;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        /* =====================================================
+           SIDEBAR FOOTER
+           ===================================================== */
+
+        .sidebar-footer {
+            border-top: 1px solid var(--border);
+            padding: 12px;
+        }
+
+        .sidebar-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar-user-avatar {
+            width: 38px;
+            height: 38px;
+
+            border-radius: 50%;
+
+            background: #eaf0f7;
+            color: var(--primary);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar-user-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .sidebar-user-name {
+            font-size: 18px;
+            font-weight: 700;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .sidebar-user-role {
+            font-size: 15px;
+            color: var(--text-light);
+        }
+
+        /* =====================================================
+           MAIN
+           ===================================================== */
+
+        .main {
+            margin-left: var(--sidebar-width);
+
+            min-height: 100vh;
+
+            transition: margin-left var(--transition);
+        }
+
+        /* =====================================================
+           TOP HEADER
+           ===================================================== */
+
+        .topbar {
+            position: sticky;
+
+            top: 0;
+
+            height: var(--header-height);
+
+            background: rgba(255,255,255,0.96);
+
+            backdrop-filter: blur(10px);
+
+            border-bottom: 1px solid var(--border);
+
+            display: flex;
+            align-items: center;
+
+            padding: 0 24px;
+
+            z-index: 900;
+        }
+
+        .mobile-menu-button {
+            display: none;
+
+            width: 40px;
+            height: 40px;
+
+            border: none;
+
+            background: transparent;
+
+            color: var(--primary);
+
+            font-size: 21px;
+
+            margin-right: 10px;
+        }
+
+        .page-title {
+            flex: 1;
+
+            min-width: 0;
+        }
+
+        .page-title h1 {
+            font-size: 25px;
+            font-weight: 700;
+
+            color: var(--primary);
+
+            line-height: 1.1;
+        }
+
+        .page-title p {
+            font-size: 16px;
+            color: var(--text-light);
+
+            line-height: 1.1;
+
+            margin-top: 2px;
+        }
+
+        .topbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .topbar-button {
+            position: relative;
+
+            width: 42px;
+            height: 42px;
+
+            border: none;
+
+            background: transparent;
+
+            border-radius: 8px;
+
+            color: #475569;
+
+            font-size: 18px;
+
+            transition: var(--transition);
+        }
+
+        .topbar-button:hover {
+            background: #f1f5f9;
+            color: var(--primary);
+        }
+
+        .notification-badge {
+            position: absolute;
+
+            top: 5px;
+            right: 4px;
+
+            min-width: 17px;
+            height: 17px;
+
+            padding: 0 4px;
+
+            border-radius: 20px;
+
+            background: var(--danger);
+            color: #ffffff;
+
+            font-family: Arial, sans-serif;
+
+            font-size: 10px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 2px solid #ffffff;
+        }
+
+        .topbar-user {
+            display: flex;
+            align-items: center;
+
+            gap: 9px;
+
+            padding-left: 8px;
+
+            margin-left: 4px;
+
+            border-left: 1px solid var(--border);
+        }
+
+        .topbar-avatar {
+            width: 38px;
+            height: 38px;
+
+            border-radius: 50%;
+
+            background: var(--primary);
+
+            color: #ffffff;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 16px;
+        }
+
+        .topbar-user-text {
+            display: none;
+        }
+
+        /* =====================================================
+           CONTENT
+           ===================================================== */
+
+        .content {
+            padding: 25px;
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+
+        /* =====================================================
+           PAGE
+           ===================================================== */
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* =====================================================
+           DASHBOARD HEADER
+           ===================================================== */
+
+        .dashboard-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+
+            margin-bottom: 22px;
+        }
+
+        .dashboard-heading h2 {
+            font-size: 30px;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .dashboard-heading p {
+            font-size: 18px;
+            color: var(--text-light);
+        }
+
+        .dashboard-filters {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .select-control {
+            height: 40px;
+
+            border: 1px solid var(--border);
+            border-radius: 7px;
+
+            background: #ffffff;
+
+            padding: 0 12px;
+
+            color: var(--text);
+
+            font-size: 18px;
+
+            outline: none;
+        }
+
+        .select-control:focus {
+            border-color: var(--primary);
+        }
+
+        /* =====================================================
+           STAT CARDS
+           ===================================================== */
+
+        .stats-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, minmax(0, 1fr));
+
+            gap: 14px;
+
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: var(--surface);
+
+            border: 1px solid var(--border);
+
+            border-radius: var(--radius-md);
+
+            padding: 17px;
+
+            box-shadow: var(--shadow-sm);
+
+            display: flex;
+            align-items: center;
+
+            gap: 14px;
+
+            min-width: 0;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+
+            border-radius: 10px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            flex-shrink: 0;
+
+            background: #edf2f7;
+
+            color: var(--primary);
+
+            font-size: 21px;
+        }
+
+        .stat-icon.success {
+            background: #eaf7f1;
+            color: var(--success);
+        }
+
+        .stat-icon.warning {
+            background: #fff7e7;
+            color: var(--warning);
+        }
+
+        .stat-icon.danger {
+            background: #fff0ee;
+            color: var(--danger);
+        }
+
+        .stat-icon.info {
+            background: #edf5ff;
+            color: var(--info);
+        }
+
+        .stat-content {
+            min-width: 0;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-size: 18px;
+            line-height: 1.1;
+        }
+
+        .stat-value {
+            font-family: "TH Sarabun PSK", sans-serif;
+
+            font-size: 30px;
+
+            font-weight: 700;
+
+            color: var(--text);
+
+            line-height: 1.05;
+
+            margin-top: 2px;
+        }
+
+        .stat-description {
+            font-size: 15px;
+            color: var(--text-muted);
+        }
+
+        /* =====================================================
+           CARDS
+           ===================================================== */
+
+        .card {
+            background: var(--surface);
+
+            border: 1px solid var(--border);
+
+            border-radius: var(--radius-md);
+
+            box-shadow: var(--shadow-sm);
+
+            overflow: hidden;
+        }
+
+        .card-header {
+            min-height: 54px;
+
+            padding: 12px 17px;
+
+            display: flex;
+            align-items: center;
+
+            justify-content: space-between;
+
+            border-bottom: 1px solid var(--border);
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+
+            gap: 9px;
+
+            font-size: 22px;
+
+            font-weight: 700;
+
+            color: var(--primary);
+        }
+
+        .card-title i {
+            font-size: 17px;
+        }
+
+        .card-body {
+            padding: 17px;
+        }
+
+        .card-action {
+            border: none;
+
+            background: transparent;
+
+            color: var(--primary);
+
+            font-size: 17px;
+
+            cursor: pointer;
+        }
+
+        /* =====================================================
+           DASHBOARD GRID
+           ===================================================== */
+
+        .dashboard-grid {
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1.6fr)
+                minmax(320px, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 18px;
+        }
+
+        .dashboard-grid-full {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 18px;
+
+            margin-bottom: 18px;
+        }
+
+        /* =====================================================
+           CHART
+           ===================================================== */
+
+        .chart-container {
+            height: 300px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: var(--text-muted);
+        }
+
+        .chart-placeholder {
+            width: 100%;
+            height: 100%;
+
+            display: flex;
+            align-items: flex-end;
+
+            gap: 15px;
+
+            padding: 15px 10px 5px;
+
+            border-bottom: 1px solid var(--border);
+        }
+
+        .chart-bar-wrapper {
+            flex: 1;
+
+            height: 100%;
+
+            display: flex;
+            flex-direction: column;
+
+            align-items: center;
+            justify-content: flex-end;
+
+            gap: 6px;
+        }
+
+        .chart-bar {
+            width: 55%;
+
+            min-height: 4px;
+
+            background: var(--primary);
+
+            border-radius: 4px 4px 0 0;
+        }
+
+        .chart-label {
+            font-size: 16px;
+            color: var(--text-light);
+        }
+
+        /* =====================================================
+           ATTENDANCE
+           ===================================================== */
+
+        .attendance-summary {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, minmax(0, 1fr));
+
+            gap: 10px;
+        }
+
+        .attendance-item {
+            padding: 12px;
+
+            border: 1px solid var(--border);
+
+            border-radius: 8px;
+
+            text-align: center;
+        }
+
+        .attendance-item-value {
+            font-size: 28px;
+            font-weight: 700;
+
+            color: var(--primary);
+        }
+
+        .attendance-item-label {
+            font-size: 17px;
+            color: var(--text-light);
+        }
+
+        /* =====================================================
+           ALERT LIST
+           ===================================================== */
+
+        .alert-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .alert-item {
+            display: flex;
+            align-items: flex-start;
+
+            gap: 10px;
+
+            padding: 10px 12px;
+
+            border-radius: 7px;
+
+            border: 1px solid var(--border);
+
+            background: #ffffff;
+        }
+
+        .alert-item-icon {
+            width: 30px;
+            height: 30px;
+
+            border-radius: 7px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            flex-shrink: 0;
+
+            font-size: 14px;
+        }
+
+        .alert-item.warning .alert-item-icon {
+            background: #fff7e7;
+            color: var(--warning);
+        }
+
+        .alert-item.danger .alert-item-icon {
+            background: #fff0ee;
+            color: var(--danger);
+        }
+
+        .alert-item.info .alert-item-icon {
+            background: #edf5ff;
+            color: var(--info);
+        }
+
+        .alert-item-content {
+            flex: 1;
+        }
+
+        .alert-item-title {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .alert-item-time {
+            font-size: 15px;
+            color: var(--text-muted);
+        }
+
+        /* =====================================================
+           TABLE
+           ===================================================== */
+
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 9px 12px;
+
+            border-bottom: 1px solid var(--border);
+
+            text-align: left;
+
+            white-space: nowrap;
+        }
+
+        th {
+            background: #f8fafc;
+
+            color: #475569;
+
+            font-weight: 700;
+
+            font-size: 18px;
+        }
+
+        td {
+            font-size: 18px;
+        }
+
+        tbody tr:hover {
+            background: #fafcff;
+        }
+
+        /* =====================================================
+           BADGE
+           ===================================================== */
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 2px 8px;
+
+            border-radius: 20px;
+
+            font-size: 16px;
+
+            font-weight: 700;
+        }
+
+        .badge-success {
+            background: #eaf7f1;
+            color: var(--success);
+        }
+
+        .badge-warning {
+            background: #fff7e7;
+            color: var(--warning);
+        }
+
+        .badge-danger {
+            background: #fff0ee;
+            color: var(--danger);
+        }
+
+        .badge-info {
+            background: #edf5ff;
+            color: var(--info);
+        }
+
+        .badge-neutral {
+            background: #f1f5f9;
+            color: #64748b;
+        }
+
+        /* =====================================================
+           BUTTONS
+           ===================================================== */
+
+        .btn {
+            height: 40px;
+
+            border: 1px solid transparent;
+
+            border-radius: 7px;
+
+            padding: 0 13px;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 7px;
+
+            font-size: 18px;
+
+            cursor: pointer;
+
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background: #ffffff;
+            border-color: var(--border);
+            color: var(--text);
+        }
+
+        .btn-secondary:hover {
+            background: #f8fafc;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: #ffffff;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: #ffffff;
+        }
+
+        .btn-warning {
+            background: var(--warning);
+            color: #ffffff;
+        }
+
+        .btn-sm {
+            height: 34px;
+            font-size: 16px;
+            padding: 0 10px;
+        }
+
+        /* =====================================================
+           FORM
+           ===================================================== */
+
+        .form-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(12, minmax(0, 1fr));
+
+            gap: 14px;
+        }
+
+        .form-group {
+            grid-column: span 12;
+        }
+
+        .form-group.col-6 {
+            grid-column: span 6;
+        }
+
+        .form-group.col-4 {
+            grid-column: span 4;
+        }
+
+        .form-group.col-3 {
+            grid-column: span 3;
+        }
+
+        .form-label {
+            display: block;
+
+            margin-bottom: 5px;
+
+            font-weight: 700;
+
+            color: #475569;
+        }
+
+        .form-control {
+            width: 100%;
+
+            min-height: 42px;
+
+            border: 1px solid var(--border);
+
+            border-radius: 7px;
+
+            background: #ffffff;
+
+            padding: 6px 11px;
+
+            font-size: 19px;
+
+            color: var(--text);
+
+            outline: none;
+
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+
+            box-shadow:
+                0 0 0 3px rgba(23,48,84,0.08);
+        }
+
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        /* =====================================================
+           EMPTY STATE
+           ===================================================== */
+
+        .empty-state {
+            text-align: center;
+
+            padding: 45px 20px;
+
+            color: var(--text-muted);
+        }
+
+        .empty-state i {
+            font-size: 35px;
+
+            margin-bottom: 10px;
+
+            color: #cbd5e1;
+        }
+
+        .empty-state-title {
+            font-size: 21px;
+            color: #64748b;
+            font-weight: 700;
+        }
+
+        .empty-state-description {
+            font-size: 17px;
+            color: #94a3b8;
+        }
+
+        /* =====================================================
+           LOADING
+           ===================================================== */
+
+        .loading-overlay {
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 99998;
+
+            background: rgba(255,255,255,0.72);
+
+            backdrop-filter: blur(3px);
+
+            display: none;
+
+            align-items: center;
+            justify-content: center;
+        }
+
+        .loading-overlay.show {
+            display: flex;
+        }
+
+        .loading-box {
+            min-width: 180px;
+
+            padding: 22px;
+
+            border-radius: 12px;
+
+            background: #ffffff;
+
+            border: 1px solid var(--border);
+
+            box-shadow: var(--shadow-md);
+
+            text-align: center;
+        }
+
+        .loading-spinner {
+            width: 36px;
+            height: 36px;
+
+            border: 3px solid #e2e8f0;
+            border-top-color: var(--primary);
+
+            border-radius: 50%;
+
+            animation:
+                spin 0.8s linear infinite;
+
+            margin: 0 auto 10px;
+        }
+
+        .loading-text {
+            font-size: 18px;
+            color: var(--text-light);
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* =====================================================
+           TOAST
+           ===================================================== */
+
+        .toast-container {
+            position: fixed;
+
+            right: 20px;
+            bottom: 20px;
+
+            z-index: 99999;
+
+            display: flex;
+            flex-direction: column;
+
+            gap: 8px;
+        }
+
+        .toast {
+            min-width: 280px;
+            max-width: 400px;
+
+            padding: 12px 15px;
+
+            background: #ffffff;
+
+            border: 1px solid var(--border);
+
+            border-left: 4px solid var(--primary);
+
+            border-radius: 8px;
+
+            box-shadow: var(--shadow-md);
+
+            display: flex;
+            align-items: flex-start;
+
+            gap: 10px;
+
+            animation:
+                toastIn 0.25s ease;
+        }
+
+        .toast.success {
+            border-left-color: var(--success);
+        }
+
+        .toast.warning {
+            border-left-color: var(--warning);
+        }
+
+        .toast.error {
+            border-left-color: var(--danger);
+        }
+
+        .toast-icon {
+            font-size: 18px;
+        }
+
+        .toast-content {
+            flex: 1;
+        }
+
+        .toast-title {
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .toast-message {
+            color: var(--text-light);
+            font-size: 16px;
+        }
+
+        @keyframes toastIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* =====================================================
+           MOBILE OVERLAY
+           ===================================================== */
+
+        .sidebar-overlay {
+            display: none;
+
+            position: fixed;
+
+            inset: 0;
+
+            background: rgba(15,23,42,0.35);
+
+            z-index: 999;
+        }
+
+        /* =====================================================
+           RESPONSIVE
+           ===================================================== */
+
+        @media (max-width: 1200px) {
+
+            .stats-grid {
+                grid-template-columns:
+                    repeat(3, minmax(0, 1fr));
+            }
+
+            .dashboard-grid {
+                grid-template-columns:
+                    1fr;
+            }
+
+            .dashboard-grid-full {
+                grid-template-columns:
+                    1fr;
+            }
+        }
+
+        @media (max-width: 900px) {
+
+            :root {
+                --sidebar-width: 270px;
+            }
+
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .sidebar-overlay.show {
+                display: block;
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .mobile-menu-button {
+                display: block;
+            }
+
+            .stats-grid {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+            .dashboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .dashboard-filters {
+                width: 100%;
+            }
+
+            .dashboard-filters .select-control {
+                flex: 1;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            body {
+                font-size: 19px;
+            }
+
+            .content {
+                padding: 15px;
+            }
+
+            .topbar {
+                padding: 0 12px;
+            }
+
+            .page-title h1 {
+                font-size: 22px;
+            }
+
+            .page-title p {
+                display: none;
+            }
+
+            .topbar-user {
+                display: none;
+            }
+
+            .stats-grid {
+                grid-template-columns:
+                    1fr 1fr;
+
+                gap: 9px;
+            }
+
+            .stat-card {
+                padding: 12px;
+                gap: 9px;
+            }
+
+            .stat-icon {
+                width: 42px;
+                height: 42px;
+                font-size: 17px;
+            }
+
+            .stat-value {
+                font-size: 25px;
+            }
+
+            .stat-label {
+                font-size: 16px;
+            }
+
+            .attendance-summary {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+            .form-group.col-6,
+            .form-group.col-4,
+            .form-group.col-3 {
+                grid-column: span 12;
+            }
+
+            .login-card {
+                padding: 30px 22px;
+            }
+
+            .dashboard-heading h2 {
+                font-size: 26px;
+            }
+
+            .card-header {
+                padding: 10px 13px;
+            }
+
+            .card-body {
+                padding: 13px;
+            }
+        }
+
+    </style>
 </head>
+
 <body>
 
-    <!-- ================= ระบบ Login ================= -->
-    <div id="login-container" class="login-wrapper">
-        <div class="login-box">
+<!-- =========================================================
+     LOGIN SCREEN
+     ========================================================= -->
+
+<div id="loginScreen">
+
+    <div class="login-container">
+
+        <div class="login-card">
+
             <div class="login-logo">
-                <i class="fa-solid fa-graduation-cap"></i>
+
+                <!--
+                    หากมีตราโรงเรียน
+                    ให้เปลี่ยน src เป็น
+                    ./assets/school-logo.png
+                -->
+
+                <img
+                    id="loginSchoolLogo"
+                    src="./assets/school-logo.png"
+                    alt="ตราโรงเรียน"
+                    onerror="this.style.display='none'; document.getElementById('loginLogoIcon').style.display='block';"
+                >
+
+                <i
+                    id="loginLogoIcon"
+                    class="fa-solid fa-school"
+                    style="display:none;"
+                ></i>
+
             </div>
-            <h2>ARAMS</h2>
-            <p>ระบบบริหารงานทะเบียนและวัดผล</p>
-            <form id="login-form">
-                <div class="input-group">
-                    <label for="username"><i class="fa-solid fa-user"></i> ชื่อผู้ใช้งาน</label>
-                    <input type="text" id="username" name="username" placeholder="กรอกชื่อผู้ใช้งาน" required>
-                </div>
-                <div class="input-group">
-                    <label for="password"><i class="fa-solid fa-lock"></i> รหัสผ่าน</label>
-                    <input type="password" id="password" name="password" placeholder="กรอกรหัสผ่าน" required>
-                </div>
-                <button type="submit" class="btn-login">เข้าสู่ระบบ</button>
-            </form>
-            <div id="login-error" class="error-message" style="display: none;">
-                ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง
+
+            <div class="login-title">
+                ARAMS
             </div>
-        </div>
-    </div>
 
-    <!-- ================= ระบบหลัก (Dashboard) ================= -->
-    <div id="app-container" class="app-wrapper" style="display: none;">
-        
-        <!-- แถบเมนูด้านซ้าย (Sidebar) -->
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <i class="fa-solid fa-graduation-cap"></i>
-                <span>ARAMS</span>
+            <div class="login-subtitle">
+                ระบบบริหารงานทะเบียนและวัดผล
             </div>
-            <div class="user-info-sidebar">
-                <div class="avatar"><i class="fa-solid fa-circle-user"></i></div>
-                <div class="details">
-                    <span id="current-user-name">ผู้ดูแลระบบ</span>
-                    <span id="current-user-role" class="role-badge">Admin</span>
-                </div>
+
+            <div id="loginError" class="login-error">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <span id="loginErrorText">
+                    ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง
+                </span>
             </div>
-            
-            <ul class="sidebar-menu">
-                <li class="menu-title">เมนูหลัก</li>
-                
-                <!-- 1. หน้าหลัก / Dashboard -->
-                <li class="menu-item active" data-page="dashboard">
-                    <a href="#"><i class="fa-solid fa-house"></i> <span>หน้าหลัก / Dashboard</span></a>
-                </li>
-                
-                <!-- 2. งานทะเบียนนักเรียน -->
-                <li class="menu-item has-submenu">
-                    <a href="#"><i class="fa-solid fa-user-graduate"></i> <span>งานทะเบียนนักเรียน</span> <i class="fa-solid fa-chevron-down arrow"></i></a>
-                    <ul class="submenu">
-                        <li data-page="student-info"><a href="#">ข้อมูลนักเรียน</a></li>
-                        <li data-page="student-add"><a href="#">เพิ่ม/แก้ไขนักเรียน</a></li>
-                        <li data-page="class-management"><a href="#">การจัดชั้นเรียน/ย้ายห้อง</a></li>
-                        <li data-page="student-status"><a href="#">สถานะนักเรียน (จบ/ลาออก/ย้าย)</a></li>
-                        <li data-page="student-history"><a href="#">ประวัติการศึกษา</a></li>
-                    </ul>
-                </li>
-                
-                <!-- 3. งานหลักสูตรและรายวิชา -->
-                <li class="menu-item has-submenu">
-                    <a href="#"><i class="fa-solid fa-book"></i> <span>งานหลักสูตรและรายวิชา</span> <i class="fa-solid fa-chevron-down arrow"></i></a>
-                    <ul class="submenu">
-                        <li data-page="subject-manage"><a href="#">จัดการรายวิชา</a></li>
-                        <li data-page="schedule-manage"><a href="#">จัดตารางสอน</a></li>
-                        <li data-page="curriculum-structure"><a href="#">จัดโครงสร้างหลักสูตร</a></li>
-                    </ul>
-                </li>
-                
-                <!-- 4. งานบันทึกคะแนน -->
-                <li class="menu-item has-submenu">
-                    <a href="#"><i class="fa-solid fa-pen-to-square"></i> <span>งานบันทึกคะแนน</span> <i class="fa-solid fa-chevron-down arrow"></i></a>
-                    <ul class="submenu">
-                        <li data-page="score-entry"><a href="#">บันทึกคะแนนรายวิชา</a></li>
-                        <li data-page="score-check"><a href="#">ตรวจสอบคะแนนผิดปกติ</a></li>
-                        <li data-page="score-status"><a href="#">สถานะผลการเรียน (0/ร/มส/มผ)</a></li>
-                    </ul>
-                </li>
-                
-                <!-- 5. งานวัดและประเมินผล -->
-                <li class="menu-item has-submenu">
-                    <a href="#"><i class="fa-solid fa-chart-pie"></i> <span>งานวัดและประเมินผล</span> <i class="fa-solid fa-chevron-down arrow"></i></a>
-                    <ul class="submenu">
-                        <li data-page="grade-subject"><a href="#">ผลการเรียนรายวิชา</a></li>
-                        <li data-page="grade-semester"><a href="#">ผลการเรียนรายภาค/สะสม</a></li>
-                        <li data-page="grade-compare"><a href="#">เปรียบเทียบผลการเรียน</a></li>
-                        <li data-page="grade-report"><a href="#">รายงานผลการเรียน</a></li>
-                    </ul>
-                </li>
 
-                <!-- 6. งานแก้ผลการเรียน / แก้ตัว -->
-                <li class="menu-item has-submenu">
-                    <a href="#"><i class="fa-solid fa-wrench"></i> <span>งานแก้ผลการเรียน</span> <i class="fa-solid fa-chevron-down arrow"></i></a>
-                    <ul class="submenu">
-                        <li data-page="remedial-list"><a href="#">รายการที่ต้องแก้ (0/ร/มส/มผ)</a></li>
-                        <li data-page="remedial-process"><a href="#">การดำเนินการแก้ไข</a></li>
-                        <li data-page="remedial-history"><a href="#">ประวัติการแก้ผลการเรียน</a></li>
-                    </ul>
-                </li>
+            <form id="loginForm">
 
-                <!-- 7. งานการมาเรียน -->
-                <li class="menu-item has-submenu">
-                    <a href="#"><i class="fa-solid fa-school"></i> <span>งานการมาเรียน</span> <i class="fa-solid fa-chevron-down arrow"></i></a>
-                    <ul class="submenu">
-                        <li data-page="attendance-check"><a href="#">เช็กการมาเรียน</a></li>
-                        <li data-page="attendance-summary"><a href="#">สรุปเวลาเรียนสะสม</a></li>
-                        <li data-page="attendance-report"><a href="#">รายงานการมาเรียน</a></li>
-                    </ul>
-                </li>
+                <div class="login-form-group">
 
-                <!-- 8. งานลา -->
-                <li class="menu-item has-submenu">
-                    <a href="#"><i class="fa-solid fa-file-signature"></i> <span>งานลา</span> <i class="fa-solid fa-chevron-down arrow"></i></a>
-                    <ul class="submenu">
-                        <li data-page="leave-request"><a href="#">ระบบขอลา</a></li>
-                        <li data-page="leave-approve"><a href="#">อนุมัติการลา</a></li>
-                        <li data-page="leave-history"><a href="#">ประวัติการลา</a></li>
-                    </ul>
-                </li>
+                    <label for="loginUsername">
+                        ชื่อผู้ใช้
+                    </label>
 
-                <!-- 9. งานออกเอกสาร / ใบรายงาน -->
-                <li class="menu-item has-submenu">
-                    <a href="#"><i class="fa-solid fa-file-contract"></i> <span>งานออกเอกสาร</span> <i class="fa-solid fa-chevron-down arrow"></i></a>
-                    <ul class="submenu">
-                        <li data-page="doc-academic"><a href="#">เอกสารผลการเรียน (ปพ.1,5,6)</a></li>
-                        <li data-page="doc-attendance"><a href="#">เอกสารการมาเรียน</a></li>
-                        <li data-page="doc-remedial"><a href="#">เอกสารแก้ผลการเรียน</a></li>
-                    </ul>
-                </li>
+                    <div class="login-input-wrapper">
 
-                <!-- 10. ระบบสำหรับครู -->
-                <li class="menu-item has-submenu">
-                    <a href="#"><i class="fa-solid fa-chalkboard-user"></i> <span>ระบบสำหรับครู</span> <i class="fa-solid fa-chevron-down arrow"></i></a>
-                    <ul class="submenu">
-                        <li data-page="teacher-dashboard"><a href="#">หน้าหลักครู</a></li>
-                        <li data-page="teacher-tasks"><a href="#">งานที่ต้องดำเนินการ</a></li>
-                        <li data-page="teacher-advisee"><a href="#">นักเรียนในความดูแล</a></li>
-                    </ul>
-                </li>
+                        <i class="fa-solid fa-user"></i>
 
-                <!-- 11. ระบบสำหรับนักเรียน -->
-                <li class="menu-item has-submenu">
-                    <a href="#"><i class="fa-solid fa-user-pen"></i> <span>ระบบสำหรับนักเรียน</span> <i class="fa-solid fa-chevron-down arrow"></i></a>
-                    <ul class="submenu">
-                        <li data-page="student-dashboard"><a href="#">Dashboard นักเรียน</a></li>
-                        <li data-page="student-grades"><a href="#">ผลการเรียนของฉัน</a></li>
-                        <li data-page="student-attendance"><a href="#">การมาเรียน/การลา</a></li>
-                    </ul>
-                </li>
+                        <input
+                            type="text"
+                            id="loginUsername"
+                            class="login-input"
+                            placeholder="กรอกชื่อผู้ใช้"
+                            autocomplete="username"
+                            required
+                        >
 
-                <!-- 12. ระบบสำหรับผู้ปกครอง -->
-                <li class="menu-item has-submenu">
-                    <a href="#"><i class="fa-solid fa-users"></i> <span>ระบบสำหรับผู้ปกครอง</span> <i class="fa-solid fa-chevron-down arrow"></i></a>
-                    <ul class="submenu">
-                        <li data-page="parent-dashboard"><a href="#">ข้อมูลบุตรหลาน</a></li>
-                        <li data-page="parent-alerts"><a href="#">แจ้งเตือนผลการเรียน/ขาดเรียน</a></li>
-                    </ul>
-                </li>
-
-                <li class="menu-title">การจัดการและสถิติ</li>
-
-                <!-- 13. รายงานสำหรับฝ่ายวิชาการ -->
-                <li class="menu-item has-submenu">
-                    <a href="#"><i class="fa-solid fa-chart-line"></i> <span>รายงานฝ่ายวิชาการ</span> <i class="fa-solid fa-chevron-down arrow"></i></a>
-                    <ul class="submenu">
-                        <li data-page="report-students"><a href="#">รายงานจำนวนนักเรียน</a></li>
-                        <li data-page="report-academic"><a href="#">รายงานผลการเรียน/GPA</a></li>
-                        <li data-page="report-attendance"><a href="#">รายงานสถิติการมาเรียน</a></li>
-                    </ul>
-                </li>
-
-                <!-- 14. ระบบสถิติและวิเคราะห์ข้อมูล -->
-                <li class="menu-item has-submenu">
-                    <a href="#"><i class="fa-solid fa-square-poll-vertical"></i> <span>สถิติและวิเคราะห์ข้อมูล</span> <i class="fa-solid fa-chevron-down arrow"></i></a>
-                    <ul class="submenu">
-                        <li data-page="stat-executive"><a href="#">Dashboard ผู้บริหาร</a></li>
-                        <li data-page="stat-graphs"><a href="#">กราฟวิเคราะห์ผลการเรียน</a></li>
-                    </ul>
-                </li>
-
-                <!-- 15. ระบบประกาศ -->
-                <li class="menu-item has-submenu">
-                    <a href="#"><i class="fa-solid fa-bullhorn"></i> <span>ระบบประกาศ</span> <i class="fa-solid fa-chevron-down arrow"></i></a>
-                    <ul class="submenu">
-                        <li data-page="announce-create"><a href="#">สร้างประกาศใหม่</a></li>
-                        <li data-page="announce-list"><a href="#">รายการประกาศทั้งหมด</a></li>
-                    </ul>
-                </li>
-
-                <!-- 16. ระบบแจ้งเตือน -->
-                <li class="menu-item" data-page="notifications">
-                    <a href="#"><i class="fa-solid fa-bell"></i> <span>ระบบแจ้งเตือน</span> <span class="badge" id="noti-badge">6</span></a>
-                </li>
-
-                <!-- 17. ผู้ใช้งานและสิทธิ์ -->
-                <li class="menu-item has-submenu">
-                    <a href="#"><i class="fa-solid fa-user-shield"></i> <span>ผู้ใช้งานและสิทธิ์</span> <i class="fa-solid fa-chevron-down arrow"></i></a>
-                    <ul class="submenu">
-                        <li data-page="user-manage"><a href="#">จัดการผู้ใช้งาน</a></li>
-                        <li data-page="role-manage"><a href="#">จัดการสิทธิ์ (Role)</a></li>
-                    </ul>
-                </li>
-
-                <!-- 18. ตั้งค่าระบบ -->
-                <li class="menu-item has-submenu">
-                    <a href="#"><i class="fa-solid fa-gear"></i> <span>ตั้งค่าระบบ</span> <i class="fa-solid fa-chevron-down arrow"></i></a>
-                    <ul class="submenu">
-                        <li data-page="setting-school"><a href="#">ข้อมูลโรงเรียน</a></li>
-                        <li data-page="setting-academic"><a href="#">ตั้งค่าปีการศึกษา/เกณฑ์</a></li>
-                        <li data-page="setting-document"><a href="#">รูปแบบเอกสาร/ลายเซ็น</a></li>
-                    </ul>
-                </li>
-
-                <li class="menu-item mt-auto" id="btn-logout">
-                    <a href="#" class="text-danger"><i class="fa-solid fa-right-from-bracket"></i> <span>ออกจากระบบ</span></a>
-                </li>
-            </ul>
-        </aside>
-
-        <!-- พื้นที่แสดงผลหลัก (Main Content) -->
-        <main class="main-content">
-            <!-- แถบด้านบน (Topbar) -->
-            <header class="topbar">
-                <div class="topbar-left">
-                    <button id="toggle-sidebar" class="btn-icon"><i class="fa-solid fa-bars"></i></button>
-                    <h2 id="page-title">หน้าหลัก / Dashboard</h2>
-                </div>
-                <div class="topbar-right">
-                    <div class="academic-year-selector">
-                        <span class="label">ปีการศึกษา:</span>
-                        <select id="global-academic-year">
-                            <option value="2567/1" selected>2567 ภาคเรียนที่ 1</option>
-                            <option value="2566/2">2566 ภาคเรียนที่ 2</option>
-                        </select>
                     </div>
-                    <button class="btn-icon noti-btn"><i class="fa-solid fa-bell"></i><span class="dot"></span></button>
-                </div>
-            </header>
 
-            <!-- พื้นที่สำหรับแสดงข้อมูลของแต่ละหน้า (Dynamic Content Injection) -->
-            <div id="page-content" class="page-container">
-                <!-- โหลดหน้าโหลดข้อมูล (Loading Spinner) -->
-                <div id="loading-spinner" class="loading-wrapper" style="display: none;">
-                    <div class="spinner"></div>
-                    <p>กำลังประมวลผล...</p>
                 </div>
 
-                <!-- เนื้อหาจะถูกแทรกที่นี่โดย app.js -->
-                <div id="dynamic-view"></div>
+                <div class="login-form-group">
+
+                    <label for="loginPassword">
+                        รหัสผ่าน
+                    </label>
+
+                    <div class="login-input-wrapper">
+
+                        <i class="fa-solid fa-lock"></i>
+
+                        <input
+                            type="password"
+                            id="loginPassword"
+                            class="login-input"
+                            placeholder="กรอกรหัสผ่าน"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="login-password-toggle"
+                            id="togglePassword"
+                            aria-label="แสดงรหัสผ่าน"
+                        >
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="login-button"
+                    id="loginButton"
+                >
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    เข้าสู่ระบบ
+                </button>
+
+            </form>
+
+            <div class="login-footer">
+                Academic Registration and Assessment Management System
+                <br>
+                <strong>ARAMS</strong>
             </div>
-        </main>
+
+        </div>
+
     </div>
 
-    <!-- ไฟล์ Script หลัก -->
-    <script src="app.js"></script>
+</div>
+
+
+<!-- =========================================================
+     APPLICATION
+     ========================================================= -->
+
+<div id="app">
+
+    <!-- =====================================================
+         SIDEBAR OVERLAY
+         ===================================================== -->
+
+    <div
+        class="sidebar-overlay"
+        id="sidebarOverlay"
+    ></div>
+
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
+        <div class="sidebar-header">
+
+            <div class="brand">
+
+                <div class="brand-logo">
+
+                    <img
+                        src="./assets/school-logo.png"
+                        alt="ตราโรงเรียน"
+                        onerror="this.style.display='none'; document.getElementById('brandLogoIcon').style.display='block';"
+                    >
+
+                    <i
+                        id="brandLogoIcon"
+                        class="fa-solid fa-school"
+                        style="display:none;"
+                    ></i>
+
+                </div>
+
+                <div class="brand-text">
+
+                    <div class="brand-title">
+                        ARAMS
+                    </div>
+
+                    <div class="brand-subtitle">
+                        งานทะเบียนและวัดผล
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             MENU
+             ================================================= -->
+
+        <nav class="sidebar-menu">
+
+            <!-- DASHBOARD -->
+
+            <div class="menu-section">
+
+                <div class="menu-section-title">
+                    ระบบหลัก
+                </div>
+
+                <div
+                    class="menu-item active"
+                    data-page="dashboard"
+                    onclick="navigateTo('dashboard')"
+                >
+
+                    <div class="menu-icon">
+                        <i class="fa-solid fa-house"></i>
+                    </div>
+
+                    <div class="menu-label">
+                        หน้าหลัก / Dashboard
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- REGISTRATION -->
+
+            <div class="menu-section">
+
+                <div class="menu-section-title">
+                    งานทะเบียน
+                </div>
+
+                <div
+                    class="menu-item"
+                    onclick="toggleSubmenu(this)"
+                >
+
+                    <div class="menu-icon">
+                        <i class="fa-solid fa-user-graduate"></i>
+                    </div>
+
+                    <div class="menu-label">
+                        งานทะเบียนนักเรียน
+                    </div>
+
+                    <div class="menu-arrow">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+
+                </div>
+
+                <div class="submenu">
+
+                    <div
+                        class="submenu-item"
+                        data-page="students"
+                        onclick="navigateTo('students')"
+                    >
+                        <i class="fa-solid fa-users"></i>
+                        ข้อมูลนักเรียน
+                    </div>
+
+                    <div
+                        class="submenu-item"
+                        data-page="student-add"
+                        onclick="navigateTo('student-add')"
+                    >
+                        <i class="fa-solid fa-user-plus"></i>
+                        เพิ่มนักเรียน
+                    </div>
+
+                    <div
+                        class="submenu-item"
+                        data-page="classes"
+                        onclick="navigateTo('classes')"
+                    >
+                        <i class="fa-solid fa-people-group"></i>
+                        จัดชั้นเรียน
+                    </div>
+
+                    <div
+                        class="submenu-item"
+                        data-page="student-history"
+                        onclick="navigateTo('student-history')"
+                    >
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                        ประวัตินักเรียน
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CURRICULUM -->
+
+            <div class="menu-section">
+
+                <div class="menu-section-title">
+                    วิชาการ
+                </div>
+
+                <div
+                    class="menu-item"
+                    onclick="toggleSubmenu(this)"
+                >
+
+                    <div class="menu-icon">
+                        <i class="fa-solid fa-book-open"></i>
+                    </div>
+
+                    <div class="menu-label">
+                        หลักสูตรและรายวิชา
+                    </div>
+
+                    <div class="menu-arrow">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+
+                </div>
+
+                <div class="submenu">
+
+                    <div
+                        class="submenu-item"
+                        data-page="subjects"
+                        onclick="navigateTo('subjects')"
+                    >
+                        <i class="fa-solid fa-book"></i>
+                        จัดการรายวิชา
+                    </div>
+
+                    <div
+                        class="submenu-item"
+                        data-page="schedule"
+                        onclick="navigateTo('schedule')"
+                    >
+                        <i class="fa-solid fa-calendar-days"></i>
+                        ตารางสอน
+                    </div>
+
+                    <div
+                        class="submenu-item"
+                        data-page="curriculum"
+                        onclick="navigateTo('curriculum')"
+                    >
+                        <i class="fa-solid fa-layer-group"></i>
+                        โครงสร้างหลักสูตร
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ASSESSMENT -->
+
+            <div class="menu-section">
+
+                <div class="menu-section-title">
+                    คะแนนและวัดผล
+                </div>
+
+                <div
+                    class="menu-item"
+                    data-page="scores"
+                    onclick="navigateTo('scores')"
+                >
+
+                    <div class="menu-icon">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </div>
+
+                    <div class="menu-label">
+                        บันทึกคะแนน
+                    </div>
+
+                </div>
+
+                <div
+                    class="menu-item"
+                    data-page="assessment"
+                    onclick="navigateTo('assessment')"
+                >
+
+                    <div class="menu-icon">
+                        <i class="fa-solid fa-chart-column"></i>
+                    </div>
+
+                    <div class="menu-label">
+                        งานวัดและประเมินผล
+                    </div>
+
+                </div>
+
+                <div
+                    class="menu-item"
+                    data-page="grade-correction"
+                    onclick="navigateTo('grade-correction')"
+                >
+
+                    <div class="menu-icon">
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                    </div>
+
+                    <div class="menu-label">
+                        แก้ผลการเรียน / แก้ตัว
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ATTENDANCE -->
+
+            <div class="menu-section">
+
+                <div class="menu-section-title">
+                    การมาเรียน
+                </div>
+
+                <div
+                    class="menu-item"
+                    data-page="attendance"
+                    onclick="navigateTo('attendance')"
+                >
+
+                    <div class="menu-icon">
+                        <i class="fa-solid fa-calendar-check"></i>
+                    </div>
+
+                    <div class="menu-label">
+                        งานการมาเรียน
+                    </div>
+
+                </div>
+
+                <div
+                    class="menu-item"
+                    data-page="leave"
+                    onclick="navigateTo('leave')"
+                >
+
+                    <div class="menu-icon">
+                        <i class="fa-solid fa-file-signature"></i>
+                    </div>
+
+                    <div class="menu-label">
+                        งานลา
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- DOCUMENTS -->
+
+            <div class="menu-section">
+
+                <div class="menu-section-title">
+                    เอกสารและรายงาน
+                </div>
+
+                <div
+                    class="menu-item"
+                    data-page="documents"
+                    onclick="navigateTo('documents')"
+                >
+
+                    <div class="menu-icon">
+                        <i class="fa-solid fa-file-lines"></i>
+                    </div>
+
+                    <div class="menu-label">
+                        ออกเอกสาร / ใบรายงาน
+                    </div>
+
+                </div>
+
+                <div
+                    class="menu-item"
+                    data-page="academic-reports"
+                    onclick="navigateTo('academic-reports')"
+                >
+
+                    <div class="menu-icon">
+                        <i class="fa-solid fa-file-chart-column"></i>
+                    </div>
+
+                    <div class="menu-label">
+                        รายงานฝ่ายวิชาการ
+                    </div>
+
+                </div>
+
+                <div
+                    class="menu-item"
+                    data-page="analytics"
+                    onclick="navigateTo('analytics')"
+                >
+
+                    <div class="menu-icon">
+                        <i class="fa-solid fa-chart-pie"></i>
+                    </div>
+
+                    <div class="menu-label">
+                        สถิติและวิเคราะห์ข้อมูล
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- COMMUNICATION -->
+
+            <div class="menu-section">
+
+                <div class="menu-section-title">
+                    การสื่อสาร
+                </div>
+
+                <div
+                    class="menu-item"
+                    data-page="announcements"
+                    onclick="navigateTo('announcements')"
+                >
+
+                    <div class="menu-icon">
+                        <i class="fa-solid fa-bullhorn"></i>
+                    </div>
+
+                    <div class="menu-label">
+                        ระบบประกาศ
+                    </div>
+
+                </div>
+
+                <div
+                    class="menu-item"
+                    data-page="notifications"
+                    onclick="navigateTo('notifications')"
+                >
+
+                    <div class="menu-icon">
+                        <i class="fa-solid fa-bell"></i>
+                    </div>
+
+                    <div class="menu-label">
+                        ระบบแจ้งเตือน
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ADMIN -->
+
+            <div
+                class="menu-section"
+                id="adminMenuSection"
+            >
+
+                <div class="menu-section-title">
+                    ผู้ดูแลระบบ
+                </div>
+
+                <div
+                    class="menu-item"
+                    data-page="users"
+                    onclick="navigateTo('users')"
+                >
+
+                    <div class="menu-icon">
+                        <i class="fa-solid fa-user-shield"></i>
+                    </div>
+
+                    <div class="menu-label">
+                        ผู้ใช้งานและสิทธิ์
+                    </div>
+
+                </div>
+
+                <div
+                    class="menu-item"
+                    data-page="settings"
+                    onclick="navigateTo('settings')"
+                >
+
+                    <div class="menu-icon">
+                        <i class="fa-solid fa-gear"></i>
+                    </div>
+
+                    <div class="menu-label">
+                        ตั้งค่าระบบ
+                    </div>
+
+                </div>
+
+            </div>
+
+        </nav>
+
+
+        <!-- =================================================
+             SIDEBAR FOOTER
+             ================================================= -->
+
+        <div class="sidebar-footer">
+
+            <div class="sidebar-user">
+
+                <div class="sidebar-user-avatar">
+
+                    <i class="fa-solid fa-user"></i>
+
+                </div>
+
+                <div class="sidebar-user-info">
+
+                    <div
+                        class="sidebar-user-name"
+                        id="sidebarUserName"
+                    >
+                        ผู้ดูแลระบบ
+                    </div>
+
+                    <div
+                        class="sidebar-user-role"
+                        id="sidebarUserRole"
+                    >
+                        ผู้ดูแลระบบ
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN
+         ===================================================== -->
+
+    <main class="main">
+
+        <!-- =================================================
+             TOPBAR
+             ================================================= -->
+
+        <header class="topbar">
+
+            <button
+                type="button"
+                class="mobile-menu-button"
+                id="mobileMenuButton"
+                aria-label="เปิดเมนู"
+            >
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <div class="page-title">
+
+                <h1 id="topPageTitle">
+                    หน้าหลัก
+                </h1>
+
+                <p id="topPageSubtitle">
+                    ระบบบริหารงานทะเบียนและวัดผล
+                </p>
+
+            </div>
+
+            <div class="topbar-actions">
+
+                <button
+                    type="button"
+                    class="topbar-button"
+                    title="รีเฟรชข้อมูล"
+                    onclick="refreshCurrentPage()"
+                >
+                    <i class="fa-solid fa-arrows-rotate"></i>
+                </button>
+
+                <button
+                    type="button"
+                    class="topbar-button"
+                    title="แจ้งเตือน"
+                    onclick="navigateTo('notifications')"
+                >
+
+                    <i class="fa-regular fa-bell"></i>
+
+                    <span
+                        class="notification-badge"
+                        id="notificationBadge"
+                    >
+                        0
+                    </span>
+
+                </button>
+
+                <div class="topbar-user">
+
+                    <div class="topbar-avatar">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+
+                    <div class="topbar-user-text">
+
+                        <div id="topbarUserName">
+                            ผู้ดูแลระบบ
+                        </div>
+
+                    </div>
+
+                    <button
+                        type="button"
+                        class="topbar-button"
+                        title="ออกจากระบบ"
+                        onclick="logout()"
+                    >
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- =================================================
+             CONTENT
+             ================================================= -->
+
+        <div class="content">
+
+            <!-- =================================================
+                 DASHBOARD PAGE
+                 ================================================= -->
+
+            <section
+                class="page active"
+                id="page-dashboard"
+            >
+
+                <div class="dashboard-header">
+
+                    <div class="dashboard-heading">
+
+                        <h2>
+                            ภาพรวมระบบ
+                        </h2>
+
+                        <p>
+                            ข้อมูลสรุปงานทะเบียนและวัดผลของโรงเรียน
+                        </p>
+
+                    </div>
+
+                    <div class="dashboard-filters">
+
+                        <select
+                            class="select-control"
+                            id="dashboardAcademicYear"
+                            onchange="loadDashboard()"
+                        >
+
+                            <option value="">
+                                ปีการศึกษา
+                            </option>
+
+                        </select>
+
+                        <select
+                            class="select-control"
+                            id="dashboardSemester"
+                            onchange="loadDashboard()"
+                        >
+
+                            <option value="">
+                                ภาคเรียน
+                            </option>
+
+                            <option value="1">
+                                ภาคเรียนที่ 1
+                            </option>
+
+                            <option value="2">
+                                ภาคเรียนที่ 2
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     STATISTICS
+                     ================================================= -->
+
+                <div class="stats-grid">
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">
+
+                            <i class="fa-solid fa-user-graduate"></i>
+
+                        </div>
+
+                        <div class="stat-content">
+
+                            <div class="stat-label">
+                                นักเรียนทั้งหมด
+                            </div>
+
+                            <div
+                                class="stat-value"
+                                id="statTotalStudents"
+                            >
+                                0
+                            </div>
+
+                            <div class="stat-description">
+                                คน
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon info">
+
+                            <i class="fa-solid fa-person"></i>
+
+                        </div>
+
+                        <div class="stat-content">
+
+                            <div class="stat-label">
+                                นักเรียนชาย
+                            </div>
+
+                            <div
+                                class="stat-value"
+                                id="statMaleStudents"
+                            >
+                                0
+                            </div>
+
+                            <div class="stat-description">
+                                คน
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">
+
+                            <i class="fa-solid fa-person-dress"></i>
+
+                        </div>
+
+                        <div class="stat-content">
+
+                            <div class="stat-label">
+                                นักเรียนหญิง
+                            </div>
+
+                            <div
+                                class="stat-value"
+                                id="statFemaleStudents"
+                            >
+                                0
+                            </div>
+
+                            <div class="stat-description">
+                                คน
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon success">
+
+                            <i class="fa-solid fa-chalkboard-user"></i>
+
+                        </div>
+
+                        <div class="stat-content">
+
+                            <div class="stat-label">
+                                จำนวนครู
+                            </div>
+
+                            <div
+                                class="stat-value"
+                                id="statTeachers"
+                            >
+                                0
+                            </div>
+
+                            <div class="stat-description">
+                                คน
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">
+
+                            <i class="fa-solid fa-door-open"></i>
+
+                        </div>
+
+                        <div class="stat-content">
+
+                            <div class="stat-label">
+                                ห้องเรียน
+                            </div>
+
+                            <div
+                                class="stat-value"
+                                id="statClasses"
+                            >
+                                0
+                            </div>
+
+                            <div class="stat-description">
+                                ห้อง
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon info">
+
+                            <i class="fa-solid fa-book"></i>
+
+                        </div>
+
+                        <div class="stat-content">
+
+                            <div class="stat-label">
+                                รายวิชา
+                            </div>
+
+                            <div
+                                class="stat-value"
+                                id="statSubjects"
+                            >
+                                0
+                            </div>
+
+                            <div class="stat-description">
+                                รายวิชา
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon success">
+
+                            <i class="fa-solid fa-circle-check"></i>
+
+                        </div>
+
+                        <div class="stat-content">
+
+                            <div class="stat-label">
+                                ผลการเรียนครบ
+                            </div>
+
+                            <div
+                                class="stat-value"
+                                id="statCompleteGrades"
+                            >
+                                0
+                            </div>
+
+                            <div class="stat-description">
+                                คน
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon danger">
+
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+
+                        </div>
+
+                        <div class="stat-content">
+
+                            <div class="stat-label">
+                                ต้องแก้ผลการเรียน
+                            </div>
+
+                            <div
+                                class="stat-value"
+                                id="statNeedCorrection"
+                            >
+                                0
+                            </div>
+
+                            <div class="stat-description">
+                                รายการ
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     ABNORMAL GRADES
+                     ================================================= -->
+
+                <div class="stats-grid">
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon danger">
+
+                            <i class="fa-solid fa-0"></i>
+
+                        </div>
+
+                        <div class="stat-content">
+
+                            <div class="stat-label">
+                                นักเรียนมี 0
+                            </div>
+
+                            <div
+                                class="stat-value"
+                                id="statGradeZero"
+                            >
+                                0
+                            </div>
+
+                            <div class="stat-description">
+                                รายการ
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon warning">
+
+                            <i class="fa-solid fa-r"></i>
+
+                        </div>
+
+                        <div class="stat-content">
+
+                            <div class="stat-label">
+                                นักเรียนมี ร
+                            </div>
+
+                            <div
+                                class="stat-value"
+                                id="statGradeR"
+                            >
+                                0
+                            </div>
+
+                            <div class="stat-description">
+                                รายการ
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon warning">
+
+                            <i class="fa-solid fa-clock"></i>
+
+                        </div>
+
+                        <div class="stat-content">
+
+                            <div class="stat-label">
+                                นักเรียนมี มส
+                            </div>
+
+                            <div
+                                class="stat-value"
+                                id="statGradeMS"
+                            >
+                                0
+                            </div>
+
+                            <div class="stat-description">
+                                รายการ
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon danger">
+
+                            <i class="fa-solid fa-xmark"></i>
+
+                        </div>
+
+                        <div class="stat-content">
+
+                            <div class="stat-label">
+                                นักเรียนมี มผ
+                            </div>
+
+                            <div
+                                class="stat-value"
+                                id="statGradeMP"
+                            >
+                                0
+                            </div>
+
+                            <div class="stat-description">
+                                รายการ
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     ATTENDANCE + ALERT
+                     ================================================= -->
+
+                <div class="dashboard-grid">
+
+                    <div class="card">
+
+                        <div class="card-header">
+
+                            <div class="card-title">
+
+                                <i class="fa-solid fa-calendar-check"></i>
+
+                                สถิติการมาเรียนวันนี้
+
+                            </div>
+
+                            <button
+                                class="card-action"
+                                onclick="navigateTo('attendance')"
+                            >
+                                ดูรายละเอียด
+                            </button>
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <div class="attendance-summary">
+
+                                <div class="attendance-item">
+
+                                    <div
+                                        class="attendance-item-value"
+                                        id="attendancePresent"
+                                    >
+                                        0
+                                    </div>
+
+                                    <div class="attendance-item-label">
+                                        มาเรียน
+                                    </div>
+
+                                </div>
+
+
+                                <div class="attendance-item">
+
+                                    <div
+                                        class="attendance-item-value"
+                                        id="attendanceAbsent"
+                                    >
+                                        0
+                                    </div>
+
+                                    <div class="attendance-item-label">
+                                        ขาด
+                                    </div>
+
+                                </div>
+
+
+                                <div class="attendance-item">
+
+                                    <div
+                                        class="attendance-item-value"
+                                        id="attendanceLeave"
+                                    >
+                                        0
+                                    </div>
+
+                                    <div class="attendance-item-label">
+                                        ลา
+                                    </div>
+
+                                </div>
+
+
+                                <div class="attendance-item">
+
+                                    <div
+                                        class="attendance-item-value"
+                                        id="attendanceLate"
+                                    >
+                                        0
+                                    </div>
+
+                                    <div class="attendance-item-label">
+                                        สาย
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="card">
+
+                        <div class="card-header">
+
+                            <div class="card-title">
+
+                                <i class="fa-solid fa-bell"></i>
+
+                                งานที่ยังไม่ดำเนินการ
+
+                            </div>
+
+                            <button
+                                class="card-action"
+                                onclick="navigateTo('notifications')"
+                            >
+                                ทั้งหมด
+                            </button>
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <div
+                                class="alert-list"
+                                id="dashboardAlerts"
+                            >
+
+                                <div class="empty-state">
+
+                                    <i class="fa-solid fa-circle-check"></i>
+
+                                    <div class="empty-state-title">
+                                        ไม่มีงานค้าง
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     CHARTS
+                     ================================================= -->
+
+                <div class="dashboard-grid-full">
+
+                    <div class="card">
+
+                        <div class="card-header">
+
+                            <div class="card-title">
+
+                                <i class="fa-solid fa-chart-column"></i>
+
+                                สรุปผลการเรียนแต่ละระดับชั้น
+
+                            </div>
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <div class="chart-container">
+
+                                <div
+                                    class="chart-placeholder"
+                                    id="gradeChart"
+                                >
+
+                                    <div class="chart-bar-wrapper">
+
+                                        <div
+                                            class="chart-bar"
+                                            style="height:20%;"
+                                        ></div>
+
+                                        <div class="chart-label">
+                                            ม.1
+                                        </div>
+
+                                    </div>
+
+                                    <div class="chart-bar-wrapper">
+
+                                        <div
+                                            class="chart-bar"
+                                            style="height:35%;"
+                                        ></div>
+
+                                        <div class="chart-label">
+                                            ม.2
+                                        </div>
+
+                                    </div>
+
+                                    <div class="chart-bar-wrapper">
+
+                                        <div
+                                            class="chart-bar"
+                                            style="height:48%;"
+                                        ></div>
+
+                                        <div class="chart-label">
+                                            ม.3
+                                        </div>
+
+                                    </div>
+
+                                    <div class="chart-bar-wrapper">
+
+                                        <div
+                                            class="chart-bar"
+                                            style="height:58%;"
+                                        ></div>
+
+                                        <div class="chart-label">
+                                            ม.4
+                                        </div>
+
+                                    </div>
+
+                                    <div class="chart-bar-wrapper">
+
+                                        <div
+                                            class="chart-bar"
+                                            style="height:72%;"
+                                        ></div>
+
+                                        <div class="chart-label">
+                                            ม.5
+                                        </div>
+
+                                    </div>
+
+                                    <div class="chart-bar-wrapper">
+
+                                        <div
+                                            class="chart-bar"
+                                            style="height:86%;"
+                                        ></div>
+
+                                        <div class="chart-label">
+                                            ม.6
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="card">
+
+                        <div class="card-header">
+
+                            <div class="card-title">
+
+                                <i class="fa-solid fa-chart-line"></i>
+
+                                GPA เฉลี่ยตามระดับชั้น
+
+                            </div>
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <div class="chart-container">
+
+                                <div
+                                    class="chart-placeholder"
+                                    id="gpaChart"
+                                >
+
+                                    <div class="chart-bar-wrapper">
+
+                                        <div
+                                            class="chart-bar"
+                                            style="height:52%;"
+                                        ></div>
+
+                                        <div class="chart-label">
+                                            ม.1
+                                        </div>
+
+                                    </div>
+
+                                    <div class="chart-bar-wrapper">
+
+                                        <div
+                                            class="chart-bar"
+                                            style="height:63%;"
+                                        ></div>
+
+                                        <div class="chart-label">
+                                            ม.2
+                                        </div>
+
+                                    </div>
+
+                                    <div class="chart-bar-wrapper">
+
+                                        <div
+                                            class="chart-bar"
+                                            style="height:68%;"
+                                        ></div>
+
+                                        <div class="chart-label">
+                                            ม.3
+                                        </div>
+
+                                    </div>
+
+                                    <div class="chart-bar-wrapper">
+
+                                        <div
+                                            class="chart-bar"
+                                            style="height:75%;"
+                                        ></div>
+
+                                        <div class="chart-label">
+                                            ม.4
+                                        </div>
+
+                                    </div>
+
+                                    <div class="chart-bar-wrapper">
+
+                                        <div
+                                            class="chart-bar"
+                                            style="height:79%;"
+                                        ></div>
+
+                                        <div class="chart-label">
+                                            ม.5
+                                        </div>
+
+                                    </div>
+
+                                    <div class="chart-bar-wrapper">
+
+                                        <div
+                                            class="chart-bar"
+                                            style="height:84%;"
+                                        ></div>
+
+                                        <div class="chart-label">
+                                            ม.6
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     RECENT DATA
+                     ================================================= -->
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <div class="card-title">
+
+                            <i class="fa-solid fa-clock-rotate-left"></i>
+
+                            รายการดำเนินการล่าสุด
+
+                        </div>
+
+                        <button
+                            class="card-action"
+                            onclick="loadRecentActivities()"
+                        >
+                            รีเฟรช
+                        </button>
+
+                    </div>
+
+                    <div class="table-wrapper">
+
+                        <table>
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        วันที่ / เวลา
+                                    </th>
+
+                                    <th>
+                                        ผู้ใช้งาน
+                                    </th>
+
+                                    <th>
+                                        รายการ
+                                    </th>
+
+                                    <th>
+                                        รายละเอียด
+                                    </th>
+
+                                    <th>
+                                        สถานะ
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="recentActivitiesTable">
+
+                                <tr>
+
+                                    <td colspan="5">
+
+                                        <div class="empty-state">
+
+                                            <i class="fa-solid fa-database"></i>
+
+                                            <div class="empty-state-title">
+                                                ยังไม่มีข้อมูล
+                                            </div>
+
+                                            <div class="empty-state-description">
+                                                รายการดำเนินการจะแสดงที่นี่
+                                            </div>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 GENERIC PAGE CONTAINER
+                 ================================================= -->
+
+            <section
+                class="page"
+                id="page-students"
+            >
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <div class="card-title">
+
+                            <i class="fa-solid fa-users"></i>
+
+                            ข้อมูลนักเรียน
+
+                        </div>
+
+                        <button
+                            class="btn btn-primary"
+                            onclick="navigateTo('student-add')"
+                        >
+                            <i class="fa-solid fa-user-plus"></i>
+                            เพิ่มนักเรียน
+                        </button>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="form-grid">
+
+                            <div class="form-group col-4">
+
+                                <label class="form-label">
+                                    ค้นหานักเรียน
+                                </label>
+
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="studentSearch"
+                                    placeholder="ชื่อ เลขประจำตัว หรือเลขบัตรประชาชน"
+                                    oninput="searchStudents()"
+                                >
+
+                            </div>
+
+                            <div class="form-group col-3">
+
+                                <label class="form-label">
+                                    ระดับชั้น
+                                </label>
+
+                                <select
+                                    class="form-control"
+                                    id="studentFilterLevel"
+                                    onchange="searchStudents()"
+                                >
+
+                                    <option value="">
+                                        ทั้งหมด
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="form-group col-3">
+
+                                <label class="form-label">
+                                    ห้อง
+                                </label>
+
+                                <select
+                                    class="form-control"
+                                    id="studentFilterRoom"
+                                    onchange="searchStudents()"
+                                >
+
+                                    <option value="">
+                                        ทั้งหมด
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="form-group col-2">
+
+                                <label class="form-label">
+                                    สถานะ
+                                </label>
+
+                                <select
+                                    class="form-control"
+                                    id="studentFilterStatus"
+                                    onchange="searchStudents()"
+                                >
+
+                                    <option value="">
+                                        ทั้งหมด
+                                    </option>
+
+                                    <option value="กำลังศึกษา">
+                                        กำลังศึกษา
+                                    </option>
+
+                                    <option value="จบการศึกษา">
+                                        จบการศึกษา
+                                    </option>
+
+                                    <option value="ลาออก">
+                                        ลาออก
+                                    </option>
+
+                                    <option value="พักการเรียน">
+                                        พักการเรียน
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="table-wrapper">
+
+                        <table>
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        เลขประจำตัว
+                                    </th>
+
+                                    <th>
+                                        ชื่อ–นามสกุล
+                                    </th>
+
+                                    <th>
+                                        เพศ
+                                    </th>
+
+                                    <th>
+                                        ชั้น / ห้อง
+                                    </th>
+
+                                    <th>
+                                        ปีการศึกษา
+                                    </th>
+
+                                    <th>
+                                        สถานะ
+                                    </th>
+
+                                    <th>
+                                        จัดการ
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="studentsTableBody">
+
+                                <tr>
+
+                                    <td colspan="7">
+
+                                        <div class="empty-state">
+
+                                            <i class="fa-solid fa-user-graduate"></i>
+
+                                            <div class="empty-state-title">
+                                                ยังไม่มีข้อมูลนักเรียน
+                                            </div>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 OTHER PAGES
+                 ================================================= -->
+
+            <section class="page" id="page-student-add">
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <div class="card-title">
+
+                            <i class="fa-solid fa-user-plus"></i>
+
+                            เพิ่มข้อมูลนักเรียน
+
+                        </div>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="empty-state">
+
+                            <i class="fa-solid fa-user-plus"></i>
+
+                            <div class="empty-state-title">
+                                แบบฟอร์มเพิ่มนักเรียน
+                            </div>
+
+                            <div class="empty-state-description">
+                                โมดูลทะเบียนนักเรียนจะเชื่อมต่อกับ Google Sheets ในไฟล์ถัดไป
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <section class="page" id="page-classes">
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <div class="card-title">
+
+                            <i class="fa-solid fa-people-group"></i>
+
+                            จัดชั้นเรียน
+
+                        </div>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="empty-state">
+
+                            <i class="fa-solid fa-door-open"></i>
+
+                            <div class="empty-state-title">
+                                ระบบจัดชั้นเรียน
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <section class="page" id="page-student-history">
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <div class="card-title">
+
+                            <i class="fa-solid fa-clock-rotate-left"></i>
+
+                            ประวัตินักเรียน
+
+                        </div>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="empty-state">
+
+                            <i class="fa-solid fa-clock-rotate-left"></i>
+
+                            <div class="empty-state-title">
+                                ประวัติการศึกษาและการเปลี่ยนแปลงสถานะ
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <section class="page" id="page-subjects">
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <div class="card-title">
+
+                            <i class="fa-solid fa-book"></i>
+
+                            จัดการรายวิชา
+
+                        </div>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="empty-state">
+
+                            <i class="fa-solid fa-book-open"></i>
+
+                            <div class="empty-state-title">
+                                ระบบจัดการรายวิชา
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <section class="page" id="page-schedule">
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <div class="card-title">
+
+                            <i class="fa-solid fa-calendar-days"></i>
+
+                            ตารางสอน
+
+                        </div>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="empty-state">
+
+                            <i class="fa-solid fa-calendar-days"></i>
+
+                            <div class="empty-state-title">
+                                ระบบจัดตารางสอน
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <section class="page" id="page-curriculum">
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <div class="card-title">
+
+                            <i class="fa-solid fa-layer-group"></i>
+
+                            โครงสร้างหลักสูตร
+
+                        </div>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="empty-state">
+
+                            <i class="fa-solid fa-layer-group"></i>
+
+                            <div class="empty-state-title">
+                                ระบบโครงสร้างหลักสูตร
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <section class="page" id="page-scores">
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <div class="card-title">
+
+                            <i class="fa-solid fa-pen-to-square"></i>
+
+                            งานบันทึกคะแนน
+
+                        </div>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="empty-state">
+
+                            <i class="fa-solid fa-pen-to-square"></i>
+
+                            <div class="empty-state-title">
+                                ระบบบันทึกคะแนน
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <section class="page" id="page-assessment">
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <div class="card-title">
+
+                            <i class="fa-solid fa-chart-column"></i>
+
+                            งานวัดและประเมินผล
+
+                        </div>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="empty-state">
+
+                            <i class="fa-solid fa-chart-column"></i>
+
+                            <div class="empty-state-title">
+                                ระบบวัดและประเมินผล
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <section class="page" id="page-grade-correction">
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <div class="card-title">
+
+                            <i class="fa-solid fa-screwdriver-wrench"></i>
+
+                            แก้ผลการเรียน / แก้ตัว
+
+                        </div>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="empty-state">
+
+                            <i class="fa-solid fa-screwdriver-wrench"></i>
+
+                            <div class="empty-state-title">
+                                ระบบแก้ 0 / ร / มส / มผ
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <section class="page" id="page-attendance">
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <div class="card-title">
+
+                            <i class="fa-solid fa-calendar-check"></i>
+
+                            งานการมาเรียน
+
+                        </div>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="empty-state">
+
+                            <i class="fa-solid fa-calendar-check"></i>
+
+                            <div class="empty-state-title">
+                                ระบบเช็กการมาเรียน
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <section class="page" id="page-leave">
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <div class="card-title">
+
+                            <i class="fa-solid fa-file-signature"></i>
+
+                            งานลา
+
+                        </div>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="empty-state">
+
+                            <i class="fa-solid fa-file-signature"></i>
+
+                            <div class="empty-state-title">
+                                ระบบขอลาและอนุมัติการลา
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <section class="page" id="page-documents">
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <div class="card-title">
+
+                            <i class="fa-solid fa-file-lines"></i>
+
+                            ออกเอกสาร / ใบรายงาน
+
+                        </div>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="empty-state">
+
+                            <i class="fa-solid fa-file-lines"></i>
+
+                            <div class="empty-state-title">
+                                ปพ.1 / ปพ.5 / ปพ.6 และเอกสารต่าง ๆ
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <section class="page" id="page-academic-reports">
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <div class="card-title">
+
+                            <i class="fa-solid fa-file-chart-column"></i>
+
+                            รายงานฝ่ายวิชาการ
+
+                        </div>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="empty-state">
+
+                            <i class="fa-solid fa-file-chart-column"></i>
+
+                            <div class="empty-state-title">
+                                รายงานสำหรับฝ่ายวิชาการ
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <section class="page" id="page-analytics">
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <div class="card-title">
+
+                            <i class="fa-solid fa-chart-pie"></i>
+
+                            สถิติและวิเคราะห์ข้อมูล
+
+                        </div>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="empty-state">
+
+                            <i class="fa-solid fa-chart-pie"></i>
+
+                            <div class="empty-state-title">
+                                Dashboard สำหรับผู้บริหาร
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <section class="page" id="page-announcements">
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <div class="card-title">
+
+                            <i class="fa-solid fa-bullhorn"></i>
+
+                            ระบบประกาศ
+
+                        </div>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="empty-state">
+
+                            <i class="fa-solid fa-bullhorn"></i>
+
+                            <div class="empty-state-title">
+                                ประกาศจากโรงเรียน
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <section class="page" id="page-notifications">
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <div class="card-title">
+
+                            <i class="fa-solid fa-bell"></i>
+
+                            ระบบแจ้งเตือน
+
+                        </div>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div
+                            class="alert-list"
+                            id="notificationList"
+                        >
+
+                            <div class="empty-state">
+
+                                <i class="fa-solid fa-circle-check"></i>
+
+                                <div class="empty-state-title">
+                                    ไม่มีการแจ้งเตือน
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <section class="page" id="page-users">
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <div class="card-title">
+
+                            <i class="fa-solid fa-user-shield"></i>
+
+                            ผู้ใช้งานและสิทธิ์
+
+                        </div>
+
+                        <button
+                            class="btn btn-primary"
+                            onclick="showToast('info','ระบบ','โมดูลจัดการผู้ใช้จะเชื่อมต่อกับฐานข้อมูลในขั้นตอนถัดไป')"
+                        >
+
+                            <i class="fa-solid fa-user-plus"></i>
+
+                            เพิ่มผู้ใช้งาน
+
+                        </button>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="empty-state">
+
+                            <i class="fa-solid fa-user-shield"></i>
+
+                            <div class="empty-state-title">
+                                ระบบจัดการผู้ใช้งานและสิทธิ์
+                            </div>
+
+                            <div class="empty-state-description">
+                                ผู้ดูแลระบบสามารถจัดการฝ่ายวิชาการ ผู้บริหาร ครู นักเรียน และผู้ปกครอง
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <section class="page" id="page-settings">
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <div class="card-title">
+
+                            <i class="fa-solid fa-gear"></i>
+
+                            ตั้งค่าระบบ
+
+                        </div>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="empty-state">
+
+                            <i class="fa-solid fa-gear"></i>
+
+                            <div class="empty-state-title">
+                                ตั้งค่าข้อมูลโรงเรียนและระบบ
+                            </div>
+
+                            <div class="empty-state-description">
+                                ชื่อโรงเรียน ตราโรงเรียน ปีการศึกษา ภาคเรียน เกณฑ์การให้คะแนน เกณฑ์การมาเรียน และรูปแบบเอกสาร
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<!-- =========================================================
+     LOADING
+     ========================================================= -->
+
+<div
+    class="loading-overlay"
+    id="loadingOverlay"
+>
+
+    <div class="loading-box">
+
+        <div class="loading-spinner"></div>
+
+        <div
+            class="loading-text"
+            id="loadingText"
+        >
+            กำลังโหลดข้อมูล...
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     TOAST
+     ========================================================= -->
+
+<div
+    class="toast-container"
+    id="toastContainer"
+></div>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+     ========================================================= -->
+
+<script>
+
+    /* =========================================================
+       CONFIGURATION
+       ========================================================= */
+
+    const ARAMS_CONFIG = {
+
+        /*
+         * URL ของ Google Apps Script Web App
+         *
+         * ให้นำ URL ที่ได้จากการ Deploy Code.gs
+         * มาใส่ตรงนี้
+         *
+         * ตัวอย่าง:
+         *
+         * https://script.google.com/macros/s/XXXXXXXXXXXX/exec
+         */
+
+        API_URL:
+            "ใส่_URL_GOOGLE_APPS_SCRIPT_ตรงนี้",
+
+        APP_NAME:
+            "ARAMS",
+
+        APP_FULL_NAME:
+            "Academic Registration and Assessment Management System",
+
+        SCHOOL_NAME:
+            "โรงเรียนของคุณ",
+
+        DEFAULT_ACADEMIC_YEAR:
+            "",
+
+        DEFAULT_SEMESTER:
+            "1"
+
+    };
+
+
+    /* =========================================================
+       APPLICATION STATE
+       ========================================================= */
+
+    const APP_STATE = {
+
+        currentPage:
+            "dashboard",
+
+        currentUser:
+            null,
+
+        dashboard:
+            {},
+
+        students:
+            [],
+
+        teachers:
+            [],
+
+        subjects:
+            [],
+
+        classes:
+            [],
+
+        notifications:
+            [],
+
+        academicYears:
+            [],
+
+        isLoading:
+            false
+
+    };
+
+
+    /* =========================================================
+       PAGE TITLES
+       ========================================================= */
+
+    const PAGE_TITLES = {
+
+        dashboard: {
+            title: "หน้าหลัก",
+            subtitle: "ภาพรวมระบบบริหารงานทะเบียนและวัดผล"
+        },
+
+        students: {
+            title: "ข้อมูลนักเรียน",
+            subtitle: "ทะเบียนนักเรียนและข้อมูลประวัติการศึกษา"
+        },
+
+        "student-add": {
+            title: "เพิ่มนักเรียน",
+            subtitle: "บันทึกข้อมูลนักเรียนเข้าสู่ระบบทะเบียน"
+        },
+
+        classes: {
+            title: "จัดชั้นเรียน",
+            subtitle: "จัดการระดับชั้น ห้องเรียน และการจัดนักเรียน"
+        },
+
+        "student-history": {
+            title: "ประวัตินักเรียน",
+            subtitle: "ประวัติการศึกษาและการเปลี่ยนแปลงสถานะ"
+        },
+
+        subjects: {
+            title: "หลักสูตรและรายวิชา",
+            subtitle: "จัดการรายวิชาและข้อมูลหลักสูตร"
+        },
+
+        schedule: {
+            title: "ตารางสอน",
+            subtitle: "จัดการตารางสอนและครูผู้สอน"
+        },
+
+        curriculum: {
+            title: "โครงสร้างหลักสูตร",
+            subtitle: "จัดการโครงสร้างหลักสูตรของโรงเรียน"
+        },
+
+        scores: {
+            title: "บันทึกคะแนน",
+            subtitle: "บันทึกและคำนวณผลการเรียน"
+        },
+
+        assessment: {
+            title: "งานวัดและประเมินผล",
+            subtitle: "รายงานและวิเคราะห์ผลการเรียน"
+        },
+
+        "grade-correction": {
+            title: "แก้ผลการเรียน / แก้ตัว",
+            subtitle: "จัดการนักเรียนที่มี 0 / ร / มส / มผ"
+        },
+
+        attendance: {
+            title: "งานการมาเรียน",
+            subtitle: "บันทึกและรายงานการเข้าเรียน"
+        },
+
+        leave: {
+            title: "งานลา",
+            subtitle: "คำขอลาและการอนุมัติ"
+        },
+
+        documents: {
+            title: "ออกเอกสาร / ใบรายงาน",
+            subtitle: "ปพ.1 ปพ.5 ปพ.6 และเอกสารทางการศึกษา"
+        },
+
+        "academic-reports": {
+            title: "รายงานฝ่ายวิชาการ",
+            subtitle: "รายงานข้อมูลทะเบียน ผลการเรียน และการมาเรียน"
+        },
+
+        analytics: {
+            title: "สถิติและวิเคราะห์ข้อมูล",
+            subtitle: "Dashboard และสถิติสำหรับผู้บริหาร"
+        },
+
+        announcements: {
+            title: "ระบบประกาศ",
+            subtitle: "ประกาศและข่าวสารจากโรงเรียน"
+        },
+
+        notifications: {
+            title: "ระบบแจ้งเตือน",
+            subtitle: "รายการแจ้งเตือนและงานที่ต้องดำเนินการ"
+        },
+
+        users: {
+            title: "ผู้ใช้งานและสิทธิ์",
+            subtitle: "จัดการบัญชีผู้ใช้และสิทธิ์การเข้าถึง"
+        },
+
+        settings: {
+            title: "ตั้งค่าระบบ",
+            subtitle: "ตั้งค่าข้อมูลโรงเรียนและระบบ ARAMS"
+        }
+
+    };
+
+
+    /* =========================================================
+       DOM READY
+       ========================================================= */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function() {
+
+            initializeApplication();
+
+        }
+    );
+
+
+    /* =========================================================
+       INITIALIZE
+       ========================================================= */
+
+    function initializeApplication() {
+
+        setupLoginEvents();
+
+        setupMobileMenu();
+
+        loadSavedSession();
+
+        initializeAcademicYearSelector();
+
+    }
+
+
+    /* =========================================================
+       LOGIN EVENTS
+       ========================================================= */
+
+    function setupLoginEvents() {
+
+        const loginForm =
+            document.getElementById("loginForm");
+
+        if (loginForm) {
+
+            loginForm.addEventListener(
+                "submit",
+                function(event) {
+
+                    event.preventDefault();
+
+                    login();
+
+                }
+            );
+
+        }
+
+
+        const togglePassword =
+            document.getElementById("togglePassword");
+
+        if (togglePassword) {
+
+            togglePassword.addEventListener(
+                "click",
+                function() {
+
+                    const password =
+                        document.getElementById("loginPassword");
+
+                    const icon =
+                        togglePassword.querySelector("i");
+
+                    if (
+                        password.type === "password"
+                    ) {
+
+                        password.type = "text";
+
+                        icon.className =
+                            "fa-solid fa-eye-slash";
+
+                    } else {
+
+                        password.type = "password";
+
+                        icon.className =
+                            "fa-solid fa-eye";
+
+                    }
+
+                }
+            );
+
+        }
+
+    }
+
+
+    /* =========================================================
+       MOBILE MENU
+       ========================================================= */
+
+    function setupMobileMenu() {
+
+        const button =
+            document.getElementById("mobileMenuButton");
+
+        const sidebar =
+            document.getElementById("sidebar");
+
+        const overlay =
+            document.getElementById("sidebarOverlay");
+
+        if (button) {
+
+            button.addEventListener(
+                "click",
+                function() {
+
+                    sidebar.classList.toggle("open");
+
+                    overlay.classList.toggle("show");
+
+                }
+            );
+
+        }
+
+        if (overlay) {
+
+            overlay.addEventListener(
+                "click",
+                closeMobileMenu
+            );
+
+        }
+
+    }
+
+
+    function closeMobileMenu() {
+
+        const sidebar =
+            document.getElementById("sidebar");
+
+        const overlay =
+            document.getElementById("sidebarOverlay");
+
+        sidebar.classList.remove("open");
+
+        overlay.classList.remove("show");
+
+    }
+
+
+    /* =========================================================
+       LOGIN
+       ========================================================= */
+
+    async function login() {
+
+        const username =
+            document
+                .getElementById("loginUsername")
+                .value
+                .trim();
+
+        const password =
+            document
+                .getElementById("loginPassword")
+                .value;
+
+        const errorBox =
+            document.getElementById("loginError");
+
+        const errorText =
+            document.getElementById("loginErrorText");
+
+        const loginButton =
+            document.getElementById("loginButton");
+
+
+        errorBox.classList.remove("show");
+
+
+        if (!username) {
+
+            showLoginError(
+                "กรุณากรอกชื่อผู้ใช้"
+            );
+
+            return;
+
+        }
+
+
+        if (!password) {
+
+            showLoginError(
+                "กรุณากรอกรหัสผ่าน"
+            );
+
+            return;
+
+        }
+
+
+        loginButton.disabled = true;
+
+        loginButton.innerHTML =
+            '<i class="fa-solid fa-spinner fa-spin"></i> กำลังตรวจสอบ...';
+
+
+        try {
+
+            /*
+             * หากยังไม่ได้ติดตั้ง Google Apps Script
+             * ให้ใช้บัญชีผู้ดูแลระบบเริ่มต้นเพื่อทดสอบหน้าจอ
+             *
+             * username:
+             * sxaiq54
+             *
+             * password:
+             * Sxxnga2011
+             *
+             * เมื่อ Code.gs พร้อม ระบบจะเปลี่ยนไปตรวจสอบ
+             * จาก Google Sheets โดยอัตโนมัติ
+             */
+
+            if (
+                ARAMS_CONFIG.API_URL ===
+                "ใส่_URL_GOOGLE_APPS_SCRIPT_ตรงนี้"
+            ) {
+
+                if (
+                    username === "sxaiq54" &&
+                    password === "Sxxnga2011"
+                ) {
+
+                    const user = {
+
+                        username:
+                            "sxaiq54",
+
+                        name:
+                            "ผู้ดูแลระบบ",
+
+                        role:
+                            "admin",
+
+                        roleName:
+                            "ผู้ดูแลระบบ",
+
+                        userId:
+                            "ADMIN001"
+
+                    };
+
+
+                    saveSession(user);
+
+                    enterApplication(user);
+
+                    showToast(
+                        "success",
+                        "เข้าสู่ระบบสำเร็จ",
+                        "ยินดีต้อนรับเข้าสู่ระบบ ARAMS"
+                    );
+
+                } else {
+
+                    showLoginError(
+                        "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง"
+                    );
+
+                }
+
+                return;
+
+            }
+
+
+            const result =
+                await callApi(
+                    "login",
+                    {
+                        username:
+                            username,
+
+                        password:
+                            password
+                    }
+                );
+
+
+            if (
+                result &&
+                result.success &&
+                result.user
+            ) {
+
+                saveSession(
+                    result.user
+                );
+
+                enterApplication(
+                    result.user
+                );
+
+                showToast(
+                    "success",
+                    "เข้าสู่ระบบสำเร็จ",
+                    "ยินดีต้อนรับเข้าสู่ระบบ ARAMS"
+                );
+
+            } else {
+
+                showLoginError(
+                    result &&
+                    result.message
+                        ? result.message
+                        : "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง"
+                );
+
+            }
+
+        } catch (error) {
+
+            console.error(
+                "Login error:",
+                error
+            );
+
+            showLoginError(
+                "ไม่สามารถเชื่อมต่อฐานข้อมูลได้"
+            );
+
+        } finally {
+
+            loginButton.disabled = false;
+
+            loginButton.innerHTML =
+                '<i class="fa-solid fa-right-to-bracket"></i> เข้าสู่ระบบ';
+
+        }
+
+    }
+
+
+    /* =========================================================
+       LOGIN ERROR
+       ========================================================= */
+
+    function showLoginError(message) {
+
+        const errorBox =
+            document.getElementById("loginError");
+
+        const errorText =
+            document.getElementById("loginErrorText");
+
+        errorText.textContent =
+            message;
+
+        errorBox.classList.add("show");
+
+    }
+
+
+    /* =========================================================
+       SESSION
+       ========================================================= */
+
+    function saveSession(user) {
+
+        APP_STATE.currentUser =
+            user;
+
+        localStorage.setItem(
+            "ARAMS_SESSION",
+            JSON.stringify(user)
+        );
+
+    }
+
+
+    function loadSavedSession() {
+
+        try {
+
+            const saved =
+                localStorage.getItem(
+                    "ARAMS_SESSION"
+                );
+
+            if (!saved) {
+
+                return;
+
+            }
+
+
+            const user =
+                JSON.parse(saved);
+
+            if (
+                user &&
+                user.username &&
+                user.role
+            ) {
+
+                APP_STATE.currentUser =
+                    user;
+
+                enterApplication(
+                    user
+                );
+
+            }
+
+        } catch (error) {
+
+            console.error(
+                "Session error:",
+                error
+            );
+
+            localStorage.removeItem(
+                "ARAMS_SESSION"
+            );
+
+        }
+
+    }
+
+
+    /* =========================================================
+       ENTER APPLICATION
+       ========================================================= */
+
+    function enterApplication(user) {
+
+        const loginScreen =
+            document.getElementById("loginScreen");
+
+        const app =
+            document.getElementById("app");
+
+        loginScreen.style.display =
+            "none";
+
+        app.classList.add("active");
+
+
+        updateUserInterface(
+            user
+        );
+
+        applyRolePermissions(
+            user.role
+        );
+
+        loadDashboard();
+
+    }
+
+
+    /* =========================================================
+       USER INTERFACE
+       ========================================================= */
+
+    function updateUserInterface(user) {
+
+        const name =
+            user.name ||
+            user.username ||
+            "ผู้ใช้งาน";
+
+        const role =
+            user.roleName ||
+            getRoleName(user.role);
+
+
+        document.getElementById(
+            "sidebarUserName"
+        ).textContent =
+            name;
+
+
+        document.getElementById(
+            "sidebarUserRole"
+        ).textContent =
+            role;
+
+
+        document.getElementById(
+            "topbarUserName"
+        ).textContent =
+            name;
+
+    }
+
+
+    /* =========================================================
+       ROLE NAME
+       ========================================================= */
+
+    function getRoleName(role) {
+
+        const roles = {
+
+            admin:
+                "ผู้ดูแลระบบ",
+
+            director:
+                "ผู้อำนวยการ",
+
+            academic:
+                "ฝ่ายวิชาการ",
+
+            deputy:
+                "รองผู้อำนวยการ",
+
+            teacher:
+                "ครู",
+
+            advisor:
+                "ครูที่ปรึกษา",
+
+            student:
+                "นักเรียน",
+
+            parent:
+                "ผู้ปกครอง"
+
+        };
+
+
+        return (
+            roles[role] ||
+            "ผู้ใช้งาน"
+        );
+
+    }
+
+
+    /* =========================================================
+       ROLE PERMISSIONS
+       ========================================================= */
+
+    function applyRolePermissions(role) {
+
+        const adminSection =
+            document.getElementById(
+                "adminMenuSection"
+            );
+
+
+        if (
+            role === "admin"
+        ) {
+
+            adminSection.style.display =
+                "block";
+
+        } else {
+
+            /*
+             * ผู้ใช้งานทั่วไปไม่เห็น
+             * เมนูจัดการผู้ใช้และตั้งค่าระบบ
+             */
+
+            adminSection.style.display =
+                "none";
+
+        }
+
+
+        /*
+         * สามารถขยายระบบ Permission
+         * ต่อจากตรงนี้ได้ เช่น
+         *
+         * teacher
+         * advisor
+         * student
+         * parent
+         */
+
+    }
+
+
+    /* =========================================================
+       LOGOUT
+       ========================================================= */
+
+    function logout() {
+
+        const confirmed =
+            window.confirm(
+                "ต้องการออกจากระบบหรือไม่?"
+            );
+
+        if (!confirmed) {
+
+            return;
+
+        }
+
+
+        localStorage.removeItem(
+            "ARAMS_SESSION"
+        );
+
+
+        APP_STATE.currentUser =
+            null;
+
+
+        document.getElementById(
+            "app"
+        ).classList.remove(
+            "active"
+        );
+
+
+        document.getElementById(
+            "loginScreen"
+        ).style.display =
+            "flex";
+
+
+        document.getElementById(
+            "loginUsername"
+        ).value =
+            "";
+
+
+        document.getElementById(
+            "loginPassword"
+        ).value =
+            "";
+
+
+        showToast(
+            "success",
+            "ออกจากระบบ",
+            "ออกจากระบบเรียบร้อยแล้ว"
+        );
+
+    }
+
+
+    /* =========================================================
+       NAVIGATION
+       ========================================================= */
+
+    function navigateTo(pageName) {
+
+        const target =
+            document.getElementById(
+                "page-" + pageName
+            );
+
+        if (!target) {
+
+            console.warn(
+                "Page not found:",
+                pageName
+            );
+
+            return;
+
+        }
+
+
+        document
+            .querySelectorAll(".page")
+            .forEach(
+                function(page) {
+
+                    page.classList.remove(
+                        "active"
+                    );
+
+                }
+            );
+
+
+        target.classList.add(
+            "active"
+        );
+
+
+        document
+            .querySelectorAll(".menu-item")
+            .forEach(
+                function(item) {
+
+                    item.classList.remove(
+                        "active"
+                    );
+
+                }
+            );
+
+
+        document
+            .querySelectorAll(".submenu-item")
+            .forEach(
+                function(item) {
+
+                    item.classList.remove(
+                        "active"
+                    );
+
+                }
+            );
+
+
+        const menuItem =
+            document.querySelector(
+                '.menu-item[data-page="' +
+                pageName +
+                '"]'
+            );
+
+
+        const submenuItem =
+            document.querySelector(
+                '.submenu-item[data-page="' +
+                pageName +
+                '"]'
+            );
+
+
+        if (menuItem) {
+
+            menuItem.classList.add(
+                "active"
+            );
+
+        }
+
+
+        if (submenuItem) {
+
+            submenuItem.classList.add(
+                "active"
+            );
+
+        }
+
+
+        updatePageTitle(
+            pageName
+        );
+
+
+        APP_STATE.currentPage =
+            pageName;
+
+
+        closeMobileMenu();
+
+
+        if (
+            pageName ===
+            "dashboard"
+        ) {
+
+            loadDashboard();
+
+        }
+
+
+        if (
+            pageName ===
+            "students"
+        ) {
+
+            loadStudents();
+
+        }
+
+    }
+
+
+    /* =========================================================
+       UPDATE PAGE TITLE
+       ========================================================= */
+
+    function updatePageTitle(pageName) {
+
+        const page =
+            PAGE_TITLES[pageName];
+
+        if (!page) {
+
+            return;
+
+        }
+
+
+        document.getElementById(
+            "topPageTitle"
+        ).textContent =
+            page.title;
+
+
+        document.getElementById(
+            "topPageSubtitle"
+        ).textContent =
+            page.subtitle;
+
+    }
+
+
+    /* =========================================================
+       SUBMENU
+       ========================================================= */
+
+    function toggleSubmenu(menuItem) {
+
+        const submenu =
+            menuItem.nextElementSibling;
+
+
+        if (!submenu) {
+
+            return;
+
+        }
+
+
+        menuItem.classList.toggle(
+            "open"
+        );
+
+
+        submenu.classList.toggle(
+            "open"
+        );
+
+    }
+
+
+    /* =========================================================
+       DASHBOARD
+       ========================================================= */
+
+    async function loadDashboard() {
+
+        if (
+            !APP_STATE.currentUser
+        ) {
+
+            return;
+
+        }
+
+
+        const academicYear =
+            document.getElementById(
+                "dashboardAcademicYear"
+            ).value;
+
+
+        const semester =
+            document.getElementById(
+                "dashboardSemester"
+            ).value;
+
+
+        try {
+
+            if (
+                ARAMS_CONFIG.API_URL ===
+                "ใส่_URL_GOOGLE_APPS_SCRIPT_ตรงนี้"
+            ) {
+
+                loadDemoDashboard();
+
+                return;
+
+            }
+
+
+            showLoading(
+                "กำลังโหลดข้อมูล Dashboard..."
+            );
+
+
+            const result =
+                await callApi(
+                    "getDashboard",
+                    {
+                        academicYear:
+                            academicYear,
+
+                        semester:
+                            semester,
+
+                        user:
+                            APP_STATE.currentUser
+                    }
+                );
+
+
+            if (
+                result &&
+                result.success
+            ) {
+
+                APP_STATE.dashboard =
+                    result.data ||
+                    {};
+
+                renderDashboard(
+                    APP_STATE.dashboard
+                );
+
+            }
+
+        } catch (error) {
+
+            console.error(
+                "Dashboard error:",
+                error
+            );
+
+            showToast(
+                "error",
+                "เกิดข้อผิดพลาด",
+                "ไม่สามารถโหลดข้อมูล Dashboard ได้"
+            );
+
+        } finally {
+
+            hideLoading();
+
+        }
+
+    }
+
+
+    /* =========================================================
+       DEMO DASHBOARD
+       ========================================================= */
+
+    function loadDemoDashboard() {
+
+        const demoData = {
+
+            totalStudents:
+                842,
+
+            maleStudents:
+                412,
+
+            femaleStudents:
+                430,
+
+            teachers:
+                58,
+
+            classes:
+                24,
+
+            subjects:
+                86,
+
+            completeGrades:
+                761,
+
+            needCorrection:
+                38,
+
+            gradeZero:
+                17,
+
+            gradeR:
+                8,
+
+            gradeMS:
+                7,
+
+            gradeMP:
+                6,
+
+            attendance: {
+
+                present:
+                    789,
+
+                absent:
+                    21,
+
+                leave:
+                    19,
+
+                late:
+                    13
+
+            },
+
+            notifications: [
+
+                {
+                    type:
+                        "warning",
+
+                    title:
+                        "ครูยังไม่ได้ส่งคะแนนบางรายวิชา",
+
+                    time:
+                        "วันนี้"
+
+                },
+
+                {
+                    type:
+                        "danger",
+
+                    title:
+                        "พบนักเรียนที่มีผลการเรียน 0",
+
+                    time:
+                        "วันนี้"
+
+                },
+
+                {
+                    type:
+                        "info",
+
+                    title:
+                        "มีคำขอลาใหม่รออนุมัติ",
+
+                    time:
+                        "วันนี้"
+
+                }
+
+            ]
+
+        };
+
+
+        APP_STATE.dashboard =
+            demoData;
+
+
+        renderDashboard(
+            demoData
+        );
+
+    }
+
+
+    /* =========================================================
+       RENDER DASHBOARD
+       ========================================================= */
+
+    function renderDashboard(data) {
+
+        setText(
+            "statTotalStudents",
+            formatNumber(
+                data.totalStudents
+            )
+        );
+
+
+        setText(
+            "statMaleStudents",
+            formatNumber(
+                data.maleStudents
+            )
+        );
+
+
+        setText(
+            "statFemaleStudents",
+            formatNumber(
+                data.femaleStudents
+            )
+        );
+
+
+        setText(
+            "statTeachers",
+            formatNumber(
+                data.teachers
+            )
+        );
+
+
+        setText(
+            "statClasses",
+            formatNumber(
+                data.classes
+            )
+        );
+
+
+        setText(
+            "statSubjects",
+            formatNumber(
+                data.subjects
+            )
+        );
+
+
+        setText(
+            "statCompleteGrades",
+            formatNumber(
+                data.completeGrades
+            )
+        );
+
+
+        setText(
+            "statNeedCorrection",
+            formatNumber(
+                data.needCorrection
+            )
+        );
+
+
+        setText(
+            "statGradeZero",
+            formatNumber(
+                data.gradeZero
+            )
+        );
+
+
+        setText(
+            "statGradeR",
+            formatNumber(
+                data.gradeR
+            )
+        );
+
+
+        setText(
+            "statGradeMS",
+            formatNumber(
+                data.gradeMS
+            )
+        );
+
+
+        setText(
+            "statGradeMP",
+            formatNumber(
+                data.gradeMP
+            )
+        );
+
+
+        if (
+            data.attendance
+        ) {
+
+            setText(
+                "attendancePresent",
+                formatNumber(
+                    data.attendance.present
+                )
+            );
+
+
+            setText(
+                "attendanceAbsent",
+                formatNumber(
+                    data.attendance.absent
+                )
+            );
+
+
+            setText(
+                "attendanceLeave",
+                formatNumber(
+                    data.attendance.leave
+                )
+            );
+
+
+            setText(
+                "attendanceLate",
+                formatNumber(
+                    data.attendance.late
+                )
+            );
+
+        }
+
+
+        renderDashboardAlerts(
+            data.notifications ||
+            []
+        );
+
+
+        updateNotificationBadge(
+            data.notifications ||
+            []
+        );
+
+    }
+
+
+    /* =========================================================
+       DASHBOARD ALERTS
+       ========================================================= */
+
+    function renderDashboardAlerts(
+        notifications
+    ) {
+
+        const container =
+            document.getElementById(
+                "dashboardAlerts"
+            );
+
+
+        if (
+            !notifications ||
+            notifications.length === 0
+        ) {
+
+            container.innerHTML = `
+
+                <div class="empty-state">
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                    <div class="empty-state-title">
+                        ไม่มีงานค้าง
+                    </div>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        container.innerHTML =
+            notifications
+                .slice(0, 5)
+                .map(
+                    function(item) {
+
+                        const type =
+                            item.type ||
+                            "info";
+
+
+                        let icon =
+                            "fa-circle-info";
+
+
+                        if (
+                            type ===
+                            "warning"
+                        ) {
+
+                            icon =
+                                "fa-triangle-exclamation";
+
+                        }
+
+
+                        if (
+                            type ===
+                            "danger"
+                        ) {
+
+                            icon =
+                                "fa-circle-exclamation";
+
+                        }
+
+
+                        return `
+
+                            <div class="alert-item ${escapeHtml(type)}">
+
+                                <div class="alert-item-icon">
+
+                                    <i class="fa-solid ${icon}"></i>
+
+                                </div>
+
+                                <div class="alert-item-content">
+
+                                    <div class="alert-item-title">
+                                        ${escapeHtml(item.title || "-")}
+                                    </div>
+
+                                    <div class="alert-item-time">
+                                        ${escapeHtml(item.time || "")}
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        `;
+
+                    }
+                )
+                .join("");
+
+    }
+
+
+    /* =========================================================
+       NOTIFICATION BADGE
+       ========================================================= */
+
+    function updateNotificationBadge(
+        notifications
+    ) {
+
+        const badge =
+            document.getElementById(
+                "notificationBadge"
+            );
+
+
+        const count =
+            notifications
+                ? notifications.length
+                : 0;
+
+
+        badge.textContent =
+            count > 99
+                ? "99+"
+                : count;
+
+    }
+
+
+    /* =========================================================
+       ACADEMIC YEAR
+       ========================================================= */
+
+    function initializeAcademicYearSelector() {
+
+        const select =
+            document.getElementById(
+                "dashboardAcademicYear"
+            );
+
+
+        if (!select) {
+
+            return;
+
+        }
+
+
+        const currentYear =
+            new Date()
+                .getFullYear() +
+            543;
+
+
+        select.innerHTML =
+            "";
+
+
+        for (
+            let i = 0;
+            i < 5;
+            i++
+        ) {
+
+            const year =
+                currentYear -
+                i;
+
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+
+            option.value =
+                year;
+
+
+            option.textContent =
+                "ปีการศึกษา " +
+                year;
+
+
+            if (
+                i === 0
+            ) {
+
+                option.selected =
+                    true;
+
+            }
+
+
+            select.appendChild(
+                option
+            );
+
+        }
+
+    }
+
+
+    /* =========================================================
+       STUDENTS
+       ========================================================= */
+
+    async function loadStudents() {
+
+        try {
+
+            if (
+                ARAMS_CONFIG.API_URL ===
+                "ใส่_URL_GOOGLE_APPS_SCRIPT_ตรงนี้"
+            ) {
+
+                renderStudents(
+                    []
+                );
+
+                return;
+
+            }
+
+
+            showLoading(
+                "กำลังโหลดข้อมูลนักเรียน..."
+            );
+
+
+            const result =
+                await callApi(
+                    "getStudents",
+                    {
+                        user:
+                            APP_STATE.currentUser
+                    }
+                );
+
+
+            if (
+                result &&
+                result.success
+            ) {
+
+                APP_STATE.students =
+                    result.data ||
+                    [];
+
+                renderStudents(
+                    APP_STATE.students
+                );
+
+            }
+
+        } catch (error) {
+
+            console.error(
+                "Students error:",
+                error
+            );
+
+            showToast(
+                "error",
+                "เกิดข้อผิดพลาด",
+                "ไม่สามารถโหลดข้อมูลนักเรียนได้"
+            );
+
+        } finally {
+
+            hideLoading();
+
+        }
+
+    }
+
+
+    /* =========================================================
+       RENDER STUDENTS
+       ========================================================= */
+
+    function renderStudents(
+        students
+    ) {
+
+        const tbody =
+            document.getElementById(
+                "studentsTableBody"
+            );
+
+
+        if (
+            !students ||
+            students.length === 0
+        ) {
+
+            tbody.innerHTML = `
+
+                <tr>
+
+                    <td colspan="7">
+
+                        <div class="empty-state">
+
+                            <i class="fa-solid fa-user-graduate"></i>
+
+                            <div class="empty-state-title">
+                                ไม่พบข้อมูลนักเรียน
+                            </div>
+
+                            <div class="empty-state-description">
+                                กรุณาเพิ่มข้อมูลนักเรียนหรือเชื่อมต่อฐานข้อมูล Google Sheets
+                            </div>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+            return;
+
+        }
+
+
+        tbody.innerHTML =
+            students
+                .map(
+                    function(student) {
+
+                        const status =
+                            student.status ||
+                            "กำลังศึกษา";
+
+
+                        let badgeClass =
+                            "badge-success";
+
+
+                        if (
+                            status ===
+                            "ลาออก"
+                        ) {
+
+                            badgeClass =
+                                "badge-danger";
+
+                        }
+
+
+                        if (
+                            status ===
+                            "พักการเรียน"
+                        ) {
+
+                            badgeClass =
+                                "badge-warning";
+
+                        }
+
+
+                        if (
+                            status ===
+                            "จบการศึกษา"
+                        ) {
+
+                            badgeClass =
+                                "badge-info";
+
+                        }
+
+
+                        return `
+
+                            <tr>
+
+                                <td>
+                                    ${escapeHtml(student.studentId || "-")}
+                                </td>
+
+                                <td>
+                                    ${escapeHtml(student.fullName || "-")}
+                                </td>
+
+                                <td>
+                                    ${escapeHtml(student.gender || "-")}
+                                </td>
+
+                                <td>
+                                    ${escapeHtml(student.className || "-")}
+                                </td>
+
+                                <td>
+                                    ${escapeHtml(student.academicYear || "-")}
+                                </td>
+
+                                <td>
+
+                                    <span class="badge ${badgeClass}">
+                                        ${escapeHtml(status)}
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <button
+                                        class="btn btn-secondary btn-sm"
+                                        onclick="viewStudent('${escapeAttribute(student.studentId || "")}')"
+                                    >
+
+                                        <i class="fa-solid fa-eye"></i>
+
+                                        ดู
+
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+                        `;
+
+                    }
+                )
+                .join("");
+
+    }
+
+
+    /* =========================================================
+       SEARCH STUDENTS
+       ========================================================= */
+
+    function searchStudents() {
+
+        const keyword =
+            (
+                document.getElementById(
+                    "studentSearch"
+                ).value ||
+                ""
+            )
+            .toLowerCase()
+            .trim();
+
+
+        const level =
+            document.getElementById(
+                "studentFilterLevel"
+            ).value;
+
+
+        const room =
+            document.getElementById(
+                "studentFilterRoom"
+            ).value;
+
+
+        const status =
+            document.getElementById(
+                "studentFilterStatus"
+            ).value;
+
+
+        const filtered =
+            APP_STATE.students.filter(
+                function(student) {
+
+                    const text = (
+
+                        (student.studentId || "") +
+                        " " +
+                        (student.fullName || "") +
+                        " " +
+                        (student.citizenId || "")
+
+                    )
+                    .toLowerCase();
+
+
+                    const keywordMatch =
+                        !keyword ||
+                        text.includes(
+                            keyword
+                        );
+
+
+                    const levelMatch =
+                        !level ||
+                        student.level ===
+                        level;
+
+
+                    const roomMatch =
+                        !room ||
+                        student.room ===
+                        room;
+
+
+                    const statusMatch =
+                        !status ||
+                        student.status ===
+                        status;
+
+
+                    return (
+                        keywordMatch &&
+                        levelMatch &&
+                        roomMatch &&
+                        statusMatch
+                    );
+
+                }
+            );
+
+
+        renderStudents(
+            filtered
+        );
+
+    }
+
+
+    /* =========================================================
+       VIEW STUDENT
+       ========================================================= */
+
+    function viewStudent(
+        studentId
+    ) {
+
+        showToast(
+            "info",
+            "ข้อมูลนักเรียน",
+            "กำลังเปิดข้อมูลนักเรียน " +
+            studentId
+        );
+
+    }
+
+
+    /* =========================================================
+       REFRESH CURRENT PAGE
+       ========================================================= */
+
+    function refreshCurrentPage() {
+
+        if (
+            APP_STATE.currentPage ===
+            "dashboard"
+        ) {
+
+            loadDashboard();
+
+            return;
+
+        }
+
+
+        if (
+            APP_STATE.currentPage ===
+            "students"
+        ) {
+
+            loadStudents();
+
+            return;
+
+        }
+
+
+        showToast(
+            "info",
+            "รีเฟรชข้อมูล",
+            "กำลังรีเฟรชหน้าปัจจุบัน"
+        );
+
+    }
+
+
+    /* =========================================================
+       RECENT ACTIVITIES
+       ========================================================= */
+
+    async function loadRecentActivities() {
+
+        try {
+
+            if (
+                ARAMS_CONFIG.API_URL ===
+                "ใส่_URL_GOOGLE_APPS_SCRIPT_ตรงนี้"
+            ) {
+
+                return;
+
+            }
+
+
+            const result =
+                await callApi(
+                    "getRecentActivities",
+                    {
+                        user:
+                            APP_STATE.currentUser
+                    }
+                );
+
+
+            if (
+                result &&
+                result.success
+            ) {
+
+                renderRecentActivities(
+                    result.data ||
+                    []
+                );
+
+            }
+
+        } catch (error) {
+
+            console.error(
+                "Recent activities error:",
+                error
+            );
+
+        }
+
+    }
+
+
+    /* =========================================================
+       RENDER RECENT ACTIVITIES
+       ========================================================= */
+
+    function renderRecentActivities(
+        activities
+    ) {
+
+        const tbody =
+            document.getElementById(
+                "recentActivitiesTable"
+            );
+
+
+        if (
+            !activities ||
+            activities.length === 0
+        ) {
+
+            tbody.innerHTML = `
+
+                <tr>
+
+                    <td colspan="5">
+
+                        <div class="empty-state">
+
+                            <i class="fa-solid fa-database"></i>
+
+                            <div class="empty-state-title">
+                                ยังไม่มีรายการ
+                            </div>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+            return;
+
+        }
+
+
+        tbody.innerHTML =
+            activities
+                .map(
+                    function(item) {
+
+                        return `
+
+                            <tr>
+
+                                <td>
+                                    ${escapeHtml(item.datetime || "-")}
+                                </td>
+
+                                <td>
+                                    ${escapeHtml(item.user || "-")}
+                                </td>
+
+                                <td>
+                                    ${escapeHtml(item.action || "-")}
+                                </td>
+
+                                <td>
+                                    ${escapeHtml(item.detail || "-")}
+                                </td>
+
+                                <td>
+
+                                    <span class="badge badge-success">
+                                        ${escapeHtml(item.status || "สำเร็จ")}
+                                    </span>
+
+                                </td>
+
+                            </tr>
+
+                        `;
+
+                    }
+                )
+                .join("");
+
+    }
+
+
+    /* =========================================================
+       API CALL
+       ========================================================= */
+
+    async function callApi(
+        action,
+        data = {}
+    ) {
+
+        if (
+            !ARAMS_CONFIG.API_URL ||
+            ARAMS_CONFIG.API_URL ===
+            "ใส่_URL_GOOGLE_APPS_SCRIPT_ตรงนี้"
+        ) {
+
+            throw new Error(
+                "ยังไม่ได้กำหนด API_URL"
+            );
+
+        }
+
+
+        const payload = {
+
+            action:
+                action,
+
+            data:
+                data,
+
+            timestamp:
+                new Date()
+                    .toISOString()
+
+        };
+
+
+        const response =
+            await fetch(
+                ARAMS_CONFIG.API_URL,
+                {
+
+                    method:
+                        "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "text/plain;charset=utf-8"
+
+                    },
+
+                    body:
+                        JSON.stringify(
+                            payload
+                        )
+
+                }
+            );
+
+
+        if (
+            !response.ok
+        ) {
+
+            throw new Error(
+                "HTTP " +
+                response.status
+            );
+
+        }
+
+
+        const result =
+            await response.json();
+
+
+        return result;
+
+    }
+
+
+    /* =========================================================
+       LOADING
+       ========================================================= */
+
+    function showLoading(
+        text = "กำลังโหลดข้อมูล..."
+    ) {
+
+        const overlay =
+            document.getElementById(
+                "loadingOverlay"
+            );
+
+
+        const loadingText =
+            document.getElementById(
+                "loadingText"
+            );
+
+
+        loadingText.textContent =
+            text;
+
+
+        overlay.classList.add(
+            "show"
+        );
+
+
+        APP_STATE.isLoading =
+            true;
+
+    }
+
+
+    function hideLoading() {
+
+        const overlay =
+            document.getElementById(
+                "loadingOverlay"
+            );
+
+
+        overlay.classList.remove(
+            "show"
+        );
+
+
+        APP_STATE.isLoading =
+            false;
+
+    }
+
+
+    /* =========================================================
+       TOAST
+       ========================================================= */
+
+    function showToast(
+        type,
+        title,
+        message
+    ) {
+
+        const container =
+            document.getElementById(
+                "toastContainer"
+            );
+
+
+        const toast =
+            document.createElement(
+                "div"
+            );
+
+
+        toast.className =
+            "toast " +
+            (
+                type === "error"
+                    ? "error"
+                    : type
+            );
+
+
+        let icon =
+            "fa-circle-info";
+
+
+        if (
+            type ===
+            "success"
+        ) {
+
+            icon =
+                "fa-circle-check";
+
+        }
+
+
+        if (
+            type ===
+            "warning"
+        ) {
+
+            icon =
+                "fa-triangle-exclamation";
+
+        }
+
+
+        if (
+            type ===
+            "error"
+        ) {
+
+            icon =
+                "fa-circle-exclamation";
+
+        }
+
+
+        toast.innerHTML = `
+
+            <div class="toast-icon">
+
+                <i class="fa-solid ${icon}"></i>
+
+            </div>
+
+            <div class="toast-content">
+
+                <div class="toast-title">
+                    ${escapeHtml(title)}
+                </div>
+
+                <div class="toast-message">
+                    ${escapeHtml(message)}
+                </div>
+
+            </div>
+
+        `;
+
+
+        container.appendChild(
+            toast
+        );
+
+
+        setTimeout(
+            function() {
+
+                toast.style.opacity =
+                    "0";
+
+                toast.style.transform =
+                    "translateY(10px)";
+
+
+                setTimeout(
+                    function() {
+
+                        toast.remove();
+
+                    },
+                    250
+                );
+
+            },
+            4000
+        );
+
+    }
+
+
+    /* =========================================================
+       SET TEXT
+       ========================================================= */
+
+    function setText(
+        elementId,
+        value
+    ) {
+
+        const element =
+            document.getElementById(
+                elementId
+            );
+
+
+        if (element) {
+
+            element.textContent =
+                value;
+
+        }
+
+    }
+
+
+    /* =========================================================
+       NUMBER FORMAT
+       ========================================================= */
+
+    function formatNumber(
+        value
+    ) {
+
+        const number =
+            Number(value);
+
+
+        if (
+            Number.isNaN(number)
+        ) {
+
+            return "0";
+
+        }
+
+
+        return number.toLocaleString(
+            "th-TH"
+        );
+
+    }
+
+
+    /* =========================================================
+       ESCAPE HTML
+       ========================================================= */
+
+    function escapeHtml(
+        value
+    ) {
+
+        if (
+            value === null ||
+            value === undefined
+        ) {
+
+            return "";
+
+        }
+
+
+        return String(value)
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+            .replace(
+                /</g,
+                "&lt;"
+            )
+            .replace(
+                />/g,
+                "&gt;"
+            )
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+            .replace(
+                /'/g,
+                "&#039;"
+            );
+
+    }
+
+
+    /* =========================================================
+       ESCAPE ATTRIBUTE
+       ========================================================= */
+
+    function escapeAttribute(
+        value
+    ) {
+
+        return escapeHtml(
+            value
+        );
+
+    }
+
+
+    /* =========================================================
+       GLOBAL ERROR HANDLER
+       ========================================================= */
+
+    window.addEventListener(
+        "error",
+        function(event) {
+
+            console.error(
+                "Global error:",
+                event.error ||
+                event.message
+            );
+
+        }
+    );
+
+
+    /* =========================================================
+       GLOBAL UNHANDLED PROMISE
+       ========================================================= */
+
+    window.addEventListener(
+        "unhandledrejection",
+        function(event) {
+
+            console.error(
+                "Unhandled promise:",
+                event.reason
+            );
+
+        }
+    );
+
+</script>
+
 </body>
-</html>
+    </html>
