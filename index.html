@@ -3,440 +3,383 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ARAMS - ระบบบริหารงานทะเบียนและวัดผล (Academic Registration and Assessment Management System)</title>
+    <title>ARAMS - ระบบบริหารจัดการงานทะเบียนและวัดผลสถานศึกษา</title>
     
-    <!-- Google Fonts: TH Sarabun PSK -->
+    <!-- Google Fonts: Sarabun -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
     
-    <!-- FontAwesome (Icons) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Tailwind CSS (โทนทางการ มินิมอล) -->
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Custom CSS -->
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.com/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="style.css">
-
 </head>
-<body class="bg-gray-50 text-gray-800 antialiased">
+<body class="bg-slate-100 text-slate-800 antialiased font-sans min-h-screen">
 
-    <!-- ==================== 1. หน้าเข้าสู่ระบบ (Login) ==================== -->
-    <div id="login-page" class="min-h-screen flex items-center justify-center bg-slate-800 relative overflow-hidden">
-        <!-- Background Decoration -->
-        <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
-            <i class="fa-solid fa-graduation-cap absolute text-9xl top-10 left-10 transform -rotate-12"></i>
-            <i class="fa-solid fa-book-open absolute text-9xl bottom-20 right-20 transform rotate-12"></i>
-        </div>
-
-        <div class="bg-white p-10 rounded-xl shadow-2xl w-full max-w-md z-10 border-t-4 border-blue-700">
-            <div class="text-center mb-8">
-                <div class="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4 border border-blue-100">
-                    <i class="fa-solid fa-building-columns text-4xl text-blue-700"></i>
+    <!-- ========================================== -->
+    <!-- 1. หน้าจอเข้าสู่ระบบ (LOGIN PAGE)           -->
+    <!-- ========================================== -->
+    <div id="login-page" class="min-h-screen flex items-center justify-center p-4 bg-slate-900">
+        <div class="max-w-md w-full bg-white rounded-xl shadow-2xl overflow-hidden border border-slate-200">
+            <!-- Header ส่วนบนของการ Login -->
+            <div class="bg-slate-800 p-6 text-center border-b border-slate-700">
+                <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-600 text-white mb-3 shadow-lg">
+                    <i class="fa-solid fa-graduation-cap text-3xl"></i>
                 </div>
-                <h1 class="text-4xl font-bold text-gray-800 tracking-tight">ARAMS</h1>
-                <p class="text-gray-500 mt-2 text-xl font-medium">ระบบบริหารงานทะเบียนและวัดผล</p>
+                <h1 class="text-2xl font-bold text-white tracking-wide">ARAMS</h1>
+                <p class="text-xs text-slate-400 mt-1">Academic Registration & Assessment Management System</p>
+                <p class="text-sm text-slate-300 mt-2 font-medium">ระบบบริหารจัดการงานทะเบียนและวัดผล</p>
             </div>
-            
-            <form id="login-form">
-                <div class="mb-5">
-                    <label for="username" class="block text-gray-700 font-bold mb-2 text-lg">ชื่อผู้ใช้งาน</label>
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                            <i class="fa-solid fa-user text-gray-400"></i>
-                        </div>
-                        <input type="text" id="username" class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100 transition-all text-lg" placeholder="ระบุชื่อผู้ใช้งาน" required>
-                    </div>
-                </div>
-                
-                <div class="mb-6">
-                    <label for="password" class="block text-gray-700 font-bold mb-2 text-lg">รหัสผ่าน</label>
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                            <i class="fa-solid fa-lock text-gray-400"></i>
-                        </div>
-                        <input type="password" id="password" class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100 transition-all text-lg" placeholder="ระบุรหัสผ่าน" required>
-                    </div>
-                </div>
-                
-                <button id="btn-login-submit" type="submit" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-3 px-4 rounded-lg transition duration-200 text-xl flex justify-center items-center shadow-md hover:shadow-lg">
-                    <span>เข้าสู่ระบบ</span> <i class="fa-solid fa-arrow-right-to-bracket ml-2"></i>
-                </button>
-                
-                <div id="login-error" class="hidden mt-5 bg-red-50 border-l-4 border-red-500 text-red-700 p-4 rounded-r-lg shadow-sm" role="alert">
+
+            <!-- ฟอร์ม กรอกข้อมูล -->
+            <form id="login-form" class="p-6 space-y-5">
+                <!-- กล่องข้อความแจ้งเตือนความผิดพลาด -->
+                <div id="login-error" class="hidden bg-red-50 border-l-4 border-red-500 p-4 rounded text-sm text-red-700">
                     <div class="flex items-center">
-                        <i class="fa-solid fa-circle-exclamation text-xl mr-3"></i>
-                        <span class="block sm:inline font-bold text-lg" id="login-error-text">ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง</span>
+                        <i class="fa-solid fa-circle-exclamation mr-2 text-red-500"></i>
+                        <span id="login-error-text">ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง</span>
                     </div>
+                </div>
+
+                <div>
+                    <label for="username" class="block text-sm font-semibold text-slate-700 mb-1">ชื่อผู้ใช้งาน (Username)</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+                            <i class="fa-solid fa-user"></i>
+                        </span>
+                        <input type="text" id="username" required autocomplete="username"
+                            class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-300 rounded-lg text-slate-800 text-base focus:outline-none focus:bg-white focus:border-blue-500 transition duration-200"
+                            placeholder="กรอกชื่อผู้ใช้งาน">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="password" class="block text-sm font-semibold text-slate-700 mb-1">รหัสผ่าน (Password)</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+                            <i class="fa-solid fa-lock"></i>
+                        </span>
+                        <input type="password" id="password" required autocomplete="current-password"
+                            class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-300 rounded-lg text-slate-800 text-base focus:outline-none focus:bg-white focus:border-blue-500 transition duration-200"
+                            placeholder="กรอกรหัสผ่าน">
+                    </div>
+                </div>
+
+                <div class="pt-2">
+                    <button type="submit" id="btn-login-submit"
+                        class="w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-semibold py-2.5 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-200 flex items-center justify-center">
+                        <i class="fa-solid fa-right-to-bracket mr-2"></i> เข้าสู่ระบบ
+                    </button>
                 </div>
             </form>
-            <div class="mt-8 text-center text-gray-400 text-base">
-                &copy; 2024 ARAMS System. All rights reserved.
+            
+            <div class="bg-slate-50 px-6 py-3 border-t border-slate-100 text-center text-xs text-slate-500">
+                &copy; 2026 ARAMS. All rights reserved.
             </div>
         </div>
     </div>
 
-    <!-- ==================== 2. ส่วนของระบบหลัก (Main Application) ==================== -->
-    <div id="app-page" class="hidden h-screen flex overflow-hidden bg-gray-100">
-        
-        <!-- Sidebar Menu -->
-        <aside id="sidebar" class="w-72 bg-slate-900 text-white flex flex-col transition-all duration-300 z-20 shadow-xl">
-            <!-- Sidebar Header -->
-            <div class="h-16 flex items-center justify-center border-b border-slate-700 px-4 bg-slate-950">
-                <i class="fa-solid fa-building-columns text-2xl text-blue-400 mr-3"></i>
-                <span class="text-3xl font-bold tracking-wider mt-1">ARAMS</span>
+
+    <!-- ========================================== -->
+    <!-- 2. หน้าจอทำงานหลัก (MAIN APPLICATION)      -->
+    <!-- ========================================== -->
+    <div id="app-page" class="hidden min-h-screen flex flex-col lg:flex-row">
+
+        <!-- Sidebar เมนูด้านข้าง -->
+        <aside id="sidebar" class="w-full lg:w-64 bg-slate-800 text-slate-200 flex-shrink-0 transition-all duration-300 ease-in-out no-select border-r border-slate-700">
+            <!-- ยี่ห้อ / โลโก้ ระบบ -->
+            <div class="h-16 flex items-center px-6 bg-slate-900 text-white font-bold text-xl tracking-wider border-b border-slate-700">
+                <i class="fa-solid fa-graduation-cap text-blue-400 mr-3 text-2xl"></i>
+                <span>ARAMS SYSTEM</span>
             </div>
-            
-            <!-- User Profile (Sidebar) -->
-            <div class="p-5 border-b border-slate-700 bg-slate-800">
-                <div class="flex items-center">
-                    <div class="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-2xl font-bold shadow-inner border-2 border-slate-600">
-                        <i class="fa-solid fa-user-tie text-white"></i>
-                    </div>
-                    <div class="ml-4 overflow-hidden">
-                        <p id="sidebar-user-name" class="font-bold text-xl leading-tight truncate w-full text-blue-50">กำลังโหลด...</p>
-                        <p id="sidebar-user-role" class="text-base text-blue-300 mt-1 font-medium"><i class="fa-solid fa-shield-halved mr-1 text-sm"></i> ผู้ดูแลระบบ</p>
+
+            <!-- Profile ผู้ใช้งานย่อ -->
+            <div class="p-4 bg-slate-800/50 border-b border-slate-700/60 flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-lg border border-blue-500/30">
+                    <i class="fa-solid fa-user-gear"></i>
+                </div>
+                <div class="overflow-hidden">
+                    <div id="sidebar-user-name" class="font-semibold text-white text-base truncate">ผู้ดูแลระบบ</div>
+                    <div id="sidebar-user-role" class="text-xs text-blue-400 flex items-center mt-0.5">
+                        <i class="fa-solid fa-shield-halved mr-1 text-xs"></i> Admin
                     </div>
                 </div>
             </div>
 
-            <!-- Navigation Links -->
-            <nav class="flex-1 overflow-y-auto py-4 custom-scrollbar">
-                <ul class="space-y-1 px-3 text-xl font-medium">
-                    <li>
-                        <a href="#" class="nav-link active flex items-center px-4 py-3 rounded-lg hover:bg-slate-700 transition-colors text-slate-300 hover:text-white" data-target="view-dashboard">
-                            <i class="fa-solid fa-chart-line w-8 text-center mr-2 text-blue-400"></i> หน้าหลัก (Dashboard)
-                        </a>
-                    </li>
-                    
-                    <li class="mt-6 mb-2 px-4">
-                        <span class="text-slate-500 text-base font-bold uppercase tracking-wider">ระบบงานวิชาการ</span>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-link flex items-center px-4 py-3 rounded-lg hover:bg-slate-700 transition-colors text-slate-300 hover:text-white" data-target="view-registration" data-title="งานทะเบียนนักเรียน">
-                            <i class="fa-solid fa-users-viewfinder w-8 text-center mr-2 text-emerald-400"></i> งานทะเบียนนักเรียน
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-link flex items-center px-4 py-3 rounded-lg hover:bg-slate-700 transition-colors text-slate-300 hover:text-white" data-target="view-curriculum" data-title="งานหลักสูตรและรายวิชา">
-                            <i class="fa-solid fa-book-bookmark w-8 text-center mr-2 text-amber-400"></i> งานหลักสูตร/รายวิชา
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-link flex items-center px-4 py-3 rounded-lg hover:bg-slate-700 transition-colors text-slate-300 hover:text-white" data-target="view-grading" data-title="งานบันทึกคะแนน">
-                            <i class="fa-solid fa-pen-to-square w-8 text-center mr-2 text-purple-400"></i> งานบันทึกคะแนน
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-link flex items-center px-4 py-3 rounded-lg hover:bg-slate-700 transition-colors text-slate-300 hover:text-white" data-target="view-assessment" data-title="งานวัดและประเมินผล">
-                            <i class="fa-solid fa-chart-pie w-8 text-center mr-2 text-pink-400"></i> งานวัดและประเมินผล
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-link flex items-center px-4 py-3 rounded-lg hover:bg-slate-700 transition-colors text-slate-300 hover:text-white" data-target="view-remedial" data-title="งานแก้ผลการเรียน (แก้ตัว)">
-                            <i class="fa-solid fa-toolbox w-8 text-center mr-2 text-orange-500"></i> งานแก้ผลการเรียน
-                        </a>
-                    </li>
-                    
-                    <li class="mt-6 mb-2 px-4">
-                        <span class="text-slate-500 text-base font-bold uppercase tracking-wider">กิจการนักเรียน</span>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-link flex items-center px-4 py-3 rounded-lg hover:bg-slate-700 transition-colors text-slate-300 hover:text-white" data-target="view-attendance" data-title="งานการมาเรียน">
-                            <i class="fa-solid fa-calendar-check w-8 text-center mr-2 text-cyan-400"></i> เช็กการมาเรียน
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-link flex items-center px-4 py-3 rounded-lg hover:bg-slate-700 transition-colors text-slate-300 hover:text-white" data-target="view-leave" data-title="งานระบบการลา">
-                            <i class="fa-solid fa-file-medical w-8 text-center mr-2 text-red-400"></i> ระบบขอลา
-                        </a>
-                    </li>
+            <!-- รายการเมนูหลัก -->
+            <nav class="p-3 space-y-1 custom-scrollbar overflow-y-auto max-h-[calc(100vh-8rem)]">
+                <a href="#" class="nav-link flex items-center px-4 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition duration-150" data-target="view-dashboard" data-title="หน้าหลัก (Dashboard)">
+                    <i class="fa-solid fa-chart-pie w-6 text-center text-slate-400 mr-2"></i>
+                    <span>หน้าหลัก (Dashboard)</span>
+                </a>
 
-                    <li class="mt-6 mb-2 px-4">
-                        <span class="text-slate-500 text-base font-bold uppercase tracking-wider">ระบบรายงานและตั้งค่า</span>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-link flex items-center px-4 py-3 rounded-lg hover:bg-slate-700 transition-colors text-slate-300 hover:text-white" data-target="view-documents" data-title="งานออกเอกสาร / ปพ.">
-                            <i class="fa-solid fa-print w-8 text-center mr-2 text-indigo-400"></i> ออกเอกสาร/ใบรายงาน
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-link flex items-center px-4 py-3 rounded-lg hover:bg-slate-700 transition-colors text-slate-300 hover:text-white" data-target="view-settings" data-title="ตั้งค่าระบบ">
-                            <i class="fa-solid fa-gears w-8 text-center mr-2 text-gray-400"></i> ตั้งค่าระบบ
-                        </a>
-                    </li>
-                </ul>
+                <div class="pt-2 pb-1 px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">งานข้อมูลนักเรียน</div>
+                <a href="#" class="nav-link flex items-center px-4 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition duration-150" data-target="view-students" data-title="จัดการข้อมูลนักเรียน">
+                    <i class="fa-solid fa-users-line w-6 text-center text-slate-400 mr-2"></i>
+                    <span>ข้อมูลนักเรียน</span>
+                </a>
+                <a href="#" class="nav-link flex items-center px-4 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition duration-150" data-target="view-leaves" data-title="ระบบการลาของนักเรียน">
+                    <i class="fa-solid fa-envelope-open-text w-6 text-center text-slate-400 mr-2"></i>
+                    <span>ระบบการลา</span>
+                </a>
+
+                <div class="pt-2 pb-1 px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">งานวิชาการ & วัดผล</div>
+                <a href="#" class="nav-link flex items-center px-4 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition duration-150" data-target="view-courses" data-title="จัดการหลักสูตรและรายวิชา">
+                    <i class="fa-solid fa-book-bookmark w-6 text-center text-slate-400 mr-2"></i>
+                    <span>จัดการรายวิชา</span>
+                </a>
+                <a href="#" class="nav-link flex items-center px-4 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition duration-150" data-target="view-classes" data-title="ตารางเรียนและห้องเรียน">
+                    <i class="fa-solid fa-chalkboard w-6 text-center text-slate-400 mr-2"></i>
+                    <span>ตารางเรียน / จัดห้อง</span>
+                </a>
+                <a href="#" class="nav-link flex items-center px-4 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition duration-150" data-target="view-enrollments" data-title="การลงทะเบียนเรียน">
+                    <i class="fa-solid fa-clipboard-user w-6 text-center text-slate-400 mr-2"></i>
+                    <span>ลงทะเบียนเรียน</span>
+                </a>
+                <a href="#" class="nav-link flex items-center px-4 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition duration-150" data-target="view-attendance" data-title="บันทึกการเข้าเรียน">
+                    <i class="fa-solid fa-calendar-check w-6 text-center text-slate-400 mr-2"></i>
+                    <span>การเข้าเรียน</span>
+                </a>
+                <a href="#" class="nav-link flex items-center px-4 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition duration-150" data-target="view-grades" data-title="บันทึกและจัดการผลการเรียน">
+                    <i class="fa-solid fa-file-pen w-6 text-center text-slate-400 mr-2"></i>
+                    <span>บันทึกเกรด / ผลการเรียน</span>
+                </a>
+                <a href="#" class="nav-link flex items-center px-4 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition duration-150" data-target="view-remedial" data-title="งานติดตามและแก้ผลการเรียน (0, ร, มส)">
+                    <i class="fa-solid fa-triangle-exclamation w-6 text-center text-amber-400 mr-2"></i>
+                    <span>การแก้ไขผลการเรียน</span>
+                </a>
+
+                <div class="pt-2 pb-1 px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">งานเอกสาร & บริหาร</div>
+                <a href="#" class="nav-link flex items-center px-4 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition duration-150" data-target="view-documents" data-title="งานออกเอกสาร / ปพ.">
+                    <i class="fa-solid fa-file-certificate w-6 text-center text-slate-400 mr-2"></i>
+                    <span>ออกเอกสาร / ปพ.</span>
+                </a>
+                <a href="#" class="nav-link flex items-center px-4 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition duration-150" data-target="view-announcements" data-title="จัดการข่าวประชาสัมพันธ์">
+                    <i class="fa-solid fa-bullhorn w-6 text-center text-slate-400 mr-2"></i>
+                    <span>ข่าวประกาศ</span>
+                </a>
+                <a href="#" class="nav-link flex items-center px-4 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition duration-150" data-target="view-settings" data-title="ตั้งค่าระบบ">
+                    <i class="fa-solid fa-gears w-6 text-center text-slate-400 mr-2"></i>
+                    <span>ตั้งค่าระบบ</span>
+                </a>
             </nav>
-            
-            <!-- Logout Button -->
-            <div class="p-4 bg-slate-950 border-t border-slate-800">
-                <button id="btn-logout" class="w-full flex items-center justify-center px-4 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg transition-colors text-xl shadow-md">
-                    <i class="fa-solid fa-power-off mr-2"></i> ออกจากระบบ
+
+            <!-- ปุ่มออกจากระบบ -->
+            <div class="p-3 border-t border-slate-700 mt-auto">
+                <button id="btn-logout" class="w-full flex items-center justify-center px-4 py-2 bg-red-600/20 text-red-300 hover:bg-red-600 hover:text-white rounded-lg transition duration-200">
+                    <i class="fa-solid fa-arrow-right-from-bracket mr-2"></i>
+                    <span>ออกจากระบบ</span>
                 </button>
             </div>
         </aside>
 
-        <!-- Main Content Layout -->
-        <div class="flex-1 flex flex-col overflow-hidden w-full relative">
+        <!-- พื้นที่เนื้อหาหลัก (Main Content Area) -->
+        <div class="flex-1 flex flex-col min-w-0 bg-slate-50">
             
-            <!-- Top Navbar -->
-            <header class="h-16 bg-white shadow-sm flex items-center justify-between px-6 z-10 w-full border-b border-gray-200">
-                <div class="flex items-center">
-                    <button id="btn-toggle-sidebar" class="text-gray-500 hover:text-blue-700 focus:outline-none p-2 rounded-md hover:bg-gray-100 transition-colors">
-                        <i class="fa-solid fa-bars text-2xl"></i>
+            <!-- Top Navigation Bar -->
+            <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-4 lg:px-8 shadow-sm z-10">
+                <div class="flex items-center space-x-3">
+                    <button id="btn-toggle-sidebar" class="text-slate-600 hover:text-slate-900 focus:outline-none p-2 rounded-lg hover:bg-slate-100">
+                        <i class="fa-solid fa-bars text-xl"></i>
                     </button>
-                    <h2 id="topbar-title" class="ml-4 text-3xl font-bold text-gray-800 tracking-wide mt-1">หน้าหลัก (Dashboard)</h2>
+                    <h1 id="topbar-title" class="text-xl font-bold text-slate-800 tracking-tight">หน้าหลัก (Dashboard)</h1>
                 </div>
-                <div class="flex items-center space-x-6">
-                    <!-- Notifications -->
-                    <button class="relative text-gray-500 hover:text-blue-700 transition-colors focus:outline-none p-2 rounded-full hover:bg-gray-100">
-                        <i class="fa-solid fa-bell text-2xl"></i>
-                        <span class="absolute top-1 right-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white font-bold border-2 border-white">3</span>
-                    </button>
-                    <div class="h-8 w-px bg-gray-300"></div>
-                    <div class="text-right hidden md:block">
-                        <p class="text-xl font-bold text-gray-800 leading-none">ปีการศึกษา 2567</p>
-                        <p class="text-lg text-blue-600 font-medium mt-1">ภาคเรียนที่ 1</p>
+
+                <div class="flex items-center space-x-4">
+                    <div class="text-right hidden sm:block">
+                        <div class="text-xs font-semibold text-slate-500">ปีการศึกษา 2567</div>
+                        <div class="text-xs text-blue-600 font-medium">ภาคเรียนที่ 1</div>
+                    </div>
+                    <div class="h-8 w-px bg-slate-200 hidden sm:block"></div>
+                    <div class="relative">
+                        <button class="p-2 text-slate-500 hover:text-slate-700 rounded-full hover:bg-slate-100 relative">
+                            <i class="fa-solid fa-bell text-lg"></i>
+                            <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full"></span>
+                        </button>
                     </div>
                 </div>
             </header>
 
-            <!-- Main Views Container -->
-            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-slate-50 p-6 custom-scrollbar" id="main-content-area">
-                
-                <!-- ================== VIEW: 1. DASHBOARD ================== -->
-                <div id="view-dashboard" class="view-section active">
-                    
-                    <!-- Stats Cards -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
-                        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 border-l-4 border-l-blue-600 flex items-center justify-between hover:shadow-md transition-shadow">
-                            <div>
-                                <p class="text-gray-500 text-xl font-bold">นักเรียนทั้งหมด</p>
-                                <h3 class="text-4xl font-extrabold text-gray-800 mt-2" id="stat-total-students"><i class="fa-solid fa-spinner fa-spin text-lg text-gray-300"></i></h3>
-                            </div>
-                            <div class="w-16 h-16 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 text-3xl">
+            <!-- พื้นที่แสดงเนื้อหาเปลี่ยนตามเมนู (View Sections Wrapper) -->
+            <main class="flex-1 p-4 lg:p-8 overflow-y-auto custom-scrollbar">
+
+                <!-- 1. VIEW: DASHBOARD -->
+                <section id="view-dashboard" class="view-section active space-y-6">
+                    <!-- การ์ดสรุปสถิติ -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex items-center space-x-4">
+                            <div class="w-14 h-14 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-2xl font-bold">
                                 <i class="fa-solid fa-user-graduate"></i>
                             </div>
-                        </div>
-                        
-                        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 border-l-4 border-l-emerald-500 flex items-center justify-between hover:shadow-md transition-shadow">
                             <div>
-                                <p class="text-gray-500 text-xl font-bold">จำนวนครู / บุคลากร</p>
-                                <h3 class="text-4xl font-extrabold text-gray-800 mt-2" id="stat-total-teachers"><i class="fa-solid fa-spinner fa-spin text-lg text-gray-300"></i></h3>
+                                <p class="text-sm font-semibold text-slate-500">จำนวนนักเรียนทั้งหมด</p>
+                                <h3 id="stat-total-students" class="text-3xl font-bold text-slate-800">0</h3>
+                                <p class="text-xs text-emerald-600 mt-1"><i class="fa-solid fa-circle-check mr-1"></i>สถานะปกติ</p>
                             </div>
-                            <div class="w-16 h-16 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-500 text-3xl">
+                        </div>
+
+                        <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex items-center space-x-4">
+                            <div class="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-2xl font-bold">
                                 <i class="fa-solid fa-chalkboard-user"></i>
                             </div>
-                        </div>
-
-                        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 border-l-4 border-l-purple-500 flex items-center justify-between hover:shadow-md transition-shadow">
                             <div>
-                                <p class="text-gray-500 text-xl font-bold">จำนวนห้องเรียน</p>
-                                <h3 class="text-4xl font-extrabold text-gray-800 mt-2" id="stat-total-classes">45</h3>
-                            </div>
-                            <div class="w-16 h-16 rounded-full bg-purple-50 flex items-center justify-center text-purple-500 text-3xl">
-                                <i class="fa-solid fa-door-open"></i>
+                                <p class="text-sm font-semibold text-slate-500">จำนวนครูผู้สอน</p>
+                                <h3 id="stat-total-teachers" class="text-3xl font-bold text-slate-800">0</h3>
+                                <p class="text-xs text-slate-400 mt-1">ประจำปีการศึกษาปัจจุบัน</p>
                             </div>
                         </div>
 
-                        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 border-l-4 border-l-red-500 flex items-center justify-between hover:shadow-md transition-shadow">
+                        <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex items-center space-x-4">
+                            <div class="w-14 h-14 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center text-2xl font-bold">
+                                <i class="fa-solid fa-book"></i>
+                            </div>
                             <div>
-                                <p class="text-gray-500 text-xl font-bold">ขาดเรียนวันนี้</p>
-                                <h3 class="text-4xl font-extrabold text-red-600 mt-2" id="stat-absent-today">12</h3>
-                            </div>
-                            <div class="w-16 h-16 rounded-full bg-red-50 flex items-center justify-center text-red-500 text-3xl">
-                                <i class="fa-solid fa-user-xmark"></i>
+                                <p class="text-sm font-semibold text-slate-500">รายวิชาเปิดสอน</p>
+                                <h3 id="stat-total-classes" class="text-3xl font-bold text-slate-800">0</h3>
+                                <p class="text-xs text-slate-400 mt-1">วิชาพื้นฐานและเพิ่มเติม</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-                        <!-- กล่องแจ้งเตือนนักเรียนติด 0, ร, มส, มผ -->
-                        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
-                            <div class="flex justify-between items-center mb-5 pb-4 border-b border-gray-100">
-                                <h3 class="text-2xl font-bold text-gray-800 flex items-center">
-                                    <i class="fa-solid fa-triangle-exclamation text-orange-500 mr-3 text-2xl"></i> สถิติผลการเรียนผิดปกติ
-                                </h3>
-                                <button class="text-blue-600 font-bold hover:underline text-lg">ดูรายละเอียด</button>
-                            </div>
-                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-                                <div class="p-5 bg-red-50 rounded-xl border border-red-100 hover:bg-red-100 transition-colors cursor-pointer">
-                                    <p class="text-red-700 font-extrabold text-4xl">15</p>
-                                    <p class="text-gray-700 text-xl mt-2 font-bold">ติด 0</p>
-                                </div>
-                                <div class="p-5 bg-orange-50 rounded-xl border border-orange-100 hover:bg-orange-100 transition-colors cursor-pointer">
-                                    <p class="text-orange-700 font-extrabold text-4xl">8</p>
-                                    <p class="text-gray-700 text-xl mt-2 font-bold">ติด ร</p>
-                                </div>
-                                <div class="p-5 bg-yellow-50 rounded-xl border border-yellow-200 hover:bg-yellow-100 transition-colors cursor-pointer">
-                                    <p class="text-yellow-700 font-extrabold text-4xl">3</p>
-                                    <p class="text-gray-700 text-xl mt-2 font-bold">ติด มส</p>
-                                </div>
-                                <div class="p-5 bg-gray-100 rounded-xl border border-gray-200 hover:bg-gray-200 transition-colors cursor-pointer">
-                                    <p class="text-gray-700 font-extrabold text-4xl">0</p>
-                                    <p class="text-gray-700 text-xl mt-2 font-bold">ติด มผ</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- แจ้งเตือนงาน -->
-                        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
-                            <div class="flex justify-between items-center mb-5 pb-4 border-b border-gray-100">
-                                <h3 class="text-2xl font-bold text-gray-800 flex items-center">
-                                    <i class="fa-regular fa-bell text-blue-500 mr-3 text-2xl"></i> งานที่ต้องดำเนินการ
-                                </h3>
-                                <span class="bg-red-100 text-red-700 text-sm font-bold px-3 py-1 rounded-full border border-red-200">3 รายการ</span>
-                            </div>
-                            <ul class="space-y-4">
-                                <li class="flex items-start p-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors border border-gray-100">
-                                    <div class="mt-1 mr-4 bg-red-100 p-3 rounded-full flex-shrink-0">
-                                        <i class="fa-solid fa-pen-nib text-red-600 text-lg"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-gray-800 text-xl font-bold">ยังไม่ได้ส่งคะแนนเก็บครั้งที่ 1</p>
-                                        <p class="text-gray-600 text-lg">วิชาคณิตศาสตร์พื้นฐาน ม.3/2 (ครบกำหนดเมื่อวาน)</p>
-                                    </div>
-                                </li>
-                                <li class="flex items-start p-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors border border-gray-100">
-                                    <div class="mt-1 mr-4 bg-orange-100 p-3 rounded-full flex-shrink-0">
-                                        <i class="fa-solid fa-list-check text-orange-600 text-lg"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-gray-800 text-xl font-bold">ยังไม่ได้เช็กชื่อโฮมรูม</p>
-                                        <p class="text-gray-600 text-lg">ห้อง ม.5/1 ประจำวันที่ 21 พ.ย. 2567</p>
-                                    </div>
-                                </li>
-                                <li class="flex items-start p-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors border border-gray-100">
-                                    <div class="mt-1 mr-4 bg-blue-100 p-3 rounded-full flex-shrink-0">
-                                        <i class="fa-solid fa-file-signature text-blue-600 text-lg"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-gray-800 text-xl font-bold">อนุมัติคำขอลา</p>
-                                        <p class="text-gray-600 text-lg">มีคำขอลาป่วย 2 รายการ รอการอนุมัติจากคุณ</p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
+                    <!-- พื้นที่เนื้อหาเสริม Dashboard -->
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                        <h3 class="text-lg font-bold text-slate-800 mb-4 border-b pb-2">ระบบประชาสัมพันธ์ & ข่าวสาร</h3>
+                        <p class="text-slate-600">ยินดีต้อนรับเข้าสู่ระบบ ARAMS (Academic Registration and Assessment Management System)</p>
                     </div>
-                </div>
-                
-                <!-- ================== VIEW: 2. ทะเบียนนักเรียน ================== -->
-                <div id="view-registration" class="view-section hidden">
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-                        <div>
-                            <h3 class="text-3xl font-bold text-gray-800">ฐานข้อมูลนักเรียน</h3>
-                            <p class="text-gray-500 text-xl mt-1">จัดการประวัติ ย้ายห้อง เลื่อนชั้น และสถานะนักเรียน</p>
-                        </div>
-                        <div class="flex gap-2">
-                            <button class="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-lg shadow flex items-center text-xl font-bold transition-colors">
-                                <i class="fa-solid fa-file-import mr-2"></i> นำเข้า Excel
-                            </button>
-                            <button class="bg-blue-700 hover:bg-blue-800 text-white px-5 py-2.5 rounded-lg shadow flex items-center text-xl font-bold transition-colors">
-                                <i class="fa-solid fa-user-plus mr-2"></i> เพิ่มนักเรียนใหม่
+                </section>
+
+                <!-- 2. VIEW: STUDENTS -->
+                <section id="view-students" class="view-section hidden space-y-6">
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                            <h2 class="text-xl font-bold text-slate-800">ทะเบียนประวัตินักเรียน</h2>
+                            <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium shadow-sm transition">
+                                <i class="fa-solid fa-user-plus mr-2"></i>เพิ่มนักเรียนใหม่
                             </button>
                         </div>
-                    </div>
-
-                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5 mb-6 flex flex-col md:flex-row gap-4 items-end">
-                        <div class="flex-1 w-full relative">
-                            <label class="block text-gray-700 font-bold mb-2 text-lg">ค้นหานักเรียน</label>
-                            <div class="absolute bottom-0 left-0 pl-4 pb-3 flex items-center pointer-events-none">
-                                <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
-                            </div>
-                            <input type="text" class="w-full pl-12 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100 text-xl" placeholder="รหัสประจำตัว, ชื่อ-นามสกุล, เลขประชาชน...">
-                        </div>
-                        <div class="w-full md:w-48">
-                            <label class="block text-gray-700 font-bold mb-2 text-lg">ระดับชั้น</label>
-                            <select class="w-full py-2.5 px-4 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100 text-xl font-medium">
-                                <option value="">ทั้งหมด</option>
-                                <option value="ม.1">มัธยมศึกษาปีที่ 1</option>
-                                <option value="ม.2">มัธยมศึกษาปีที่ 2</option>
-                                <option value="ม.3">มัธยมศึกษาปีที่ 3</option>
-                            </select>
-                        </div>
-                        <div class="w-full md:w-40">
-                            <label class="block text-gray-700 font-bold mb-2 text-lg">ห้อง</label>
-                            <select class="w-full py-2.5 px-4 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100 text-xl font-medium">
-                                <option value="">ทั้งหมด</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                            </select>
-                        </div>
-                        <div class="w-full md:w-auto">
-                            <button class="w-full bg-gray-800 hover:bg-gray-900 text-white px-6 py-2.5 rounded-lg shadow font-bold text-xl transition-colors">
-                                ค้นหา
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
                         <div class="overflow-x-auto">
-                            <table class="min-w-full divide-y divide-gray-200">
-                                <thead class="bg-gray-50">
-                                    <tr>
-                                        <th scope="col" class="px-6 py-4 text-left font-bold text-gray-700 text-xl tracking-wider">รหัสนักเรียน</th>
-                                        <th scope="col" class="px-6 py-4 text-left font-bold text-gray-700 text-xl tracking-wider">ชื่อ - นามสกุล</th>
-                                        <th scope="col" class="px-6 py-4 text-center font-bold text-gray-700 text-xl tracking-wider">ชั้น/ห้อง</th>
-                                        <th scope="col" class="px-6 py-4 text-center font-bold text-gray-700 text-xl tracking-wider">สถานะ</th>
-                                        <th scope="col" class="px-6 py-4 text-center font-bold text-gray-700 text-xl tracking-wider">จัดการ</th>
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="bg-slate-100 border-b border-slate-200 text-slate-700 text-sm">
+                                        <th class="p-3">รหัสนักเรียน</th>
+                                        <th class="p-3">ชื่อ-นามสกุล</th>
+                                        <th class="p-3">ชั้น/ห้อง</th>
+                                        <th class="p-3">สถานะ</th>
+                                        <th class="p-3 text-center">จัดการ</th>
                                     </tr>
                                 </thead>
-                                <tbody class="bg-white divide-y divide-gray-200 text-gray-800" id="student-table-body">
-                                    <!-- ตัวอย่างข้อมูล Mockup 1 แถว -->
-                                    <tr class="hover:bg-blue-50 transition-colors">
-                                        <td class="px-6 py-4 whitespace-nowrap text-xl font-bold">67001</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-xl">เด็กชายเรียนดี ตั้งใจเรียน</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-xl text-center font-bold">ม.1/1</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-center">
-                                            <span class="px-3 py-1 inline-flex text-lg leading-5 font-bold rounded-full bg-green-100 text-green-800">
-                                                ปกติ
-                                            </span>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-center text-xl font-medium">
-                                            <button class="text-blue-600 hover:text-blue-900 mx-2" title="ดูประวัติ"><i class="fa-solid fa-address-card"></i></button>
-                                            <button class="text-amber-500 hover:text-amber-700 mx-2" title="แก้ไข"><i class="fa-solid fa-pen-to-square"></i></button>
-                                        </td>
+                                <tbody class="divide-y divide-slate-200 text-sm">
+                                    <tr>
+                                        <td class="p-3 text-slate-500" colspan="5">กำลังเชื่อมต่อตารางข้อมูลนักเรียน...</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
-                        <!-- Pagination -->
-                        <div class="bg-white px-4 py-3 border-t border-gray-200 flex items-center justify-between sm:px-6">
-                            <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-                                <div><p class="text-lg text-gray-700">แสดง <span class="font-bold">1</span> ถึง <span class="font-bold">1</span> จาก <span class="font-bold">1</span> รายการ</p></div>
-                                <div>
-                                    <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-                                        <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                                            <i class="fa-solid fa-chevron-left"></i>
-                                        </a>
-                                        <a href="#" aria-current="page" class="z-10 bg-blue-50 border-blue-500 text-blue-600 relative inline-flex items-center px-4 py-2 border text-lg font-bold">1</a>
-                                        <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                                            <i class="fa-solid fa-chevron-right"></i>
-                                        </a>
-                                    </nav>
-                                </div>
-                            </div>
-                        </div>
                     </div>
-                </div>
+                </section>
 
-                <!-- ================== VIEW: 3. โครงสร้างเมนูอื่นๆ (รอการเชื่อมต่อ API) ================== -->
-                <div id="view-coming-soon" class="view-section hidden">
-                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-12 flex flex-col items-center justify-center h-full min-h-[65vh] text-center">
-                        <div class="w-32 h-32 bg-slate-100 rounded-full flex items-center justify-center mb-6 shadow-inner border border-slate-200">
-                            <i class="fa-solid fa-laptop-code text-6xl text-slate-400"></i>
-                        </div>
-                        <h3 class="text-4xl font-bold text-gray-800 mb-4 tracking-wide" id="coming-soon-title">กำลังโหลดโมดูล...</h3>
-                        <p class="text-gray-500 text-2xl max-w-2xl">ส่วนระบบงานนี้เตรียมโครงสร้าง HTML/CSS ไว้เรียบร้อยแล้ว รอการเขียน JavaScript เชื่อมต่อ API (Google Apps Script) ในขั้นตอนต่อไป</p>
+                <!-- 3. VIEW: LEAVES -->
+                <section id="view-leaves" class="view-section hidden space-y-6">
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                        <h2 class="text-xl font-bold text-slate-800 mb-4">ระบบการลาและบันทึกใบลา</h2>
+                        <p class="text-slate-600">ส่วนจัดการการลาป่วย ลากิจ ของนักเรียนในสังกัด</p>
                     </div>
-                </div>
+                </section>
+
+                <!-- 4. VIEW: COURSES -->
+                <section id="view-courses" class="view-section hidden space-y-6">
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                        <h2 class="text-xl font-bold text-slate-800 mb-4">หลักสูตรและรายวิชา</h2>
+                        <p class="text-slate-600">จัดการรหัสวิชา กลุ่มสาระการเรียนรู้ และหน่วยกิต</p>
+                    </div>
+                </section>
+
+                <!-- 5. VIEW: CLASSES -->
+                <section id="view-classes" class="view-section hidden space-y-6">
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                        <h2 class="text-xl font-bold text-slate-800 mb-4">ตารางเรียนและการจัดชั้นเรียน</h2>
+                        <p class="text-slate-600">กำหนดห้องเรียน ตารางสอน และครูผู้สอนประจำวิชา</p>
+                    </div>
+                </section>
+
+                <!-- 6. VIEW: ENROLLMENTS -->
+                <section id="view-enrollments" class="view-section hidden space-y-6">
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                        <h2 class="text-xl font-bold text-slate-800 mb-4">การลงทะเบียนเรียน</h2>
+                        <p class="text-slate-600">จัดกลุ่มนักเรียนเข้าชั้นเรียนตามกลุ่มสาระวิชา</p>
+                    </div>
+                </section>
+
+                <!-- 7. VIEW: ATTENDANCE -->
+                <section id="view-attendance" class="view-section hidden space-y-6">
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                        <h2 class="text-xl font-bold text-slate-800 mb-4">ระบบบันทึกเวลาเรียน / เช็คชื่อ</h2>
+                        <p class="text-slate-600">บันทึก มา, สาย, ลา, ขาด ของนักเรียนรายคาบวิชา</p>
+                    </div>
+                </section>
+
+                <!-- 8. VIEW: GRADES -->
+                <section id="view-grades" class="view-section hidden space-y-6">
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                        <h2 class="text-xl font-bold text-slate-800 mb-4">บันทึกคะแนนและผลการเรียน</h2>
+                        <p class="text-slate-600">คำนวณคะแนนระหว่างภาค, ปลายภาค และการให้ระดับเกรด</p>
+                    </div>
+                </section>
+
+                <!-- 9. VIEW: REMEDIAL -->
+                <section id="view-remedial" class="view-section hidden space-y-6">
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                        <h2 class="text-xl font-bold text-slate-800 mb-4">ระบบติดตามการแก้ไขผลการเรียน (0, ร, มส, มผ)</h2>
+                        <p class="text-slate-600">บันทึกภาระงานแก้ ติดตามสถานะ และอนุมัติเกรดหลังการแก้ไข</p>
+                    </div>
+                </section>
+
+                <!-- 10. VIEW: DOCUMENTS -->
+                <section id="view-documents" class="view-section hidden space-y-6">
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                        <h2 class="text-xl font-bold text-slate-800 mb-4">ระบบออกเอกสารและใบรายงานผลการเรียน (ปพ.)</h2>
+                        <p class="text-slate-600">พิมพ์เอกสาร ปพ.1, ปพ.5, ปพ.6, ปพ.7 และ ปพ.8</p>
+                    </div>
+                </section>
+
+                <!-- 11. VIEW: ANNOUNCEMENTS -->
+                <section id="view-announcements" class="view-section hidden space-y-6">
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                        <h2 class="text-xl font-bold text-slate-800 mb-4">จัดการข่าวประชาสัมพันธ์</h2>
+                        <p class="text-slate-600">ประกาศข้อมูลข่าวสารภายในโรงเรียน</p>
+                    </div>
+                </section>
+
+                <!-- 12. VIEW: SETTINGS -->
+                <section id="view-settings" class="view-section hidden space-y-6">
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                        <h2 class="text-xl font-bold text-slate-800 mb-4">ตั้งค่าระบบ ARAMS</h2>
+                        <p class="text-slate-600">กำหนดปีการศึกษา ภาคเรียน ข้อมูลสถานศึกษา และสิทธิ์การใช้งาน</p>
+                    </div>
+                </section>
+
+                <!-- 13. VIEW FALLBACK: COMING SOON -->
+                <section id="view-coming-soon" class="view-section hidden">
+                    <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-12 text-center max-w-lg mx-auto my-8">
+                        <div class="w-16 h-16 rounded-full bg-slate-100 text-slate-400 inline-flex items-center justify-center text-3xl mb-4">
+                            <i class="fa-solid fa-laptop-code"></i>
+                        </div>
+                        <h2 id="coming-soon-title" class="text-xl font-bold text-slate-800 mb-2">ระบบกำลังพัฒนา</h2>
+                        <p class="text-slate-500 text-sm">ส่วนระบบงานนี้เตรียมโครงสร้างไว้เรียบร้อยแล้ว พร้อมสำหรับการพัฒนาโมดูลย่อยถัดไป</p>
+                    </div>
+                </section>
 
             </main>
         </div>
     </div>
 
-    <!-- Scripts -->
+    <!-- JavaScript Controller -->
     <script src="script.js"></script>
 </body>
 </html>
