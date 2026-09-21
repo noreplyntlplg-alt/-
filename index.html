@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARAMS - ระบบบริหารงานทะเบียนและวัดผล</title>
+    
+    <!-- ฟอนต์ Sarabun (มาตรฐานเว็บแทน TH Sarabun PSK) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome สำหรับไอคอน -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ================= Reset & Base Styles ================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Sarabun', sans-serif;
+        }
+
+        body {
+            background-color: #f3f4f6;
+            color: #374151;
+            font-size: 16px;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* ================= Utility Classes ================= */
+        .hidden { display: none !important; }
+        .text-center { text-align: center; }
+        .text-danger { color: #dc2626; }
+        .text-success { color: #16a34a; }
+        .mt-1 { margin-top: 0.5rem; }
+        .mt-2 { margin-top: 1rem; }
+        .mb-2 { margin-bottom: 1rem; }
+
+        /* ================= Login Page ================= */
+        #login-page {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        }
+
+        .login-card {
+            background-color: #ffffff;
+            padding: 2.5rem;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-header i {
+            font-size: 3rem;
+            color: #2563eb;
+            margin-bottom: 1rem;
+        }
+
+        .login-header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .login-header p {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #475569;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .btn {
+            display: inline-block;
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background-color: #2563eb;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #1d4ed8;
+        }
+
+        .btn:disabled {
+            background-color: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        /* ================= Dashboard Layout ================= */
+        #app-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background-color: #1e293b;
+            color: #f8fafc;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-header {
+            padding: 1.5rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid #334155;
+            background-color: #0f172a;
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .sidebar-header p {
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+
+        .sidebar-menu {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 1rem 0;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            color: #cbd5e1;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .menu-item:hover, .menu-item.active {
+            background-color: #2563eb;
+            color: #ffffff;
+            border-left: 4px solid #60a5fa;
+        }
+
+        .menu-item i {
+            width: 24px;
+            font-size: 1.1rem;
+            margin-right: 10px;
+        }
+
+        .sidebar-footer {
+            padding: 1rem;
+            border-top: 1px solid #334155;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            width: calc(100% - 260px);
+        }
+
+        /* Topbar */
+        .topbar {
+            height: 60px;
+            background-color: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-info {
+            text-align: right;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 1rem;
+        }
+
+        .user-role {
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        .btn-logout {
+            background: none;
+            border: none;
+            color: #ef4444;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: color 0.2s;
+        }
+
+        .btn-logout:hover {
+            color: #b91c1c;
+        }
+
+        /* Content Area */
+        .content-area {
+            padding: 2rem;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        .page-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 0.5rem;
+        }
+
+        /* Dashboard Cards */
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background-color: #ffffff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            border-left: 5px solid #2563eb;
+        }
+
+        .stat-card.success { border-color: #10b981; }
+        .stat-card.warning { border-color: #f59e0b; }
+        .stat-card.danger { border-color: #ef4444; }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            color: #cbd5e1;
+            margin-right: 1.5rem;
+        }
+
+        .stat-details h3 {
+            font-size: 0.9rem;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .stat-details p {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-top: 0.2rem;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- ================= หน้า Login ================= -->
+    <div id="login-page">
+        <div class="login-card">
+            <div class="login-header">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <h1>ARAMS</h1>
+                <p>ระบบบริหารงานทะเบียนและวัดผล</p>
+            </div>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username">ชื่อผู้ใช้งาน</label>
+                    <input type="text" id="username" class="form-control" placeholder="กรอกชื่อผู้ใช้งาน" required autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">รหัสผ่าน</label>
+                    <input type="password" id="password" class="form-control" placeholder="กรอกรหัสผ่าน" required autocomplete="current-password">
+                </div>
+                <div id="login-error" class="text-danger text-center mb-2 hidden">ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง</div>
+                <button type="submit" id="btn-login" class="btn">
+                    <span id="login-text">เข้าสู่ระบบ</span>
+                    <i id="login-spinner" class="fa-solid fa-spinner fa-spin hidden"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ================= หน้า Dashboard หลัก ================= -->
+    <div id="app-layout" class="hidden">
+        
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>ARAMS</h2>
+                <p>ระบบบริหารงานทะเบียน</p>
+            </div>
+            <div class="sidebar-menu">
+                <div class="menu-item active" onclick="loadPage('dashboard')">
+                    <i class="fa-solid fa-chart-pie"></i> หน้าหลัก (Dashboard)
+                </div>
+                <div class="menu-item" onclick="loadPage('students')">
+                    <i class="fa-solid fa-user-graduate"></i> งานทะเบียนนักเรียน
+                </div>
+                <div class="menu-item" onclick="loadPage('courses')">
+                    <i class="fa-solid fa-book"></i> งานหลักสูตรและรายวิชา
+                </div>
+                <div class="menu-item" onclick="loadPage('grading')">
+                    <i class="fa-solid fa-pen-to-square"></i> งานบันทึกคะแนน
+                </div>
+                <div class="menu-item" onclick="loadPage('assessment')">
+                    <i class="fa-solid fa-chart-line"></i> งานวัดและประเมินผล
+                </div>
+                <div class="menu-item" onclick="loadPage('remedial')">
+                    <i class="fa-solid fa-wrench"></i> งานแก้ผลการเรียน
+                </div>
+                <div class="menu-item" onclick="loadPage('attendance')">
+                    <i class="fa-solid fa-calendar-check"></i> งานการมาเรียน
+                </div>
+                <div class="menu-item" onclick="loadPage('leaves')">
+                    <i class="fa-solid fa-notes-medical"></i> งานลา
+                </div>
+                <div class="menu-item" onclick="loadPage('documents')">
+                    <i class="fa-solid fa-file-pdf"></i> งานออกเอกสาร (ปพ.)
+                </div>
+                <div class="menu-item" onclick="loadPage('settings')" id="menu-settings" style="display: none;">
+                    <i class="fa-solid fa-gear"></i> ตั้งค่าระบบ
+                </div>
+            </div>
+            <div class="sidebar-footer">
+                &copy; 2024 ARAMS System
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Topbar -->
+            <header class="topbar">
+                <div class="page-breadcrumb">
+                    <span id="current-date" style="color: #64748b; font-size: 0.9rem;"></span>
+                </div>
+                <div class="user-profile">
+                    <div class="user-info">
+                        <div class="user-name" id="display-fullname">กำลังโหลด...</div>
+                        <div class="user-role" id="display-role">ผู้ดูแลระบบ</div>
+                    </div>
+                    <button class="btn-logout" onclick="logout()" title="ออกจากระบบ">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Dynamic Content Area -->
+            <div class="content-area" id="main-view">
+                <!-- เนื้อหาจะถูกโหลดมาใส่ตรงนี้ด้วย JavaScript -->
+                <h1 class="page-title">ภาพรวมระบบ (Dashboard)</h1>
+                
+                <div class="grid-cards">
+                    <div class="stat-card">
+                        <i class="fa-solid fa-users stat-icon text-primary"></i>
+                        <div class="stat-details">
+                            <h3>นักเรียนทั้งหมด</h3>
+                            <p id="stat-students">...</p>
+                        </div>
+                    </div>
+                    <div class="stat-card success">
+                        <i class="fa-solid fa-chalkboard-user stat-icon"></i>
+                        <div class="stat-details">
+                            <h3>ครูบุคลากร</h3>
+                            <p id="stat-teachers">...</p>
+                        </div>
+                    </div>
+                    <div class="stat-card warning">
+                        <i class="fa-solid fa-book-open stat-icon"></i>
+                        <div class="stat-details">
+                            <h3>รายวิชาที่เปิดสอน</h3>
+                            <p id="stat-courses">...</p>
+                        </div>
+                    </div>
+                    <div class="stat-card danger">
+                        <i class="fa-solid fa-triangle-exclamation stat-icon"></i>
+                        <div class="stat-details">
+                            <h3>นักเรียนติด 0/ร/มส/มผ</h3>
+                            <p id="stat-abnormal">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- พื้นที่สำหรับกราฟหรือตารางรายการด่วนในอนาคต -->
+                <div style="background: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                    <h3 style="margin-bottom: 1rem; color: #1e293b;">ยินดีต้อนรับเข้าสู่ระบบ ARAMS</h3>
+                    <p style="color: #64748b; line-height: 1.6;">
+                        กรุณาเลือกเมนูทางด้านซ้ายเพื่อเริ่มต้นการทำงาน ระบบออกแบบมาให้รองรับการทำงานของฝ่ายวิชาการ งานทะเบียน และครูผู้สอนอย่างครบถ้วน
+                    </p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- ================= JavaScript Logic ================= -->
+    <script>
+        /**
+         * กรุณานำ URL ที่ได้จากการ Deploy Google Apps Script (Web App) มาวางที่นี่
+         */
+        const API_URL = "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
+
+        // DOM Elements
+        const loginPage = document.getElementById('login-page');
+        const appLayout = document.getElementById('app-layout');
+        const loginForm = document.getElementById('login-form');
+        const loginError = document.getElementById('login-error');
+        const btnLogin = document.getElementById('btn-login');
+        const loginText = document.getElementById('login-text');
+        const loginSpinner = document.getElementById('login-spinner');
+
+        // ฟังก์ชันเมื่อโหลดหน้าเว็บ
+        document.addEventListener('DOMContentLoaded', () => {
+            // แสดงวันที่ปัจจุบันที่ Topbar
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('current-date').textContent = new Date().toLocaleDateString('th-TH', options);
+
+            // เช็คว่าเคย Login ค้างไว้ไหม (Session)
+            const userData = sessionStorage.getItem('arams_user');
+            if (userData) {
+                const user = JSON.parse(userData);
+                showDashboard(user);
+            }
+        });
+
+        // จัดการฟอร์ม Login
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+
+            // เปลี่ยนสถานะปุ่ม
+            btnLogin.disabled = true;
+            loginText.textContent = 'กำลังเข้าสู่ระบบ...';
+            loginSpinner.classList.remove('hidden');
+            loginError.classList.add('hidden');
+
+            try {
+                // ถ้ายังไม่ได้ใส่ API_URL ให้จำลองการ Login ด้วย Admin พื้นฐานไปก่อนเพื่อเทส UI
+                if (API_URL === "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE") {
+                    console.warn("ยังไม่ได้ตั้งค่า API_URL จำลองการเข้าระบบสำหรับทดสอบ");
+                    setTimeout(() => {
+                        if(username === "sxaiq54" && password === "Sxxnga2011") {
+                            const mockUser = { userId: "USR-TEST", username: username, role: "Admin", fullName: "นายผู้ดูแลระบบ สูงสุด" };
+                            sessionStorage.setItem('arams_user', JSON.stringify(mockUser));
+                            showDashboard(mockUser);
+                        } else {
+                            showLoginError("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง (โหมดจำลอง)");
+                        }
+                    }, 1000);
+                    return;
+                }
+
+                // ส่ง Request ไปยัง Google Apps Script API
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        action: 'LOGIN',
+                        payload: { username, password }
+                    }),
+                    // ไม่ตั้ง header Content-Type สำหรับ GAS CORS
+                });
+
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    // เก็บข้อมูลลง Session
+                    sessionStorage.setItem('arams_user', JSON.stringify(result.data));
+                    showDashboard(result.data);
+                } else {
+                    showLoginError(result.message);
+                }
+
+            } catch (error) {
+                console.error("Login Error:", error);
+                showLoginError("เกิดข้อผิดพลาดในการเชื่อมต่อเซิร์ฟเวอร์");
+            }
+        });
+
+        function showLoginError(msg) {
+            loginError.textContent = msg;
+            loginError.classList.remove('hidden');
+            btnLogin.disabled = false;
+            loginText.textContent = 'เข้าสู่ระบบ';
+            loginSpinner.classList.add('hidden');
+        }
+
+        function showDashboard(user) {
+            // ซ่อนหน้า Login
+            loginPage.classList.add('hidden');
+            
+            // รีเซ็ตปุ่ม Login
+            btnLogin.disabled = false;
+            loginText.textContent = 'เข้าสู่ระบบ';
+            loginSpinner.classList.add('hidden');
+            loginForm.reset();
+
+            // แสดง Dashboard
+            appLayout.classList.remove('hidden');
+
+            // อัปเดตข้อมูลผู้ใช้
+            document.getElementById('display-fullname').textContent = user.fullName;
+            document.getElementById('display-role').textContent = user.role === "Admin" ? "ผู้ดูแลระบบ" : (user.role === "Teacher" ? "คุณครู" : user.role);
+
+            // ซ่อนเมนูตั้งค่าถ้าไม่ใช่ Admin
+            if (user.role === "Admin") {
+                document.getElementById('menu-settings').style.display = 'flex';
+            }
+
+            // ดึงข้อมูลสถิติ
+            fetchDashboardStats();
+        }
+
+        function logout() {
+            if (confirm("ต้องการออกจากระบบใช่หรือไม่?")) {
+                sessionStorage.removeItem('arams_user');
+                appLayout.classList.add('hidden');
+                loginPage.classList.remove('hidden');
+            }
+        }
+
+        async function fetchDashboardStats() {
+            if (API_URL === "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE") {
+                document.getElementById('stat-students').textContent = "1,250";
+                document.getElementById('stat-teachers').textContent = "85";
+                document.getElementById('stat-courses').textContent = "120";
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL}?action=GET_DASHBOARD_STATS`);
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    document.getElementById('stat-students').textContent = result.data.totalStudents;
+                    document.getElementById('stat-teachers').textContent = result.data.totalTeachers;
+                    document.getElementById('stat-courses').textContent = result.data.totalCourses;
+                }
+            } catch (error) {
+                console.error("Failed to fetch stats", error);
+            }
+        }
+
+        // ฟังก์ชันจัดการการเปลี่ยนหน้าเมนู (จำลอง SPA)
+        function loadPage(pageName) {
+            // อัปเดต UI เมนูที่เลือก
+            const menuItems = document.querySelectorAll('.menu-item');
+            menuItems.forEach(item => item.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+
+            // ในไฟล์ต่อไป เราจะเขียนฟังก์ชันดึง HTML ย่อยมาใส่ใน id="main-view"
+            // ตอนนี้แสดง Alert หรือเปลี่ยน Title ชั่วคราว
+            if(pageName !== 'dashboard') {
+                document.querySelector('.page-title').textContent = event.currentTarget.innerText;
+                document.querySelector('.grid-cards').style.display = 'none';
+            } else {
+                document.querySelector('.page-title').textContent = 'ภาพรวมระบบ (Dashboard)';
+                document.querySelector('.grid-cards').style.display = 'grid';
+                fetchDashboardStats();
+            }
+        }
+    </script>
+</body>
+</html>
