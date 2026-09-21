@@ -3,383 +3,273 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ARAMS - ระบบบริหารจัดการงานทะเบียนและวัดผลสถานศึกษา</title>
+    <title>ARAMS - ระบบบริหารงานทะเบียนและวัดผล</title>
     
-    <!-- Google Fonts: Sarabun -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.com/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- FontAwesome สำหรับไอคอน -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Custom Stylesheet -->
+    <!-- เชื่อมต่อไฟล์ CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-slate-100 text-slate-800 antialiased font-sans min-h-screen">
+<body>
 
-    <!-- ========================================== -->
-    <!-- 1. หน้าจอเข้าสู่ระบบ (LOGIN PAGE)           -->
-    <!-- ========================================== -->
-    <div id="login-page" class="min-h-screen flex items-center justify-center p-4 bg-slate-900">
-        <div class="max-w-md w-full bg-white rounded-xl shadow-2xl overflow-hidden border border-slate-200">
-            <!-- Header ส่วนบนของการ Login -->
-            <div class="bg-slate-800 p-6 text-center border-b border-slate-700">
-                <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-600 text-white mb-3 shadow-lg">
-                    <i class="fa-solid fa-graduation-cap text-3xl"></i>
-                </div>
-                <h1 class="text-2xl font-bold text-white tracking-wide">ARAMS</h1>
-                <p class="text-xs text-slate-400 mt-1">Academic Registration & Assessment Management System</p>
-                <p class="text-sm text-slate-300 mt-2 font-medium">ระบบบริหารจัดการงานทะเบียนและวัดผล</p>
+    <!-- ================= ระบบ Login ================= -->
+    <div id="login-container" class="login-wrapper">
+        <div class="login-box">
+            <div class="login-logo">
+                <i class="fa-solid fa-graduation-cap"></i>
             </div>
-
-            <!-- ฟอร์ม กรอกข้อมูล -->
-            <form id="login-form" class="p-6 space-y-5">
-                <!-- กล่องข้อความแจ้งเตือนความผิดพลาด -->
-                <div id="login-error" class="hidden bg-red-50 border-l-4 border-red-500 p-4 rounded text-sm text-red-700">
-                    <div class="flex items-center">
-                        <i class="fa-solid fa-circle-exclamation mr-2 text-red-500"></i>
-                        <span id="login-error-text">ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง</span>
-                    </div>
+            <h2>ARAMS</h2>
+            <p>ระบบบริหารงานทะเบียนและวัดผล</p>
+            <form id="login-form">
+                <div class="input-group">
+                    <label for="username"><i class="fa-solid fa-user"></i> ชื่อผู้ใช้งาน</label>
+                    <input type="text" id="username" name="username" placeholder="กรอกชื่อผู้ใช้งาน" required>
                 </div>
-
-                <div>
-                    <label for="username" class="block text-sm font-semibold text-slate-700 mb-1">ชื่อผู้ใช้งาน (Username)</label>
-                    <div class="relative">
-                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
-                            <i class="fa-solid fa-user"></i>
-                        </span>
-                        <input type="text" id="username" required autocomplete="username"
-                            class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-300 rounded-lg text-slate-800 text-base focus:outline-none focus:bg-white focus:border-blue-500 transition duration-200"
-                            placeholder="กรอกชื่อผู้ใช้งาน">
-                    </div>
+                <div class="input-group">
+                    <label for="password"><i class="fa-solid fa-lock"></i> รหัสผ่าน</label>
+                    <input type="password" id="password" name="password" placeholder="กรอกรหัสผ่าน" required>
                 </div>
-
-                <div>
-                    <label for="password" class="block text-sm font-semibold text-slate-700 mb-1">รหัสผ่าน (Password)</label>
-                    <div class="relative">
-                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
-                            <i class="fa-solid fa-lock"></i>
-                        </span>
-                        <input type="password" id="password" required autocomplete="current-password"
-                            class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-300 rounded-lg text-slate-800 text-base focus:outline-none focus:bg-white focus:border-blue-500 transition duration-200"
-                            placeholder="กรอกรหัสผ่าน">
-                    </div>
-                </div>
-
-                <div class="pt-2">
-                    <button type="submit" id="btn-login-submit"
-                        class="w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-semibold py-2.5 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-200 flex items-center justify-center">
-                        <i class="fa-solid fa-right-to-bracket mr-2"></i> เข้าสู่ระบบ
-                    </button>
-                </div>
+                <button type="submit" class="btn-login">เข้าสู่ระบบ</button>
             </form>
-            
-            <div class="bg-slate-50 px-6 py-3 border-t border-slate-100 text-center text-xs text-slate-500">
-                &copy; 2026 ARAMS. All rights reserved.
+            <div id="login-error" class="error-message" style="display: none;">
+                ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง
             </div>
         </div>
     </div>
 
-
-    <!-- ========================================== -->
-    <!-- 2. หน้าจอทำงานหลัก (MAIN APPLICATION)      -->
-    <!-- ========================================== -->
-    <div id="app-page" class="hidden min-h-screen flex flex-col lg:flex-row">
-
-        <!-- Sidebar เมนูด้านข้าง -->
-        <aside id="sidebar" class="w-full lg:w-64 bg-slate-800 text-slate-200 flex-shrink-0 transition-all duration-300 ease-in-out no-select border-r border-slate-700">
-            <!-- ยี่ห้อ / โลโก้ ระบบ -->
-            <div class="h-16 flex items-center px-6 bg-slate-900 text-white font-bold text-xl tracking-wider border-b border-slate-700">
-                <i class="fa-solid fa-graduation-cap text-blue-400 mr-3 text-2xl"></i>
-                <span>ARAMS SYSTEM</span>
+    <!-- ================= ระบบหลัก (Dashboard) ================= -->
+    <div id="app-container" class="app-wrapper" style="display: none;">
+        
+        <!-- แถบเมนูด้านซ้าย (Sidebar) -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <span>ARAMS</span>
             </div>
-
-            <!-- Profile ผู้ใช้งานย่อ -->
-            <div class="p-4 bg-slate-800/50 border-b border-slate-700/60 flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-lg border border-blue-500/30">
-                    <i class="fa-solid fa-user-gear"></i>
-                </div>
-                <div class="overflow-hidden">
-                    <div id="sidebar-user-name" class="font-semibold text-white text-base truncate">ผู้ดูแลระบบ</div>
-                    <div id="sidebar-user-role" class="text-xs text-blue-400 flex items-center mt-0.5">
-                        <i class="fa-solid fa-shield-halved mr-1 text-xs"></i> Admin
-                    </div>
+            <div class="user-info-sidebar">
+                <div class="avatar"><i class="fa-solid fa-circle-user"></i></div>
+                <div class="details">
+                    <span id="current-user-name">ผู้ดูแลระบบ</span>
+                    <span id="current-user-role" class="role-badge">Admin</span>
                 </div>
             </div>
+            
+            <ul class="sidebar-menu">
+                <li class="menu-title">เมนูหลัก</li>
+                
+                <!-- 1. หน้าหลัก / Dashboard -->
+                <li class="menu-item active" data-page="dashboard">
+                    <a href="#"><i class="fa-solid fa-house"></i> <span>หน้าหลัก / Dashboard</span></a>
+                </li>
+                
+                <!-- 2. งานทะเบียนนักเรียน -->
+                <li class="menu-item has-submenu">
+                    <a href="#"><i class="fa-solid fa-user-graduate"></i> <span>งานทะเบียนนักเรียน</span> <i class="fa-solid fa-chevron-down arrow"></i></a>
+                    <ul class="submenu">
+                        <li data-page="student-info"><a href="#">ข้อมูลนักเรียน</a></li>
+                        <li data-page="student-add"><a href="#">เพิ่ม/แก้ไขนักเรียน</a></li>
+                        <li data-page="class-management"><a href="#">การจัดชั้นเรียน/ย้ายห้อง</a></li>
+                        <li data-page="student-status"><a href="#">สถานะนักเรียน (จบ/ลาออก/ย้าย)</a></li>
+                        <li data-page="student-history"><a href="#">ประวัติการศึกษา</a></li>
+                    </ul>
+                </li>
+                
+                <!-- 3. งานหลักสูตรและรายวิชา -->
+                <li class="menu-item has-submenu">
+                    <a href="#"><i class="fa-solid fa-book"></i> <span>งานหลักสูตรและรายวิชา</span> <i class="fa-solid fa-chevron-down arrow"></i></a>
+                    <ul class="submenu">
+                        <li data-page="subject-manage"><a href="#">จัดการรายวิชา</a></li>
+                        <li data-page="schedule-manage"><a href="#">จัดตารางสอน</a></li>
+                        <li data-page="curriculum-structure"><a href="#">จัดโครงสร้างหลักสูตร</a></li>
+                    </ul>
+                </li>
+                
+                <!-- 4. งานบันทึกคะแนน -->
+                <li class="menu-item has-submenu">
+                    <a href="#"><i class="fa-solid fa-pen-to-square"></i> <span>งานบันทึกคะแนน</span> <i class="fa-solid fa-chevron-down arrow"></i></a>
+                    <ul class="submenu">
+                        <li data-page="score-entry"><a href="#">บันทึกคะแนนรายวิชา</a></li>
+                        <li data-page="score-check"><a href="#">ตรวจสอบคะแนนผิดปกติ</a></li>
+                        <li data-page="score-status"><a href="#">สถานะผลการเรียน (0/ร/มส/มผ)</a></li>
+                    </ul>
+                </li>
+                
+                <!-- 5. งานวัดและประเมินผล -->
+                <li class="menu-item has-submenu">
+                    <a href="#"><i class="fa-solid fa-chart-pie"></i> <span>งานวัดและประเมินผล</span> <i class="fa-solid fa-chevron-down arrow"></i></a>
+                    <ul class="submenu">
+                        <li data-page="grade-subject"><a href="#">ผลการเรียนรายวิชา</a></li>
+                        <li data-page="grade-semester"><a href="#">ผลการเรียนรายภาค/สะสม</a></li>
+                        <li data-page="grade-compare"><a href="#">เปรียบเทียบผลการเรียน</a></li>
+                        <li data-page="grade-report"><a href="#">รายงานผลการเรียน</a></li>
+                    </ul>
+                </li>
 
-            <!-- รายการเมนูหลัก -->
-            <nav class="p-3 space-y-1 custom-scrollbar overflow-y-auto max-h-[calc(100vh-8rem)]">
-                <a href="#" class="nav-link flex items-center px-4 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition duration-150" data-target="view-dashboard" data-title="หน้าหลัก (Dashboard)">
-                    <i class="fa-solid fa-chart-pie w-6 text-center text-slate-400 mr-2"></i>
-                    <span>หน้าหลัก (Dashboard)</span>
-                </a>
+                <!-- 6. งานแก้ผลการเรียน / แก้ตัว -->
+                <li class="menu-item has-submenu">
+                    <a href="#"><i class="fa-solid fa-wrench"></i> <span>งานแก้ผลการเรียน</span> <i class="fa-solid fa-chevron-down arrow"></i></a>
+                    <ul class="submenu">
+                        <li data-page="remedial-list"><a href="#">รายการที่ต้องแก้ (0/ร/มส/มผ)</a></li>
+                        <li data-page="remedial-process"><a href="#">การดำเนินการแก้ไข</a></li>
+                        <li data-page="remedial-history"><a href="#">ประวัติการแก้ผลการเรียน</a></li>
+                    </ul>
+                </li>
 
-                <div class="pt-2 pb-1 px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">งานข้อมูลนักเรียน</div>
-                <a href="#" class="nav-link flex items-center px-4 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition duration-150" data-target="view-students" data-title="จัดการข้อมูลนักเรียน">
-                    <i class="fa-solid fa-users-line w-6 text-center text-slate-400 mr-2"></i>
-                    <span>ข้อมูลนักเรียน</span>
-                </a>
-                <a href="#" class="nav-link flex items-center px-4 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition duration-150" data-target="view-leaves" data-title="ระบบการลาของนักเรียน">
-                    <i class="fa-solid fa-envelope-open-text w-6 text-center text-slate-400 mr-2"></i>
-                    <span>ระบบการลา</span>
-                </a>
+                <!-- 7. งานการมาเรียน -->
+                <li class="menu-item has-submenu">
+                    <a href="#"><i class="fa-solid fa-school"></i> <span>งานการมาเรียน</span> <i class="fa-solid fa-chevron-down arrow"></i></a>
+                    <ul class="submenu">
+                        <li data-page="attendance-check"><a href="#">เช็กการมาเรียน</a></li>
+                        <li data-page="attendance-summary"><a href="#">สรุปเวลาเรียนสะสม</a></li>
+                        <li data-page="attendance-report"><a href="#">รายงานการมาเรียน</a></li>
+                    </ul>
+                </li>
 
-                <div class="pt-2 pb-1 px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">งานวิชาการ & วัดผล</div>
-                <a href="#" class="nav-link flex items-center px-4 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition duration-150" data-target="view-courses" data-title="จัดการหลักสูตรและรายวิชา">
-                    <i class="fa-solid fa-book-bookmark w-6 text-center text-slate-400 mr-2"></i>
-                    <span>จัดการรายวิชา</span>
-                </a>
-                <a href="#" class="nav-link flex items-center px-4 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition duration-150" data-target="view-classes" data-title="ตารางเรียนและห้องเรียน">
-                    <i class="fa-solid fa-chalkboard w-6 text-center text-slate-400 mr-2"></i>
-                    <span>ตารางเรียน / จัดห้อง</span>
-                </a>
-                <a href="#" class="nav-link flex items-center px-4 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition duration-150" data-target="view-enrollments" data-title="การลงทะเบียนเรียน">
-                    <i class="fa-solid fa-clipboard-user w-6 text-center text-slate-400 mr-2"></i>
-                    <span>ลงทะเบียนเรียน</span>
-                </a>
-                <a href="#" class="nav-link flex items-center px-4 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition duration-150" data-target="view-attendance" data-title="บันทึกการเข้าเรียน">
-                    <i class="fa-solid fa-calendar-check w-6 text-center text-slate-400 mr-2"></i>
-                    <span>การเข้าเรียน</span>
-                </a>
-                <a href="#" class="nav-link flex items-center px-4 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition duration-150" data-target="view-grades" data-title="บันทึกและจัดการผลการเรียน">
-                    <i class="fa-solid fa-file-pen w-6 text-center text-slate-400 mr-2"></i>
-                    <span>บันทึกเกรด / ผลการเรียน</span>
-                </a>
-                <a href="#" class="nav-link flex items-center px-4 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition duration-150" data-target="view-remedial" data-title="งานติดตามและแก้ผลการเรียน (0, ร, มส)">
-                    <i class="fa-solid fa-triangle-exclamation w-6 text-center text-amber-400 mr-2"></i>
-                    <span>การแก้ไขผลการเรียน</span>
-                </a>
+                <!-- 8. งานลา -->
+                <li class="menu-item has-submenu">
+                    <a href="#"><i class="fa-solid fa-file-signature"></i> <span>งานลา</span> <i class="fa-solid fa-chevron-down arrow"></i></a>
+                    <ul class="submenu">
+                        <li data-page="leave-request"><a href="#">ระบบขอลา</a></li>
+                        <li data-page="leave-approve"><a href="#">อนุมัติการลา</a></li>
+                        <li data-page="leave-history"><a href="#">ประวัติการลา</a></li>
+                    </ul>
+                </li>
 
-                <div class="pt-2 pb-1 px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">งานเอกสาร & บริหาร</div>
-                <a href="#" class="nav-link flex items-center px-4 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition duration-150" data-target="view-documents" data-title="งานออกเอกสาร / ปพ.">
-                    <i class="fa-solid fa-file-certificate w-6 text-center text-slate-400 mr-2"></i>
-                    <span>ออกเอกสาร / ปพ.</span>
-                </a>
-                <a href="#" class="nav-link flex items-center px-4 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition duration-150" data-target="view-announcements" data-title="จัดการข่าวประชาสัมพันธ์">
-                    <i class="fa-solid fa-bullhorn w-6 text-center text-slate-400 mr-2"></i>
-                    <span>ข่าวประกาศ</span>
-                </a>
-                <a href="#" class="nav-link flex items-center px-4 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition duration-150" data-target="view-settings" data-title="ตั้งค่าระบบ">
-                    <i class="fa-solid fa-gears w-6 text-center text-slate-400 mr-2"></i>
-                    <span>ตั้งค่าระบบ</span>
-                </a>
-            </nav>
+                <!-- 9. งานออกเอกสาร / ใบรายงาน -->
+                <li class="menu-item has-submenu">
+                    <a href="#"><i class="fa-solid fa-file-contract"></i> <span>งานออกเอกสาร</span> <i class="fa-solid fa-chevron-down arrow"></i></a>
+                    <ul class="submenu">
+                        <li data-page="doc-academic"><a href="#">เอกสารผลการเรียน (ปพ.1,5,6)</a></li>
+                        <li data-page="doc-attendance"><a href="#">เอกสารการมาเรียน</a></li>
+                        <li data-page="doc-remedial"><a href="#">เอกสารแก้ผลการเรียน</a></li>
+                    </ul>
+                </li>
 
-            <!-- ปุ่มออกจากระบบ -->
-            <div class="p-3 border-t border-slate-700 mt-auto">
-                <button id="btn-logout" class="w-full flex items-center justify-center px-4 py-2 bg-red-600/20 text-red-300 hover:bg-red-600 hover:text-white rounded-lg transition duration-200">
-                    <i class="fa-solid fa-arrow-right-from-bracket mr-2"></i>
-                    <span>ออกจากระบบ</span>
-                </button>
-            </div>
+                <!-- 10. ระบบสำหรับครู -->
+                <li class="menu-item has-submenu">
+                    <a href="#"><i class="fa-solid fa-chalkboard-user"></i> <span>ระบบสำหรับครู</span> <i class="fa-solid fa-chevron-down arrow"></i></a>
+                    <ul class="submenu">
+                        <li data-page="teacher-dashboard"><a href="#">หน้าหลักครู</a></li>
+                        <li data-page="teacher-tasks"><a href="#">งานที่ต้องดำเนินการ</a></li>
+                        <li data-page="teacher-advisee"><a href="#">นักเรียนในความดูแล</a></li>
+                    </ul>
+                </li>
+
+                <!-- 11. ระบบสำหรับนักเรียน -->
+                <li class="menu-item has-submenu">
+                    <a href="#"><i class="fa-solid fa-user-pen"></i> <span>ระบบสำหรับนักเรียน</span> <i class="fa-solid fa-chevron-down arrow"></i></a>
+                    <ul class="submenu">
+                        <li data-page="student-dashboard"><a href="#">Dashboard นักเรียน</a></li>
+                        <li data-page="student-grades"><a href="#">ผลการเรียนของฉัน</a></li>
+                        <li data-page="student-attendance"><a href="#">การมาเรียน/การลา</a></li>
+                    </ul>
+                </li>
+
+                <!-- 12. ระบบสำหรับผู้ปกครอง -->
+                <li class="menu-item has-submenu">
+                    <a href="#"><i class="fa-solid fa-users"></i> <span>ระบบสำหรับผู้ปกครอง</span> <i class="fa-solid fa-chevron-down arrow"></i></a>
+                    <ul class="submenu">
+                        <li data-page="parent-dashboard"><a href="#">ข้อมูลบุตรหลาน</a></li>
+                        <li data-page="parent-alerts"><a href="#">แจ้งเตือนผลการเรียน/ขาดเรียน</a></li>
+                    </ul>
+                </li>
+
+                <li class="menu-title">การจัดการและสถิติ</li>
+
+                <!-- 13. รายงานสำหรับฝ่ายวิชาการ -->
+                <li class="menu-item has-submenu">
+                    <a href="#"><i class="fa-solid fa-chart-line"></i> <span>รายงานฝ่ายวิชาการ</span> <i class="fa-solid fa-chevron-down arrow"></i></a>
+                    <ul class="submenu">
+                        <li data-page="report-students"><a href="#">รายงานจำนวนนักเรียน</a></li>
+                        <li data-page="report-academic"><a href="#">รายงานผลการเรียน/GPA</a></li>
+                        <li data-page="report-attendance"><a href="#">รายงานสถิติการมาเรียน</a></li>
+                    </ul>
+                </li>
+
+                <!-- 14. ระบบสถิติและวิเคราะห์ข้อมูล -->
+                <li class="menu-item has-submenu">
+                    <a href="#"><i class="fa-solid fa-square-poll-vertical"></i> <span>สถิติและวิเคราะห์ข้อมูล</span> <i class="fa-solid fa-chevron-down arrow"></i></a>
+                    <ul class="submenu">
+                        <li data-page="stat-executive"><a href="#">Dashboard ผู้บริหาร</a></li>
+                        <li data-page="stat-graphs"><a href="#">กราฟวิเคราะห์ผลการเรียน</a></li>
+                    </ul>
+                </li>
+
+                <!-- 15. ระบบประกาศ -->
+                <li class="menu-item has-submenu">
+                    <a href="#"><i class="fa-solid fa-bullhorn"></i> <span>ระบบประกาศ</span> <i class="fa-solid fa-chevron-down arrow"></i></a>
+                    <ul class="submenu">
+                        <li data-page="announce-create"><a href="#">สร้างประกาศใหม่</a></li>
+                        <li data-page="announce-list"><a href="#">รายการประกาศทั้งหมด</a></li>
+                    </ul>
+                </li>
+
+                <!-- 16. ระบบแจ้งเตือน -->
+                <li class="menu-item" data-page="notifications">
+                    <a href="#"><i class="fa-solid fa-bell"></i> <span>ระบบแจ้งเตือน</span> <span class="badge" id="noti-badge">6</span></a>
+                </li>
+
+                <!-- 17. ผู้ใช้งานและสิทธิ์ -->
+                <li class="menu-item has-submenu">
+                    <a href="#"><i class="fa-solid fa-user-shield"></i> <span>ผู้ใช้งานและสิทธิ์</span> <i class="fa-solid fa-chevron-down arrow"></i></a>
+                    <ul class="submenu">
+                        <li data-page="user-manage"><a href="#">จัดการผู้ใช้งาน</a></li>
+                        <li data-page="role-manage"><a href="#">จัดการสิทธิ์ (Role)</a></li>
+                    </ul>
+                </li>
+
+                <!-- 18. ตั้งค่าระบบ -->
+                <li class="menu-item has-submenu">
+                    <a href="#"><i class="fa-solid fa-gear"></i> <span>ตั้งค่าระบบ</span> <i class="fa-solid fa-chevron-down arrow"></i></a>
+                    <ul class="submenu">
+                        <li data-page="setting-school"><a href="#">ข้อมูลโรงเรียน</a></li>
+                        <li data-page="setting-academic"><a href="#">ตั้งค่าปีการศึกษา/เกณฑ์</a></li>
+                        <li data-page="setting-document"><a href="#">รูปแบบเอกสาร/ลายเซ็น</a></li>
+                    </ul>
+                </li>
+
+                <li class="menu-item mt-auto" id="btn-logout">
+                    <a href="#" class="text-danger"><i class="fa-solid fa-right-from-bracket"></i> <span>ออกจากระบบ</span></a>
+                </li>
+            </ul>
         </aside>
 
-        <!-- พื้นที่เนื้อหาหลัก (Main Content Area) -->
-        <div class="flex-1 flex flex-col min-w-0 bg-slate-50">
-            
-            <!-- Top Navigation Bar -->
-            <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-4 lg:px-8 shadow-sm z-10">
-                <div class="flex items-center space-x-3">
-                    <button id="btn-toggle-sidebar" class="text-slate-600 hover:text-slate-900 focus:outline-none p-2 rounded-lg hover:bg-slate-100">
-                        <i class="fa-solid fa-bars text-xl"></i>
-                    </button>
-                    <h1 id="topbar-title" class="text-xl font-bold text-slate-800 tracking-tight">หน้าหลัก (Dashboard)</h1>
+        <!-- พื้นที่แสดงผลหลัก (Main Content) -->
+        <main class="main-content">
+            <!-- แถบด้านบน (Topbar) -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button id="toggle-sidebar" class="btn-icon"><i class="fa-solid fa-bars"></i></button>
+                    <h2 id="page-title">หน้าหลัก / Dashboard</h2>
                 </div>
-
-                <div class="flex items-center space-x-4">
-                    <div class="text-right hidden sm:block">
-                        <div class="text-xs font-semibold text-slate-500">ปีการศึกษา 2567</div>
-                        <div class="text-xs text-blue-600 font-medium">ภาคเรียนที่ 1</div>
+                <div class="topbar-right">
+                    <div class="academic-year-selector">
+                        <span class="label">ปีการศึกษา:</span>
+                        <select id="global-academic-year">
+                            <option value="2567/1" selected>2567 ภาคเรียนที่ 1</option>
+                            <option value="2566/2">2566 ภาคเรียนที่ 2</option>
+                        </select>
                     </div>
-                    <div class="h-8 w-px bg-slate-200 hidden sm:block"></div>
-                    <div class="relative">
-                        <button class="p-2 text-slate-500 hover:text-slate-700 rounded-full hover:bg-slate-100 relative">
-                            <i class="fa-solid fa-bell text-lg"></i>
-                            <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full"></span>
-                        </button>
-                    </div>
+                    <button class="btn-icon noti-btn"><i class="fa-solid fa-bell"></i><span class="dot"></span></button>
                 </div>
             </header>
 
-            <!-- พื้นที่แสดงเนื้อหาเปลี่ยนตามเมนู (View Sections Wrapper) -->
-            <main class="flex-1 p-4 lg:p-8 overflow-y-auto custom-scrollbar">
+            <!-- พื้นที่สำหรับแสดงข้อมูลของแต่ละหน้า (Dynamic Content Injection) -->
+            <div id="page-content" class="page-container">
+                <!-- โหลดหน้าโหลดข้อมูล (Loading Spinner) -->
+                <div id="loading-spinner" class="loading-wrapper" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>กำลังประมวลผล...</p>
+                </div>
 
-                <!-- 1. VIEW: DASHBOARD -->
-                <section id="view-dashboard" class="view-section active space-y-6">
-                    <!-- การ์ดสรุปสถิติ -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex items-center space-x-4">
-                            <div class="w-14 h-14 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-2xl font-bold">
-                                <i class="fa-solid fa-user-graduate"></i>
-                            </div>
-                            <div>
-                                <p class="text-sm font-semibold text-slate-500">จำนวนนักเรียนทั้งหมด</p>
-                                <h3 id="stat-total-students" class="text-3xl font-bold text-slate-800">0</h3>
-                                <p class="text-xs text-emerald-600 mt-1"><i class="fa-solid fa-circle-check mr-1"></i>สถานะปกติ</p>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex items-center space-x-4">
-                            <div class="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-2xl font-bold">
-                                <i class="fa-solid fa-chalkboard-user"></i>
-                            </div>
-                            <div>
-                                <p class="text-sm font-semibold text-slate-500">จำนวนครูผู้สอน</p>
-                                <h3 id="stat-total-teachers" class="text-3xl font-bold text-slate-800">0</h3>
-                                <p class="text-xs text-slate-400 mt-1">ประจำปีการศึกษาปัจจุบัน</p>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex items-center space-x-4">
-                            <div class="w-14 h-14 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center text-2xl font-bold">
-                                <i class="fa-solid fa-book"></i>
-                            </div>
-                            <div>
-                                <p class="text-sm font-semibold text-slate-500">รายวิชาเปิดสอน</p>
-                                <h3 id="stat-total-classes" class="text-3xl font-bold text-slate-800">0</h3>
-                                <p class="text-xs text-slate-400 mt-1">วิชาพื้นฐานและเพิ่มเติม</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- พื้นที่เนื้อหาเสริม Dashboard -->
-                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-                        <h3 class="text-lg font-bold text-slate-800 mb-4 border-b pb-2">ระบบประชาสัมพันธ์ & ข่าวสาร</h3>
-                        <p class="text-slate-600">ยินดีต้อนรับเข้าสู่ระบบ ARAMS (Academic Registration and Assessment Management System)</p>
-                    </div>
-                </section>
-
-                <!-- 2. VIEW: STUDENTS -->
-                <section id="view-students" class="view-section hidden space-y-6">
-                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-                            <h2 class="text-xl font-bold text-slate-800">ทะเบียนประวัตินักเรียน</h2>
-                            <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium shadow-sm transition">
-                                <i class="fa-solid fa-user-plus mr-2"></i>เพิ่มนักเรียนใหม่
-                            </button>
-                        </div>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left border-collapse">
-                                <thead>
-                                    <tr class="bg-slate-100 border-b border-slate-200 text-slate-700 text-sm">
-                                        <th class="p-3">รหัสนักเรียน</th>
-                                        <th class="p-3">ชื่อ-นามสกุล</th>
-                                        <th class="p-3">ชั้น/ห้อง</th>
-                                        <th class="p-3">สถานะ</th>
-                                        <th class="p-3 text-center">จัดการ</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-slate-200 text-sm">
-                                    <tr>
-                                        <td class="p-3 text-slate-500" colspan="5">กำลังเชื่อมต่อตารางข้อมูลนักเรียน...</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- 3. VIEW: LEAVES -->
-                <section id="view-leaves" class="view-section hidden space-y-6">
-                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-                        <h2 class="text-xl font-bold text-slate-800 mb-4">ระบบการลาและบันทึกใบลา</h2>
-                        <p class="text-slate-600">ส่วนจัดการการลาป่วย ลากิจ ของนักเรียนในสังกัด</p>
-                    </div>
-                </section>
-
-                <!-- 4. VIEW: COURSES -->
-                <section id="view-courses" class="view-section hidden space-y-6">
-                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-                        <h2 class="text-xl font-bold text-slate-800 mb-4">หลักสูตรและรายวิชา</h2>
-                        <p class="text-slate-600">จัดการรหัสวิชา กลุ่มสาระการเรียนรู้ และหน่วยกิต</p>
-                    </div>
-                </section>
-
-                <!-- 5. VIEW: CLASSES -->
-                <section id="view-classes" class="view-section hidden space-y-6">
-                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-                        <h2 class="text-xl font-bold text-slate-800 mb-4">ตารางเรียนและการจัดชั้นเรียน</h2>
-                        <p class="text-slate-600">กำหนดห้องเรียน ตารางสอน และครูผู้สอนประจำวิชา</p>
-                    </div>
-                </section>
-
-                <!-- 6. VIEW: ENROLLMENTS -->
-                <section id="view-enrollments" class="view-section hidden space-y-6">
-                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-                        <h2 class="text-xl font-bold text-slate-800 mb-4">การลงทะเบียนเรียน</h2>
-                        <p class="text-slate-600">จัดกลุ่มนักเรียนเข้าชั้นเรียนตามกลุ่มสาระวิชา</p>
-                    </div>
-                </section>
-
-                <!-- 7. VIEW: ATTENDANCE -->
-                <section id="view-attendance" class="view-section hidden space-y-6">
-                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-                        <h2 class="text-xl font-bold text-slate-800 mb-4">ระบบบันทึกเวลาเรียน / เช็คชื่อ</h2>
-                        <p class="text-slate-600">บันทึก มา, สาย, ลา, ขาด ของนักเรียนรายคาบวิชา</p>
-                    </div>
-                </section>
-
-                <!-- 8. VIEW: GRADES -->
-                <section id="view-grades" class="view-section hidden space-y-6">
-                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-                        <h2 class="text-xl font-bold text-slate-800 mb-4">บันทึกคะแนนและผลการเรียน</h2>
-                        <p class="text-slate-600">คำนวณคะแนนระหว่างภาค, ปลายภาค และการให้ระดับเกรด</p>
-                    </div>
-                </section>
-
-                <!-- 9. VIEW: REMEDIAL -->
-                <section id="view-remedial" class="view-section hidden space-y-6">
-                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-                        <h2 class="text-xl font-bold text-slate-800 mb-4">ระบบติดตามการแก้ไขผลการเรียน (0, ร, มส, มผ)</h2>
-                        <p class="text-slate-600">บันทึกภาระงานแก้ ติดตามสถานะ และอนุมัติเกรดหลังการแก้ไข</p>
-                    </div>
-                </section>
-
-                <!-- 10. VIEW: DOCUMENTS -->
-                <section id="view-documents" class="view-section hidden space-y-6">
-                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-                        <h2 class="text-xl font-bold text-slate-800 mb-4">ระบบออกเอกสารและใบรายงานผลการเรียน (ปพ.)</h2>
-                        <p class="text-slate-600">พิมพ์เอกสาร ปพ.1, ปพ.5, ปพ.6, ปพ.7 และ ปพ.8</p>
-                    </div>
-                </section>
-
-                <!-- 11. VIEW: ANNOUNCEMENTS -->
-                <section id="view-announcements" class="view-section hidden space-y-6">
-                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-                        <h2 class="text-xl font-bold text-slate-800 mb-4">จัดการข่าวประชาสัมพันธ์</h2>
-                        <p class="text-slate-600">ประกาศข้อมูลข่าวสารภายในโรงเรียน</p>
-                    </div>
-                </section>
-
-                <!-- 12. VIEW: SETTINGS -->
-                <section id="view-settings" class="view-section hidden space-y-6">
-                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-                        <h2 class="text-xl font-bold text-slate-800 mb-4">ตั้งค่าระบบ ARAMS</h2>
-                        <p class="text-slate-600">กำหนดปีการศึกษา ภาคเรียน ข้อมูลสถานศึกษา และสิทธิ์การใช้งาน</p>
-                    </div>
-                </section>
-
-                <!-- 13. VIEW FALLBACK: COMING SOON -->
-                <section id="view-coming-soon" class="view-section hidden">
-                    <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-12 text-center max-w-lg mx-auto my-8">
-                        <div class="w-16 h-16 rounded-full bg-slate-100 text-slate-400 inline-flex items-center justify-center text-3xl mb-4">
-                            <i class="fa-solid fa-laptop-code"></i>
-                        </div>
-                        <h2 id="coming-soon-title" class="text-xl font-bold text-slate-800 mb-2">ระบบกำลังพัฒนา</h2>
-                        <p class="text-slate-500 text-sm">ส่วนระบบงานนี้เตรียมโครงสร้างไว้เรียบร้อยแล้ว พร้อมสำหรับการพัฒนาโมดูลย่อยถัดไป</p>
-                    </div>
-                </section>
-
-            </main>
-        </div>
+                <!-- เนื้อหาจะถูกแทรกที่นี่โดย app.js -->
+                <div id="dynamic-view"></div>
+            </div>
+        </main>
     </div>
 
-    <!-- JavaScript Controller -->
-    <script src="script.js"></script>
+    <!-- ไฟล์ Script หลัก -->
+    <script src="app.js"></script>
 </body>
 </html>
