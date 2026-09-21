@@ -1,0 +1,115 @@
+/* 
+ * ARAMS (Academic Registration and Assessment Management System)
+ * Custom Stylesheet 
+ */
+
+/* =========================================
+   1. การตั้งค่า Font หลัก (TH Sarabun) 
+   ========================================= */
+body {
+    font-family: 'Sarabun', sans-serif;
+    /* ฟอนต์ TH Sarabun มักจะดูเล็กกว่าปกติเมื่ออยู่บนหน้าจอ 
+       ดังนั้นจึงตั้งค่า Base font ให้อ่านง่าย */
+    font-size: 1.125rem; /* เทียบเท่า 18px */
+    line-height: 1.6;
+    letter-spacing: 0.01em;
+}
+
+/* ปรับขนาดฟอนต์สำหรับหัวข้อให้ใหญ่และชัดเจนขึ้น */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Sarabun', sans-serif;
+    font-weight: 700;
+}
+
+/* =========================================
+   2. การจัดการ View Sections (Single Page App) 
+   ========================================= */
+.view-section {
+    display: none;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+.view-section.active {
+    display: block;
+}
+
+/* แอนิเมชันตอนสลับหน้าจอ */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================================
+   3. Custom Scrollbar (มินิมอล และเป็นทางการ) 
+   ========================================= */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #cbd5e1; /* สีเทาอ่อน (Tailwind slate-300) */
+    border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #94a3b8; /* สีเทาเข้มขึ้น (Tailwind slate-400) */
+}
+
+/* สำหรับ Firefox */
+.custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 transparent;
+}
+
+/* =========================================
+   4. Sidebar Active Link Styling 
+   ========================================= */
+/* เมื่อเมนูถูกเลือก (Active) ให้เปลี่ยนสีพื้นหลังและสีตัวอักษร */
+.nav-link.active {
+    background-color: #1e293b; /* Tailwind slate-800 */
+    color: #ffffff;
+    font-weight: 700;
+    border-left: 4px solid #3b82f6; /* Tailwind blue-500 */
+    padding-left: 0.75rem; /* ปรับชดเชยความกว้างของ border */
+}
+
+/* ปรับไอคอนของเมนูที่ถูกเลือกให้เป็นสีน้ำเงินสว่าง */
+.nav-link.active i {
+    color: #60a5fa; /* Tailwind blue-400 */
+}
+
+/* =========================================
+   5. Utility Classes เพิ่มเติม
+   ========================================= */
+/* ป้องกันการคลุมดำข้อความบนปุ่มหรือเมนู */
+.no-select {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* ตกแต่งตารางเพิ่มเติม */
+table th {
+    letter-spacing: 0.05em;
+}
+
+table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+/* ตกแต่ง Input เมื่อ Focus */
+input:focus, select:focus {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); /* Soft blue glow */
+}
