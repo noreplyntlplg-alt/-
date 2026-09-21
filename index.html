@@ -3,623 +3,440 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ARAMS - ระบบบริหารงานทะเบียนและวัดผล</title>
+    <title>ARAMS - ระบบบริหารงานทะเบียนและวัดผล (Academic Registration and Assessment Management System)</title>
     
-    <!-- ฟอนต์ Sarabun (มาตรฐานเว็บแทน TH Sarabun PSK) -->
+    <!-- Google Fonts: TH Sarabun PSK -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
     
-    <!-- FontAwesome สำหรับไอคอน -->
+    <!-- FontAwesome (Icons) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS (โทนทางการ มินิมอล) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
 
-    <style>
-        /* ================= Reset & Base Styles ================= */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Sarabun', sans-serif;
-        }
-
-        body {
-            background-color: #f3f4f6;
-            color: #374151;
-            font-size: 16px;
-            overflow-x: hidden;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        /* ================= Utility Classes ================= */
-        .hidden { display: none !important; }
-        .text-center { text-align: center; }
-        .text-danger { color: #dc2626; }
-        .text-success { color: #16a34a; }
-        .mt-1 { margin-top: 0.5rem; }
-        .mt-2 { margin-top: 1rem; }
-        .mb-2 { margin-bottom: 1rem; }
-
-        /* ================= Login Page ================= */
-        #login-page {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-        }
-
-        .login-card {
-            background-color: #ffffff;
-            padding: 2.5rem;
-            border-radius: 8px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            max-width: 400px;
-        }
-
-        .login-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .login-header i {
-            font-size: 3rem;
-            color: #2563eb;
-            margin-bottom: 1rem;
-        }
-
-        .login-header h1 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #1e293b;
-        }
-
-        .login-header p {
-            color: #64748b;
-            font-size: 0.9rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.25rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: #475569;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 1px solid #cbd5e1;
-            border-radius: 4px;
-            font-size: 1rem;
-            transition: border-color 0.2s;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: #2563eb;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-
-        .btn {
-            display: inline-block;
-            width: 100%;
-            padding: 0.75rem 1rem;
-            background-color: #2563eb;
-            color: #ffffff;
-            border: none;
-            border-radius: 4px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-        .btn:hover {
-            background-color: #1d4ed8;
-        }
-
-        .btn:disabled {
-            background-color: #94a3b8;
-            cursor: not-allowed;
-        }
-
-        /* ================= Dashboard Layout ================= */
-        #app-layout {
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            width: 260px;
-            background-color: #1e293b;
-            color: #f8fafc;
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.3s ease;
-        }
-
-        .sidebar-header {
-            padding: 1.5rem 1rem;
-            text-align: center;
-            border-bottom: 1px solid #334155;
-            background-color: #0f172a;
-        }
-
-        .sidebar-header h2 {
-            font-size: 1.4rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
-
-        .sidebar-header p {
-            font-size: 0.8rem;
-            color: #94a3b8;
-        }
-
-        .sidebar-menu {
-            flex-grow: 1;
-            overflow-y: auto;
-            padding: 1rem 0;
-        }
-
-        .menu-item {
-            display: flex;
-            align-items: center;
-            padding: 0.75rem 1.5rem;
-            color: #cbd5e1;
-            transition: all 0.2s;
-            cursor: pointer;
-        }
-
-        .menu-item:hover, .menu-item.active {
-            background-color: #2563eb;
-            color: #ffffff;
-            border-left: 4px solid #60a5fa;
-        }
-
-        .menu-item i {
-            width: 24px;
-            font-size: 1.1rem;
-            margin-right: 10px;
-        }
-
-        .sidebar-footer {
-            padding: 1rem;
-            border-top: 1px solid #334155;
-            text-align: center;
-            font-size: 0.8rem;
-            color: #64748b;
-        }
-
-        /* Main Content */
-        .main-content {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            width: calc(100% - 260px);
-        }
-
-        /* Topbar */
-        .topbar {
-            height: 60px;
-            background-color: #ffffff;
-            border-bottom: 1px solid #e2e8f0;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 2rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-        }
-
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .user-info {
-            text-align: right;
-        }
-
-        .user-name {
-            font-weight: 600;
-            color: #1e293b;
-            font-size: 1rem;
-        }
-
-        .user-role {
-            font-size: 0.8rem;
-            color: #64748b;
-        }
-
-        .btn-logout {
-            background: none;
-            border: none;
-            color: #ef4444;
-            cursor: pointer;
-            font-size: 1.2rem;
-            transition: color 0.2s;
-        }
-
-        .btn-logout:hover {
-            color: #b91c1c;
-        }
-
-        /* Content Area */
-        .content-area {
-            padding: 2rem;
-            flex-grow: 1;
-            overflow-y: auto;
-        }
-
-        .page-title {
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 1.5rem;
-            border-bottom: 2px solid #e2e8f0;
-            padding-bottom: 0.5rem;
-        }
-
-        /* Dashboard Cards */
-        .grid-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .stat-card {
-            background-color: #ffffff;
-            padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            display: flex;
-            align-items: center;
-            border-left: 5px solid #2563eb;
-        }
-
-        .stat-card.success { border-color: #10b981; }
-        .stat-card.warning { border-color: #f59e0b; }
-        .stat-card.danger { border-color: #ef4444; }
-
-        .stat-icon {
-            font-size: 2.5rem;
-            color: #cbd5e1;
-            margin-right: 1.5rem;
-        }
-
-        .stat-details h3 {
-            font-size: 0.9rem;
-            color: #64748b;
-            font-weight: 500;
-        }
-
-        .stat-details p {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #1e293b;
-            margin-top: 0.2rem;
-        }
-
-    </style>
 </head>
-<body>
+<body class="bg-gray-50 text-gray-800 antialiased">
 
-    <!-- ================= หน้า Login ================= -->
-    <div id="login-page">
-        <div class="login-card">
-            <div class="login-header">
-                <i class="fa-solid fa-graduation-cap"></i>
-                <h1>ARAMS</h1>
-                <p>ระบบบริหารงานทะเบียนและวัดผล</p>
+    <!-- ==================== 1. หน้าเข้าสู่ระบบ (Login) ==================== -->
+    <div id="login-page" class="min-h-screen flex items-center justify-center bg-slate-800 relative overflow-hidden">
+        <!-- Background Decoration -->
+        <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+            <i class="fa-solid fa-graduation-cap absolute text-9xl top-10 left-10 transform -rotate-12"></i>
+            <i class="fa-solid fa-book-open absolute text-9xl bottom-20 right-20 transform rotate-12"></i>
+        </div>
+
+        <div class="bg-white p-10 rounded-xl shadow-2xl w-full max-w-md z-10 border-t-4 border-blue-700">
+            <div class="text-center mb-8">
+                <div class="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4 border border-blue-100">
+                    <i class="fa-solid fa-building-columns text-4xl text-blue-700"></i>
+                </div>
+                <h1 class="text-4xl font-bold text-gray-800 tracking-tight">ARAMS</h1>
+                <p class="text-gray-500 mt-2 text-xl font-medium">ระบบบริหารงานทะเบียนและวัดผล</p>
             </div>
+            
             <form id="login-form">
-                <div class="form-group">
-                    <label for="username">ชื่อผู้ใช้งาน</label>
-                    <input type="text" id="username" class="form-control" placeholder="กรอกชื่อผู้ใช้งาน" required autocomplete="username">
+                <div class="mb-5">
+                    <label for="username" class="block text-gray-700 font-bold mb-2 text-lg">ชื่อผู้ใช้งาน</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <i class="fa-solid fa-user text-gray-400"></i>
+                        </div>
+                        <input type="text" id="username" class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100 transition-all text-lg" placeholder="ระบุชื่อผู้ใช้งาน" required>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="password">รหัสผ่าน</label>
-                    <input type="password" id="password" class="form-control" placeholder="กรอกรหัสผ่าน" required autocomplete="current-password">
+                
+                <div class="mb-6">
+                    <label for="password" class="block text-gray-700 font-bold mb-2 text-lg">รหัสผ่าน</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <i class="fa-solid fa-lock text-gray-400"></i>
+                        </div>
+                        <input type="password" id="password" class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100 transition-all text-lg" placeholder="ระบุรหัสผ่าน" required>
+                    </div>
                 </div>
-                <div id="login-error" class="text-danger text-center mb-2 hidden">ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง</div>
-                <button type="submit" id="btn-login" class="btn">
-                    <span id="login-text">เข้าสู่ระบบ</span>
-                    <i id="login-spinner" class="fa-solid fa-spinner fa-spin hidden"></i>
+                
+                <button id="btn-login-submit" type="submit" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-3 px-4 rounded-lg transition duration-200 text-xl flex justify-center items-center shadow-md hover:shadow-lg">
+                    <span>เข้าสู่ระบบ</span> <i class="fa-solid fa-arrow-right-to-bracket ml-2"></i>
                 </button>
+                
+                <div id="login-error" class="hidden mt-5 bg-red-50 border-l-4 border-red-500 text-red-700 p-4 rounded-r-lg shadow-sm" role="alert">
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-circle-exclamation text-xl mr-3"></i>
+                        <span class="block sm:inline font-bold text-lg" id="login-error-text">ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง</span>
+                    </div>
+                </div>
             </form>
+            <div class="mt-8 text-center text-gray-400 text-base">
+                &copy; 2024 ARAMS System. All rights reserved.
+            </div>
         </div>
     </div>
 
-    <!-- ================= หน้า Dashboard หลัก ================= -->
-    <div id="app-layout" class="hidden">
+    <!-- ==================== 2. ส่วนของระบบหลัก (Main Application) ==================== -->
+    <div id="app-page" class="hidden h-screen flex overflow-hidden bg-gray-100">
         
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <h2>ARAMS</h2>
-                <p>ระบบบริหารงานทะเบียน</p>
+        <!-- Sidebar Menu -->
+        <aside id="sidebar" class="w-72 bg-slate-900 text-white flex flex-col transition-all duration-300 z-20 shadow-xl">
+            <!-- Sidebar Header -->
+            <div class="h-16 flex items-center justify-center border-b border-slate-700 px-4 bg-slate-950">
+                <i class="fa-solid fa-building-columns text-2xl text-blue-400 mr-3"></i>
+                <span class="text-3xl font-bold tracking-wider mt-1">ARAMS</span>
             </div>
-            <div class="sidebar-menu">
-                <div class="menu-item active" onclick="loadPage('dashboard')">
-                    <i class="fa-solid fa-chart-pie"></i> หน้าหลัก (Dashboard)
-                </div>
-                <div class="menu-item" onclick="loadPage('students')">
-                    <i class="fa-solid fa-user-graduate"></i> งานทะเบียนนักเรียน
-                </div>
-                <div class="menu-item" onclick="loadPage('courses')">
-                    <i class="fa-solid fa-book"></i> งานหลักสูตรและรายวิชา
-                </div>
-                <div class="menu-item" onclick="loadPage('grading')">
-                    <i class="fa-solid fa-pen-to-square"></i> งานบันทึกคะแนน
-                </div>
-                <div class="menu-item" onclick="loadPage('assessment')">
-                    <i class="fa-solid fa-chart-line"></i> งานวัดและประเมินผล
-                </div>
-                <div class="menu-item" onclick="loadPage('remedial')">
-                    <i class="fa-solid fa-wrench"></i> งานแก้ผลการเรียน
-                </div>
-                <div class="menu-item" onclick="loadPage('attendance')">
-                    <i class="fa-solid fa-calendar-check"></i> งานการมาเรียน
-                </div>
-                <div class="menu-item" onclick="loadPage('leaves')">
-                    <i class="fa-solid fa-notes-medical"></i> งานลา
-                </div>
-                <div class="menu-item" onclick="loadPage('documents')">
-                    <i class="fa-solid fa-file-pdf"></i> งานออกเอกสาร (ปพ.)
-                </div>
-                <div class="menu-item" onclick="loadPage('settings')" id="menu-settings" style="display: none;">
-                    <i class="fa-solid fa-gear"></i> ตั้งค่าระบบ
+            
+            <!-- User Profile (Sidebar) -->
+            <div class="p-5 border-b border-slate-700 bg-slate-800">
+                <div class="flex items-center">
+                    <div class="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-2xl font-bold shadow-inner border-2 border-slate-600">
+                        <i class="fa-solid fa-user-tie text-white"></i>
+                    </div>
+                    <div class="ml-4 overflow-hidden">
+                        <p id="sidebar-user-name" class="font-bold text-xl leading-tight truncate w-full text-blue-50">กำลังโหลด...</p>
+                        <p id="sidebar-user-role" class="text-base text-blue-300 mt-1 font-medium"><i class="fa-solid fa-shield-halved mr-1 text-sm"></i> ผู้ดูแลระบบ</p>
+                    </div>
                 </div>
             </div>
-            <div class="sidebar-footer">
-                &copy; 2024 ARAMS System
+
+            <!-- Navigation Links -->
+            <nav class="flex-1 overflow-y-auto py-4 custom-scrollbar">
+                <ul class="space-y-1 px-3 text-xl font-medium">
+                    <li>
+                        <a href="#" class="nav-link active flex items-center px-4 py-3 rounded-lg hover:bg-slate-700 transition-colors text-slate-300 hover:text-white" data-target="view-dashboard">
+                            <i class="fa-solid fa-chart-line w-8 text-center mr-2 text-blue-400"></i> หน้าหลัก (Dashboard)
+                        </a>
+                    </li>
+                    
+                    <li class="mt-6 mb-2 px-4">
+                        <span class="text-slate-500 text-base font-bold uppercase tracking-wider">ระบบงานวิชาการ</span>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link flex items-center px-4 py-3 rounded-lg hover:bg-slate-700 transition-colors text-slate-300 hover:text-white" data-target="view-registration" data-title="งานทะเบียนนักเรียน">
+                            <i class="fa-solid fa-users-viewfinder w-8 text-center mr-2 text-emerald-400"></i> งานทะเบียนนักเรียน
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link flex items-center px-4 py-3 rounded-lg hover:bg-slate-700 transition-colors text-slate-300 hover:text-white" data-target="view-curriculum" data-title="งานหลักสูตรและรายวิชา">
+                            <i class="fa-solid fa-book-bookmark w-8 text-center mr-2 text-amber-400"></i> งานหลักสูตร/รายวิชา
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link flex items-center px-4 py-3 rounded-lg hover:bg-slate-700 transition-colors text-slate-300 hover:text-white" data-target="view-grading" data-title="งานบันทึกคะแนน">
+                            <i class="fa-solid fa-pen-to-square w-8 text-center mr-2 text-purple-400"></i> งานบันทึกคะแนน
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link flex items-center px-4 py-3 rounded-lg hover:bg-slate-700 transition-colors text-slate-300 hover:text-white" data-target="view-assessment" data-title="งานวัดและประเมินผล">
+                            <i class="fa-solid fa-chart-pie w-8 text-center mr-2 text-pink-400"></i> งานวัดและประเมินผล
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link flex items-center px-4 py-3 rounded-lg hover:bg-slate-700 transition-colors text-slate-300 hover:text-white" data-target="view-remedial" data-title="งานแก้ผลการเรียน (แก้ตัว)">
+                            <i class="fa-solid fa-toolbox w-8 text-center mr-2 text-orange-500"></i> งานแก้ผลการเรียน
+                        </a>
+                    </li>
+                    
+                    <li class="mt-6 mb-2 px-4">
+                        <span class="text-slate-500 text-base font-bold uppercase tracking-wider">กิจการนักเรียน</span>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link flex items-center px-4 py-3 rounded-lg hover:bg-slate-700 transition-colors text-slate-300 hover:text-white" data-target="view-attendance" data-title="งานการมาเรียน">
+                            <i class="fa-solid fa-calendar-check w-8 text-center mr-2 text-cyan-400"></i> เช็กการมาเรียน
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link flex items-center px-4 py-3 rounded-lg hover:bg-slate-700 transition-colors text-slate-300 hover:text-white" data-target="view-leave" data-title="งานระบบการลา">
+                            <i class="fa-solid fa-file-medical w-8 text-center mr-2 text-red-400"></i> ระบบขอลา
+                        </a>
+                    </li>
+
+                    <li class="mt-6 mb-2 px-4">
+                        <span class="text-slate-500 text-base font-bold uppercase tracking-wider">ระบบรายงานและตั้งค่า</span>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link flex items-center px-4 py-3 rounded-lg hover:bg-slate-700 transition-colors text-slate-300 hover:text-white" data-target="view-documents" data-title="งานออกเอกสาร / ปพ.">
+                            <i class="fa-solid fa-print w-8 text-center mr-2 text-indigo-400"></i> ออกเอกสาร/ใบรายงาน
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link flex items-center px-4 py-3 rounded-lg hover:bg-slate-700 transition-colors text-slate-300 hover:text-white" data-target="view-settings" data-title="ตั้งค่าระบบ">
+                            <i class="fa-solid fa-gears w-8 text-center mr-2 text-gray-400"></i> ตั้งค่าระบบ
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <!-- Logout Button -->
+            <div class="p-4 bg-slate-950 border-t border-slate-800">
+                <button id="btn-logout" class="w-full flex items-center justify-center px-4 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg transition-colors text-xl shadow-md">
+                    <i class="fa-solid fa-power-off mr-2"></i> ออกจากระบบ
+                </button>
             </div>
         </aside>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- Topbar -->
-            <header class="topbar">
-                <div class="page-breadcrumb">
-                    <span id="current-date" style="color: #64748b; font-size: 0.9rem;"></span>
-                </div>
-                <div class="user-profile">
-                    <div class="user-info">
-                        <div class="user-name" id="display-fullname">กำลังโหลด...</div>
-                        <div class="user-role" id="display-role">ผู้ดูแลระบบ</div>
-                    </div>
-                    <button class="btn-logout" onclick="logout()" title="ออกจากระบบ">
-                        <i class="fa-solid fa-right-from-bracket"></i>
+        <!-- Main Content Layout -->
+        <div class="flex-1 flex flex-col overflow-hidden w-full relative">
+            
+            <!-- Top Navbar -->
+            <header class="h-16 bg-white shadow-sm flex items-center justify-between px-6 z-10 w-full border-b border-gray-200">
+                <div class="flex items-center">
+                    <button id="btn-toggle-sidebar" class="text-gray-500 hover:text-blue-700 focus:outline-none p-2 rounded-md hover:bg-gray-100 transition-colors">
+                        <i class="fa-solid fa-bars text-2xl"></i>
                     </button>
+                    <h2 id="topbar-title" class="ml-4 text-3xl font-bold text-gray-800 tracking-wide mt-1">หน้าหลัก (Dashboard)</h2>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <!-- Notifications -->
+                    <button class="relative text-gray-500 hover:text-blue-700 transition-colors focus:outline-none p-2 rounded-full hover:bg-gray-100">
+                        <i class="fa-solid fa-bell text-2xl"></i>
+                        <span class="absolute top-1 right-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white font-bold border-2 border-white">3</span>
+                    </button>
+                    <div class="h-8 w-px bg-gray-300"></div>
+                    <div class="text-right hidden md:block">
+                        <p class="text-xl font-bold text-gray-800 leading-none">ปีการศึกษา 2567</p>
+                        <p class="text-lg text-blue-600 font-medium mt-1">ภาคเรียนที่ 1</p>
+                    </div>
                 </div>
             </header>
 
-            <!-- Dynamic Content Area -->
-            <div class="content-area" id="main-view">
-                <!-- เนื้อหาจะถูกโหลดมาใส่ตรงนี้ด้วย JavaScript -->
-                <h1 class="page-title">ภาพรวมระบบ (Dashboard)</h1>
+            <!-- Main Views Container -->
+            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-slate-50 p-6 custom-scrollbar" id="main-content-area">
                 
-                <div class="grid-cards">
-                    <div class="stat-card">
-                        <i class="fa-solid fa-users stat-icon text-primary"></i>
-                        <div class="stat-details">
-                            <h3>นักเรียนทั้งหมด</h3>
-                            <p id="stat-students">...</p>
+                <!-- ================== VIEW: 1. DASHBOARD ================== -->
+                <div id="view-dashboard" class="view-section active">
+                    
+                    <!-- Stats Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
+                        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 border-l-4 border-l-blue-600 flex items-center justify-between hover:shadow-md transition-shadow">
+                            <div>
+                                <p class="text-gray-500 text-xl font-bold">นักเรียนทั้งหมด</p>
+                                <h3 class="text-4xl font-extrabold text-gray-800 mt-2" id="stat-total-students"><i class="fa-solid fa-spinner fa-spin text-lg text-gray-300"></i></h3>
+                            </div>
+                            <div class="w-16 h-16 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 text-3xl">
+                                <i class="fa-solid fa-user-graduate"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 border-l-4 border-l-emerald-500 flex items-center justify-between hover:shadow-md transition-shadow">
+                            <div>
+                                <p class="text-gray-500 text-xl font-bold">จำนวนครู / บุคลากร</p>
+                                <h3 class="text-4xl font-extrabold text-gray-800 mt-2" id="stat-total-teachers"><i class="fa-solid fa-spinner fa-spin text-lg text-gray-300"></i></h3>
+                            </div>
+                            <div class="w-16 h-16 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-500 text-3xl">
+                                <i class="fa-solid fa-chalkboard-user"></i>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 border-l-4 border-l-purple-500 flex items-center justify-between hover:shadow-md transition-shadow">
+                            <div>
+                                <p class="text-gray-500 text-xl font-bold">จำนวนห้องเรียน</p>
+                                <h3 class="text-4xl font-extrabold text-gray-800 mt-2" id="stat-total-classes">45</h3>
+                            </div>
+                            <div class="w-16 h-16 rounded-full bg-purple-50 flex items-center justify-center text-purple-500 text-3xl">
+                                <i class="fa-solid fa-door-open"></i>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 border-l-4 border-l-red-500 flex items-center justify-between hover:shadow-md transition-shadow">
+                            <div>
+                                <p class="text-gray-500 text-xl font-bold">ขาดเรียนวันนี้</p>
+                                <h3 class="text-4xl font-extrabold text-red-600 mt-2" id="stat-absent-today">12</h3>
+                            </div>
+                            <div class="w-16 h-16 rounded-full bg-red-50 flex items-center justify-center text-red-500 text-3xl">
+                                <i class="fa-solid fa-user-xmark"></i>
+                            </div>
                         </div>
                     </div>
-                    <div class="stat-card success">
-                        <i class="fa-solid fa-chalkboard-user stat-icon"></i>
-                        <div class="stat-details">
-                            <h3>ครูบุคลากร</h3>
-                            <p id="stat-teachers">...</p>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                        <!-- กล่องแจ้งเตือนนักเรียนติด 0, ร, มส, มผ -->
+                        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+                            <div class="flex justify-between items-center mb-5 pb-4 border-b border-gray-100">
+                                <h3 class="text-2xl font-bold text-gray-800 flex items-center">
+                                    <i class="fa-solid fa-triangle-exclamation text-orange-500 mr-3 text-2xl"></i> สถิติผลการเรียนผิดปกติ
+                                </h3>
+                                <button class="text-blue-600 font-bold hover:underline text-lg">ดูรายละเอียด</button>
+                            </div>
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+                                <div class="p-5 bg-red-50 rounded-xl border border-red-100 hover:bg-red-100 transition-colors cursor-pointer">
+                                    <p class="text-red-700 font-extrabold text-4xl">15</p>
+                                    <p class="text-gray-700 text-xl mt-2 font-bold">ติด 0</p>
+                                </div>
+                                <div class="p-5 bg-orange-50 rounded-xl border border-orange-100 hover:bg-orange-100 transition-colors cursor-pointer">
+                                    <p class="text-orange-700 font-extrabold text-4xl">8</p>
+                                    <p class="text-gray-700 text-xl mt-2 font-bold">ติด ร</p>
+                                </div>
+                                <div class="p-5 bg-yellow-50 rounded-xl border border-yellow-200 hover:bg-yellow-100 transition-colors cursor-pointer">
+                                    <p class="text-yellow-700 font-extrabold text-4xl">3</p>
+                                    <p class="text-gray-700 text-xl mt-2 font-bold">ติด มส</p>
+                                </div>
+                                <div class="p-5 bg-gray-100 rounded-xl border border-gray-200 hover:bg-gray-200 transition-colors cursor-pointer">
+                                    <p class="text-gray-700 font-extrabold text-4xl">0</p>
+                                    <p class="text-gray-700 text-xl mt-2 font-bold">ติด มผ</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- แจ้งเตือนงาน -->
+                        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+                            <div class="flex justify-between items-center mb-5 pb-4 border-b border-gray-100">
+                                <h3 class="text-2xl font-bold text-gray-800 flex items-center">
+                                    <i class="fa-regular fa-bell text-blue-500 mr-3 text-2xl"></i> งานที่ต้องดำเนินการ
+                                </h3>
+                                <span class="bg-red-100 text-red-700 text-sm font-bold px-3 py-1 rounded-full border border-red-200">3 รายการ</span>
+                            </div>
+                            <ul class="space-y-4">
+                                <li class="flex items-start p-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors border border-gray-100">
+                                    <div class="mt-1 mr-4 bg-red-100 p-3 rounded-full flex-shrink-0">
+                                        <i class="fa-solid fa-pen-nib text-red-600 text-lg"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-gray-800 text-xl font-bold">ยังไม่ได้ส่งคะแนนเก็บครั้งที่ 1</p>
+                                        <p class="text-gray-600 text-lg">วิชาคณิตศาสตร์พื้นฐาน ม.3/2 (ครบกำหนดเมื่อวาน)</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start p-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors border border-gray-100">
+                                    <div class="mt-1 mr-4 bg-orange-100 p-3 rounded-full flex-shrink-0">
+                                        <i class="fa-solid fa-list-check text-orange-600 text-lg"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-gray-800 text-xl font-bold">ยังไม่ได้เช็กชื่อโฮมรูม</p>
+                                        <p class="text-gray-600 text-lg">ห้อง ม.5/1 ประจำวันที่ 21 พ.ย. 2567</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start p-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors border border-gray-100">
+                                    <div class="mt-1 mr-4 bg-blue-100 p-3 rounded-full flex-shrink-0">
+                                        <i class="fa-solid fa-file-signature text-blue-600 text-lg"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-gray-800 text-xl font-bold">อนุมัติคำขอลา</p>
+                                        <p class="text-gray-600 text-lg">มีคำขอลาป่วย 2 รายการ รอการอนุมัติจากคุณ</p>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
                     </div>
-                    <div class="stat-card warning">
-                        <i class="fa-solid fa-book-open stat-icon"></i>
-                        <div class="stat-details">
-                            <h3>รายวิชาที่เปิดสอน</h3>
-                            <p id="stat-courses">...</p>
+                </div>
+                
+                <!-- ================== VIEW: 2. ทะเบียนนักเรียน ================== -->
+                <div id="view-registration" class="view-section hidden">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+                        <div>
+                            <h3 class="text-3xl font-bold text-gray-800">ฐานข้อมูลนักเรียน</h3>
+                            <p class="text-gray-500 text-xl mt-1">จัดการประวัติ ย้ายห้อง เลื่อนชั้น และสถานะนักเรียน</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <button class="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-lg shadow flex items-center text-xl font-bold transition-colors">
+                                <i class="fa-solid fa-file-import mr-2"></i> นำเข้า Excel
+                            </button>
+                            <button class="bg-blue-700 hover:bg-blue-800 text-white px-5 py-2.5 rounded-lg shadow flex items-center text-xl font-bold transition-colors">
+                                <i class="fa-solid fa-user-plus mr-2"></i> เพิ่มนักเรียนใหม่
+                            </button>
                         </div>
                     </div>
-                    <div class="stat-card danger">
-                        <i class="fa-solid fa-triangle-exclamation stat-icon"></i>
-                        <div class="stat-details">
-                            <h3>นักเรียนติด 0/ร/มส/มผ</h3>
-                            <p id="stat-abnormal">0</p>
+
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5 mb-6 flex flex-col md:flex-row gap-4 items-end">
+                        <div class="flex-1 w-full relative">
+                            <label class="block text-gray-700 font-bold mb-2 text-lg">ค้นหานักเรียน</label>
+                            <div class="absolute bottom-0 left-0 pl-4 pb-3 flex items-center pointer-events-none">
+                                <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
+                            </div>
+                            <input type="text" class="w-full pl-12 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100 text-xl" placeholder="รหัสประจำตัว, ชื่อ-นามสกุล, เลขประชาชน...">
+                        </div>
+                        <div class="w-full md:w-48">
+                            <label class="block text-gray-700 font-bold mb-2 text-lg">ระดับชั้น</label>
+                            <select class="w-full py-2.5 px-4 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100 text-xl font-medium">
+                                <option value="">ทั้งหมด</option>
+                                <option value="ม.1">มัธยมศึกษาปีที่ 1</option>
+                                <option value="ม.2">มัธยมศึกษาปีที่ 2</option>
+                                <option value="ม.3">มัธยมศึกษาปีที่ 3</option>
+                            </select>
+                        </div>
+                        <div class="w-full md:w-40">
+                            <label class="block text-gray-700 font-bold mb-2 text-lg">ห้อง</label>
+                            <select class="w-full py-2.5 px-4 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100 text-xl font-medium">
+                                <option value="">ทั้งหมด</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                            </select>
+                        </div>
+                        <div class="w-full md:w-auto">
+                            <button class="w-full bg-gray-800 hover:bg-gray-900 text-white px-6 py-2.5 rounded-lg shadow font-bold text-xl transition-colors">
+                                ค้นหา
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-4 text-left font-bold text-gray-700 text-xl tracking-wider">รหัสนักเรียน</th>
+                                        <th scope="col" class="px-6 py-4 text-left font-bold text-gray-700 text-xl tracking-wider">ชื่อ - นามสกุล</th>
+                                        <th scope="col" class="px-6 py-4 text-center font-bold text-gray-700 text-xl tracking-wider">ชั้น/ห้อง</th>
+                                        <th scope="col" class="px-6 py-4 text-center font-bold text-gray-700 text-xl tracking-wider">สถานะ</th>
+                                        <th scope="col" class="px-6 py-4 text-center font-bold text-gray-700 text-xl tracking-wider">จัดการ</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200 text-gray-800" id="student-table-body">
+                                    <!-- ตัวอย่างข้อมูล Mockup 1 แถว -->
+                                    <tr class="hover:bg-blue-50 transition-colors">
+                                        <td class="px-6 py-4 whitespace-nowrap text-xl font-bold">67001</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-xl">เด็กชายเรียนดี ตั้งใจเรียน</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-xl text-center font-bold">ม.1/1</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-center">
+                                            <span class="px-3 py-1 inline-flex text-lg leading-5 font-bold rounded-full bg-green-100 text-green-800">
+                                                ปกติ
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-center text-xl font-medium">
+                                            <button class="text-blue-600 hover:text-blue-900 mx-2" title="ดูประวัติ"><i class="fa-solid fa-address-card"></i></button>
+                                            <button class="text-amber-500 hover:text-amber-700 mx-2" title="แก้ไข"><i class="fa-solid fa-pen-to-square"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Pagination -->
+                        <div class="bg-white px-4 py-3 border-t border-gray-200 flex items-center justify-between sm:px-6">
+                            <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                                <div><p class="text-lg text-gray-700">แสดง <span class="font-bold">1</span> ถึง <span class="font-bold">1</span> จาก <span class="font-bold">1</span> รายการ</p></div>
+                                <div>
+                                    <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                                        <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                            <i class="fa-solid fa-chevron-left"></i>
+                                        </a>
+                                        <a href="#" aria-current="page" class="z-10 bg-blue-50 border-blue-500 text-blue-600 relative inline-flex items-center px-4 py-2 border text-lg font-bold">1</a>
+                                        <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                            <i class="fa-solid fa-chevron-right"></i>
+                                        </a>
+                                    </nav>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- พื้นที่สำหรับกราฟหรือตารางรายการด่วนในอนาคต -->
-                <div style="background: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
-                    <h3 style="margin-bottom: 1rem; color: #1e293b;">ยินดีต้อนรับเข้าสู่ระบบ ARAMS</h3>
-                    <p style="color: #64748b; line-height: 1.6;">
-                        กรุณาเลือกเมนูทางด้านซ้ายเพื่อเริ่มต้นการทำงาน ระบบออกแบบมาให้รองรับการทำงานของฝ่ายวิชาการ งานทะเบียน และครูผู้สอนอย่างครบถ้วน
-                    </p>
+                <!-- ================== VIEW: 3. โครงสร้างเมนูอื่นๆ (รอการเชื่อมต่อ API) ================== -->
+                <div id="view-coming-soon" class="view-section hidden">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-12 flex flex-col items-center justify-center h-full min-h-[65vh] text-center">
+                        <div class="w-32 h-32 bg-slate-100 rounded-full flex items-center justify-center mb-6 shadow-inner border border-slate-200">
+                            <i class="fa-solid fa-laptop-code text-6xl text-slate-400"></i>
+                        </div>
+                        <h3 class="text-4xl font-bold text-gray-800 mb-4 tracking-wide" id="coming-soon-title">กำลังโหลดโมดูล...</h3>
+                        <p class="text-gray-500 text-2xl max-w-2xl">ส่วนระบบงานนี้เตรียมโครงสร้าง HTML/CSS ไว้เรียบร้อยแล้ว รอการเขียน JavaScript เชื่อมต่อ API (Google Apps Script) ในขั้นตอนต่อไป</p>
+                    </div>
                 </div>
-            </div>
-        </main>
+
+            </main>
+        </div>
     </div>
 
-    <!-- ================= JavaScript Logic ================= -->
-    <script>
-        /**
-         * กรุณานำ URL ที่ได้จากการ Deploy Google Apps Script (Web App) มาวางที่นี่
-         */
-        const API_URL = "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
-
-        // DOM Elements
-        const loginPage = document.getElementById('login-page');
-        const appLayout = document.getElementById('app-layout');
-        const loginForm = document.getElementById('login-form');
-        const loginError = document.getElementById('login-error');
-        const btnLogin = document.getElementById('btn-login');
-        const loginText = document.getElementById('login-text');
-        const loginSpinner = document.getElementById('login-spinner');
-
-        // ฟังก์ชันเมื่อโหลดหน้าเว็บ
-        document.addEventListener('DOMContentLoaded', () => {
-            // แสดงวันที่ปัจจุบันที่ Topbar
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            document.getElementById('current-date').textContent = new Date().toLocaleDateString('th-TH', options);
-
-            // เช็คว่าเคย Login ค้างไว้ไหม (Session)
-            const userData = sessionStorage.getItem('arams_user');
-            if (userData) {
-                const user = JSON.parse(userData);
-                showDashboard(user);
-            }
-        });
-
-        // จัดการฟอร์ม Login
-        loginForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const username = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value.trim();
-
-            // เปลี่ยนสถานะปุ่ม
-            btnLogin.disabled = true;
-            loginText.textContent = 'กำลังเข้าสู่ระบบ...';
-            loginSpinner.classList.remove('hidden');
-            loginError.classList.add('hidden');
-
-            try {
-                // ถ้ายังไม่ได้ใส่ API_URL ให้จำลองการ Login ด้วย Admin พื้นฐานไปก่อนเพื่อเทส UI
-                if (API_URL === "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE") {
-                    console.warn("ยังไม่ได้ตั้งค่า API_URL จำลองการเข้าระบบสำหรับทดสอบ");
-                    setTimeout(() => {
-                        if(username === "sxaiq54" && password === "Sxxnga2011") {
-                            const mockUser = { userId: "USR-TEST", username: username, role: "Admin", fullName: "นายผู้ดูแลระบบ สูงสุด" };
-                            sessionStorage.setItem('arams_user', JSON.stringify(mockUser));
-                            showDashboard(mockUser);
-                        } else {
-                            showLoginError("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง (โหมดจำลอง)");
-                        }
-                    }, 1000);
-                    return;
-                }
-
-                // ส่ง Request ไปยัง Google Apps Script API
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        action: 'LOGIN',
-                        payload: { username, password }
-                    }),
-                    // ไม่ตั้ง header Content-Type สำหรับ GAS CORS
-                });
-
-                const result = await response.json();
-
-                if (result.status === 'success') {
-                    // เก็บข้อมูลลง Session
-                    sessionStorage.setItem('arams_user', JSON.stringify(result.data));
-                    showDashboard(result.data);
-                } else {
-                    showLoginError(result.message);
-                }
-
-            } catch (error) {
-                console.error("Login Error:", error);
-                showLoginError("เกิดข้อผิดพลาดในการเชื่อมต่อเซิร์ฟเวอร์");
-            }
-        });
-
-        function showLoginError(msg) {
-            loginError.textContent = msg;
-            loginError.classList.remove('hidden');
-            btnLogin.disabled = false;
-            loginText.textContent = 'เข้าสู่ระบบ';
-            loginSpinner.classList.add('hidden');
-        }
-
-        function showDashboard(user) {
-            // ซ่อนหน้า Login
-            loginPage.classList.add('hidden');
-            
-            // รีเซ็ตปุ่ม Login
-            btnLogin.disabled = false;
-            loginText.textContent = 'เข้าสู่ระบบ';
-            loginSpinner.classList.add('hidden');
-            loginForm.reset();
-
-            // แสดง Dashboard
-            appLayout.classList.remove('hidden');
-
-            // อัปเดตข้อมูลผู้ใช้
-            document.getElementById('display-fullname').textContent = user.fullName;
-            document.getElementById('display-role').textContent = user.role === "Admin" ? "ผู้ดูแลระบบ" : (user.role === "Teacher" ? "คุณครู" : user.role);
-
-            // ซ่อนเมนูตั้งค่าถ้าไม่ใช่ Admin
-            if (user.role === "Admin") {
-                document.getElementById('menu-settings').style.display = 'flex';
-            }
-
-            // ดึงข้อมูลสถิติ
-            fetchDashboardStats();
-        }
-
-        function logout() {
-            if (confirm("ต้องการออกจากระบบใช่หรือไม่?")) {
-                sessionStorage.removeItem('arams_user');
-                appLayout.classList.add('hidden');
-                loginPage.classList.remove('hidden');
-            }
-        }
-
-        async function fetchDashboardStats() {
-            if (API_URL === "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE") {
-                document.getElementById('stat-students').textContent = "1,250";
-                document.getElementById('stat-teachers').textContent = "85";
-                document.getElementById('stat-courses').textContent = "120";
-                return;
-            }
-
-            try {
-                const response = await fetch(`${API_URL}?action=GET_DASHBOARD_STATS`);
-                const result = await response.json();
-                
-                if (result.status === 'success') {
-                    document.getElementById('stat-students').textContent = result.data.totalStudents;
-                    document.getElementById('stat-teachers').textContent = result.data.totalTeachers;
-                    document.getElementById('stat-courses').textContent = result.data.totalCourses;
-                }
-            } catch (error) {
-                console.error("Failed to fetch stats", error);
-            }
-        }
-
-        // ฟังก์ชันจัดการการเปลี่ยนหน้าเมนู (จำลอง SPA)
-        function loadPage(pageName) {
-            // อัปเดต UI เมนูที่เลือก
-            const menuItems = document.querySelectorAll('.menu-item');
-            menuItems.forEach(item => item.classList.remove('active'));
-            event.currentTarget.classList.add('active');
-
-            // ในไฟล์ต่อไป เราจะเขียนฟังก์ชันดึง HTML ย่อยมาใส่ใน id="main-view"
-            // ตอนนี้แสดง Alert หรือเปลี่ยน Title ชั่วคราว
-            if(pageName !== 'dashboard') {
-                document.querySelector('.page-title').textContent = event.currentTarget.innerText;
-                document.querySelector('.grid-cards').style.display = 'none';
-            } else {
-                document.querySelector('.page-title').textContent = 'ภาพรวมระบบ (Dashboard)';
-                document.querySelector('.grid-cards').style.display = 'grid';
-                fetchDashboardStats();
-            }
-        }
-    </script>
+    <!-- Scripts -->
+    <script src="script.js"></script>
 </body>
 </html>
